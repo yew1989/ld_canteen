@@ -24,7 +24,7 @@ class API{
     var queryParam = Map<String, dynamic>();
     queryParam['keys'] = '-ACL,-updatedAt,-createdAt';
     if(limit != null) queryParam['limit'] = limit.toString();
-    if(skip != null) queryParam['skip'] = limit.toString();
+    if(skip != null) queryParam['skip'] = skip.toString();
     if(order != null) queryParam['order'] = order;
 
     HttpHelper.getHttp(path, queryParam, (dynamic data,String msg){

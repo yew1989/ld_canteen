@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:connectivity/connectivity.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:ld_canteen/api/api.dart';
@@ -10,7 +9,7 @@ typedef HttpFailCallback = void Function(String msg);
 class HttpHelper {
 
   // 开启代理模式,允许抓包
-  static final isProxyModeOpen = false;
+  static final isProxyModeOpen = true;
   // 代理地址
   static final proxyIP = 'PROXY 192.168.31.74:8888';
   // 超时时间
@@ -31,35 +30,15 @@ class HttpHelper {
     return dio;
   }
 
-  // 检测网络
-  static Future<bool> isReachablity() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile) {
-      return true;
-    } else if (connectivityResult == ConnectivityResult.wifi) {
-      return true;
-    }
-    return false;
-  }
 
   // GET 
   static void getHttp(String path, Map<String, dynamic> queryParam,HttpSuccCallback onSucc,HttpFailCallback onFail) async { 
 
-    // 检测网络
-    var isReachable = await isReachablity();
-    if (isReachable == false) {
-      if (onFail != null) {
-        onFail('网络异常,请检查网络');
-        return;
-      }
-    }
-
     final dio = HttpHelper.initDio();
 
     try {
-      var url = API.host + path;
-      Response response = await dio.get(
-        url,
+
+      Response response = await dio.get(path,
         options: Options(
           headers: {
           'X-LC-Id': leancloudID,
@@ -92,21 +71,10 @@ class HttpHelper {
   // POST 
   static void postHttp(String path, Map<String, dynamic> param,HttpSuccCallback onSucc,HttpFailCallback onFail) async { 
 
-    // 检测网络
-    var isReachable = await isReachablity();
-    if (isReachable == false) {
-      if (onFail != null) {
-        onFail('网络异常,请检查网络');
-        return;
-      }
-    }
-
     final dio = HttpHelper.initDio();
 
     try {
-      var url = API.host + path;
-      Response response = await dio.post(
-        url,
+      Response response = await dio.post(path,
         options: Options(
           headers: {
           'X-LC-Id': leancloudID,
@@ -139,21 +107,10 @@ class HttpHelper {
   // PUT
   static void putHttp(String path, Map<String, dynamic> param,HttpSuccCallback onSucc,HttpFailCallback onFail) async { 
 
-    // 检测网络
-    var isReachable = await isReachablity();
-    if (isReachable == false) {
-      if (onFail != null) {
-        onFail('网络异常,请检查网络');
-        return;
-      }
-    }
-
     final dio = HttpHelper.initDio();
 
     try {
-      var url = API.host + path;
-      Response response = await dio.put(
-        url,
+      Response response = await dio.put(path,
         options: Options(
           headers: {
           'X-LC-Id': leancloudID,
@@ -186,21 +143,10 @@ class HttpHelper {
   // Delete
   static void deleteHttp(String path, Map<String, dynamic> queryParam,HttpSuccCallback onSucc,HttpFailCallback onFail) async { 
 
-    // 检测网络
-    var isReachable = await isReachablity();
-    if (isReachable == false) {
-      if (onFail != null) {
-        onFail('网络异常,请检查网络');
-        return;
-      }
-    }
-
     final dio = HttpHelper.initDio();
 
     try {
-      var url = API.host + path;
-      Response response = await dio.delete(
-        url,
+      Response response = await dio.delete(path,
         options: Options(
           headers: {
           'X-LC-Id': leancloudID,
