@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ld_canteen/api/api_test_page.dart';
+import 'package:ld_canteen/api/page/api_demo_page.dart';
+import 'package:ld_canteen/api/page/api_test_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -38,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
             FlatButton(child: Text('测试页面1'),onPressed: () => pushToSomePage(context,null)),
             FlatButton(child: Text('测试页面2'),onPressed: () => pushToSomePage(context,null)),
             FlatButton(child: Text('测试API'),onPressed: () => pushToSomePage(context,ApiTestPage())),
-            FlatButton(child: Text('测试界面'),onPressed: () => pushToSomePage(context,null)),
+            FlatButton(child: Text('测试界面'),onPressed: () => pushToSomePage(context,ApiDemoPage())),
             FlatButton(child: Text('前端 TV 端'),onPressed: () => pushToSomePage(context,null)),
             FlatButton(child: Text('后台 PC 端'),onPressed: () => pushToSomePage(context,null)),
           ],
