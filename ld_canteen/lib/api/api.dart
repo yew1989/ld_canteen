@@ -26,8 +26,6 @@ class API{
   // 展览位
   static final menuPath       = '/classes/Menu';
 
-
-
   // 获取分类列表
   static void getCategoryList(CategoryListCallback onSucc,HttpFailCallback onFail,{int limit,int skip}) {
 
@@ -45,6 +43,26 @@ class API{
         
     }, onFail);
   }
+
+  // 删除分类
+  static void deleteCategory(String objectId,DeleteCallBack onSucc,HttpFailCallback onFail) {
+
+    final path = host + categoryPath + '/' + objectId;
+
+    HttpHelper.deleteHttp(path, null, (_,String msg){
+        if(onSucc != null) onSucc(msg);
+    }, onFail);
+  }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -68,6 +86,11 @@ class API{
         
     }, onFail);
   }
+
+
+
+
+
 
   // 新增菜品
   static void addDish(Dish dish,UpdateCallBack onSucc,HttpFailCallback onFail) {

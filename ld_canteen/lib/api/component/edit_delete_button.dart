@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EditAndDeleteButton extends StatelessWidget {
@@ -17,13 +18,35 @@ class EditAndDeleteButton extends StatelessWidget {
         children: <Widget>[
             FlatButton(
               color: Colors.green,
-              child: Text('编辑',style: TextStyle(color: Colors.white,fontSize: 20)),onPressed: (){}),
+              child: Text('编辑',style: TextStyle(color: Colors.white,fontSize: 20)),onPressed: (){
+                if(onEditPressed != null)onEditPressed();
+              }),
             SizedBox(width: 8),
             FlatButton(
               color: Colors.red,
-              child: Text('删除',style: TextStyle(color: Colors.white,fontSize: 20)),onPressed: (){}),
+              child: Text('删除',style: TextStyle(color: Colors.white,fontSize: 20)),onPressed: (){
+                showDialog(
+                  context:context,
+                  child: CupertinoAlertDialog(
+                    title:Text('提示'),
+                    content:Center(
+                      child: Text('是否确定删除该项'),
+                    ),
+                    actions: <Widget>[
+                      CupertinoDialogAction(isDestructiveAction: true,child: Text('确定'),onPressed: (){
+                        if(onDeletePressed != null) onDeletePressed();
+                        Navigator.of(context).pop();
+                      }),
+                      CupertinoDialogAction(child: Text('取消'),onPressed: (){
+                        Navigator.of(context).pop();
+                      }),
+                    ],
+                  )
+                );
+              }),
         ],
       ),
     );
   }
+
 }

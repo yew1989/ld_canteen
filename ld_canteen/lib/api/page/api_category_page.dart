@@ -15,23 +15,47 @@ class _ApiCategoryPageState extends State<ApiCategoryPage> {
 
   @override
   void initState() {
-    requestFirstPage();
+    getCategoryList();
     super.initState();
   }
 
   // 请求菜品分类数据
-  void requestFirstPage() {
+  void getCategoryList() {
     
     API.getCategoryList((List<Category> categories,String msg){
-      
+
       setState(() {
         this.categories = categories;
       });
 
+      debugPrint(msg);
+
     }, (String msg){
+
+      debugPrint(msg);
 
     });
   }
+
+  // 删除菜品
+  void deleteCategory(Category category) {
+    // TODO 先删除该菜品分类下的所有菜
+
+    // 删除分类
+    API.deleteCategory(category.objectId, (String msg){
+
+      debugPrint(msg);
+      // 刷新列表
+      getCategoryList();
+
+    }, (String msg) {
+
+      debugPrint(msg);
+
+    });
+  }
+
+  // void 
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +98,15 @@ class _ApiCategoryPageState extends State<ApiCategoryPage> {
             ),
             Expanded(
               flex: 1,
-              child: EditAndDeleteButton(),
+              child: EditAndDeleteButton(
+              // 删除菜品
+              onDeletePressed: (){
+                deleteCategory(category);
+              },
+              // 编辑菜品
+              onEditPressed: (){
+
+              }),
             )
           ],
         ),
