@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/api/component/edit_delete_button.dart';
+import 'package:ld_canteen/api/component/public_tool.dart';
+import 'package:ld_canteen/api/page/category/api_category_edit_page.dart';
 import 'package:ld_canteen/model/category.dart';
 
-class ApiCategoryPage extends StatefulWidget {
+class ApiCategoryListPage extends StatefulWidget {
   @override
-  _ApiCategoryPageState createState() => _ApiCategoryPageState();
+  _ApiCategoryListPageState createState() => _ApiCategoryListPageState();
 }
 
-class _ApiCategoryPageState extends State<ApiCategoryPage> {
+class _ApiCategoryListPageState extends State<ApiCategoryListPage> {
 
   
   List<Category> categories = [];
@@ -65,7 +67,9 @@ class _ApiCategoryPageState extends State<ApiCategoryPage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: (){},
+            onPressed: (){
+              pushToPage(context, ApiCategoryEditPage());
+            },
           )
         ],
       ),
@@ -73,7 +77,6 @@ class _ApiCategoryPageState extends State<ApiCategoryPage> {
         child: ListView.builder(
           itemCount: categories?.length ?? 0,
           itemBuilder: (BuildContext context,int index) => categoryTile(context,index),
-
         )
       ),
     );
@@ -105,7 +108,7 @@ class _ApiCategoryPageState extends State<ApiCategoryPage> {
               },
               // 编辑菜品
               onEditPressed: (){
-
+                pushToPage(context, ApiCategoryEditPage(category: category));
               }),
             )
           ],

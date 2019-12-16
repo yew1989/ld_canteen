@@ -54,6 +54,35 @@ class API{
     }, onFail);
   }
 
+  // 更新分类
+  static void updateCategory(String objectId,Category category,UpdateCallBack onSucc,HttpFailCallback onFail) {
+
+    final path = host + categoryPath + '/' + objectId;
+    var param = category.toJson();
+
+    HttpHelper.putHttp(path, param, (dynamic data,String msg){
+        final map  = data as Map<String,dynamic>;
+        final resp = UpdateResp.fromJson(map);
+        final objectId = resp?.objectId ?? ''; 
+        if(onSucc != null) onSucc(objectId,msg);
+    }, onFail);
+  }
+
+  // 新增分类
+  static void createCategory(Category category,UpdateCallBack onSucc,HttpFailCallback onFail) {
+
+    final path = host + categoryPath;
+    var param = category.toJson();
+
+    HttpHelper.postHttp(path, param, (dynamic data,String msg){
+        final map  = data as Map<String,dynamic>;
+        final resp = UpdateResp.fromJson(map);
+        final objectId = resp?.objectId ?? ''; 
+        if(onSucc != null) onSucc(objectId,msg);
+    }, onFail);
+  }
+
+
 
 
 
