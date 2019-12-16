@@ -1,42 +1,37 @@
-// 菜品
-class Dish {
-  
+// 菜品分类
+class Category {
   // id
   String objectId;
-  // 菜名
+  // 菜品名称
   String name;
-  // 菜价
-  String price;
 
-  Dish({this.name,this.objectId,this.price});
+  Category({this.name,this.objectId});
 
-  Dish.fromJson(Map<String, dynamic> json) {
-    objectId = json['objectId'] ?? '';
+  Category.fromJson(Map<String, dynamic> json) {
     name = json['name'] ?? '';
-    price = json['price'] ?? '';
+    objectId = json['objectId'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    data['objectId'] = this.objectId ?? '';
     data['name'] = this.name ?? '';
-    data['price'] = this.price ?? '';
+    data['objectId'] = this.objectId ?? '';
     return data;
   }
 }
 
-// 菜品列表 responese
-class DishListResp {
+// 菜品分类列表 responese
+class CategoryListResp {
 
-  List<Dish> results;
+  List<Category> results;
 
-  DishListResp({this.results});
+  CategoryListResp({this.results});
 
-  DishListResp.fromJson(Map<String, dynamic> json) {
+  CategoryListResp.fromJson(Map<String, dynamic> json) {
     if (json['results'] != null) {
-      results = List<Dish>();
+      results = List<Category>();
       json['results'].forEach((v) {
-        results.add(Dish.fromJson(v));
+        results.add(Category.fromJson(v));
       });
     }
   }

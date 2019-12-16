@@ -66,9 +66,9 @@ class _ApiTestPageState extends State<ApiTestPage> {
             // 菜品对象
             var dish = Dish();
             dish.name = '青椒肉丝';
-            dish.price = '8.5';
-            dish.isShow = true;
-            dish.sort = 8;
+            // dish.price = '8.5';
+            // dish.isShow = true;
+            // dish.sort = 8;
 
             API.addDish(dish,(String objectId,String msg){
             
@@ -91,9 +91,9 @@ class _ApiTestPageState extends State<ApiTestPage> {
           // 菜品对象
           var dish = Dish();
           dish.name = '肉末茄子';
-          dish.price = '3.5';
-          dish.isShow = true;
-          dish.sort = 4;
+          // dish.price = '3.5';
+          // dish.isShow = true;
+          // dish.sort = 4;
 
           API.updateDish(objectId,dish,(String objectId,String msg){
             

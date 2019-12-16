@@ -16,8 +16,12 @@ class HttpHelper {
   static final kTimeOutSeconds = 20;
 
   // 应用账号
-  static final leancloudID = 'oXs9QMrxcehkiO2MsIASzvjy-gzGzoHsz';
-  static final leancloudKey = 'DNDBbIrsP1YKSEMsxTqnP8u3';
+  // static final leancloudID = 'oXs9QMrxcehkiO2MsIASzvjy-gzGzoHsz';
+  // static final leancloudKey = 'DNDBbIrsP1YKSEMsxTqnP8u3';
+
+  static final leancloudID = 'Re57WX9hoM4A8cjf7T2htdk7-gzGzoHsz';
+  static final leancloudKey = 'EhoADXxCcD7LcwWfJACnCAYG';
+
 
   // 创建 DIO 对象
   static Dio initDio() {

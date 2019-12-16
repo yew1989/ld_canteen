@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ld_canteen/api/page/api_category_page.dart';
 
 class ApiDemoPage extends StatefulWidget {
   @override
@@ -31,7 +32,7 @@ class _ApiDemoPageState extends State<ApiDemoPage> {
       color: Colors.blueAccent,
       onPressed: (){
         if(title == '菜品分类管理'){
-
+          pushToPage(context,ApiCategoryPage());
         }
         else if(title == '广告栏管理') {
 
@@ -45,4 +46,11 @@ class _ApiDemoPageState extends State<ApiDemoPage> {
       },
     ));
   }
+
+  void pushToPage(BuildContext context,StatefulWidget page) {
+    if(page == null) return;
+    final MaterialPageRoute route = MaterialPageRoute(builder: (BuildContext context) => page);
+    Navigator.of(context).push(route);
+  }
+
 }

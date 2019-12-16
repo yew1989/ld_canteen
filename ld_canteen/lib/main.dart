@@ -36,12 +36,12 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            FlatButton(child: Text('测试页面1'),onPressed: () => pushToSomePage(context,null)),
-            FlatButton(child: Text('测试页面2'),onPressed: () => pushToSomePage(context,null)),
-            FlatButton(child: Text('测试API'),onPressed: () => pushToSomePage(context,ApiTestPage())),
-            FlatButton(child: Text('测试界面'),onPressed: () => pushToSomePage(context,ApiDemoPage())),
-            FlatButton(child: Text('前端 TV 端'),onPressed: () => pushToSomePage(context,null)),
-            FlatButton(child: Text('后台 PC 端'),onPressed: () => pushToSomePage(context,null)),
+            FlatButton(child: Text('测试页面1'),onPressed: () => pushToPage(context,null)),
+            FlatButton(child: Text('测试页面2'),onPressed: () => pushToPage(context,null)),
+            FlatButton(child: Text('测试API'),onPressed: () => pushToPage(context,ApiTestPage())),
+            FlatButton(child: Text('测试界面'),onPressed: () => pushToPage(context,ApiDemoPage())),
+            FlatButton(child: Text('前端 TV 端'),onPressed: () => pushToPage(context,null)),
+            FlatButton(child: Text('后台 PC 端'),onPressed: () => pushToPage(context,null)),
           ],
         ),
       ),
@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // 跳转到相应页面
-  void pushToSomePage(BuildContext context,StatefulWidget page) {
+  void pushToPage(BuildContext context,StatefulWidget page) {
     if(page == null) return;
     final MaterialPageRoute route = MaterialPageRoute(builder: (BuildContext context) => page);
     Navigator.of(context).push(route);
