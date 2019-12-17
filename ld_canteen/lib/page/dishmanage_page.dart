@@ -14,11 +14,9 @@ class DishManagePage extends StatefulWidget {
 
 class _DishManagePageState extends State<DishManagePage> with SingleTickerProviderStateMixin{
 
-  TabController _tabController;      // 先声明变量
   List<Dish> dishList = [];
   List<Category> categoryList = [];
 
-  
   // 请求菜品数据
   void getDishList() {
     
@@ -77,18 +75,12 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
   void initState() {
     getCategoryList();
     getDishList();
-    this._tabController = new TabController(
-      vsync: this,    // 动画效果的异步处理
-      length: 10 // tab 个数
-    );
     super.initState();
     
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     
     return Container(
       child: Scaffold(
@@ -104,22 +96,21 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
           ],
         ),
       body: DefaultTabController(
-        length: 10,
+        length: categoryList.length,
         child: new Scaffold(
           appBar:
           new TabBar(
-            controller: this._tabController,
             indicatorColor: Colors.white,
             tabs: categoryList.map((Category category){
-              Container(child: new Tab(child: Text('$category.name',style: TextStyle(color: Colors.white))));
+              return Container(child: new Tab(child: Text('${category.name}',style: TextStyle(color: Colors.black))));
             }).toList(),
             isScrollable: true,
           ),
           body:
           new TabBarView(
-            controller: this._tabController,
             children: categoryList.map((Category category){
-              return new DishListPage(dishList:this.dishList);
+              // return new DishListPage(dishList:this.dishList);
+              return Container(color: Colors.blueAccent,child: Text('${category.name}'),);
             }).toList(),
           )
         ), 
@@ -131,7 +122,6 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
 
   @override
     void dispose() {
-        this._tabController .dispose();
         super.dispose();
   }
 }
