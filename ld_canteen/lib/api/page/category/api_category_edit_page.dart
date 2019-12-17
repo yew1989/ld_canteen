@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
+import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/model/category.dart';
 
 class ApiCategoryEditPage extends StatefulWidget {
@@ -17,6 +18,11 @@ class _ApiCategoryEditPageState extends State<ApiCategoryEditPage> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -74,7 +80,8 @@ class _ApiCategoryEditPageState extends State<ApiCategoryEditPage> {
     API.updateCategory(category.objectId, category, (_,msg){
 
       Navigator.of(context).pop();
-
+      // 发送刷新通知
+      EventBus().emit('REFRESH');
     }, (_){
 
     });
@@ -86,6 +93,8 @@ class _ApiCategoryEditPageState extends State<ApiCategoryEditPage> {
     API.createCategory(category, (_,msg){
 
       Navigator.of(context).pop();
+      // 发送刷新通知
+      EventBus().emit('REFRESH');
 
     }, (_){
 
