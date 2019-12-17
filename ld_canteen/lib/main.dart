@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api_test_page.dart';
+import 'package:ld_canteen/page/main.dart';
+import 'package:ld_canteen/page/dishmanage_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,7 +24,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: MyHomePage(title: 'Flutter Demo Home Page'),
-      home: ApiTestPage(),
+      //home: ApiTestPage(),
+      home: DishManagePage(),
+      //home: MainPage(),
     );
   }
 }
