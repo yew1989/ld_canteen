@@ -40,7 +40,7 @@ class _ApiCategoryEditPageState extends State<ApiCategoryEditPage> {
         margin: EdgeInsets.all(40),
         child: ListView(
           children: <Widget>[
-            Text('菜品名称:',style: TextStyle(color: Colors.black,fontSize: 30),),
+            Text('菜品分类名称:',style: TextStyle(color: Colors.black,fontSize: 30),),
             TextField(
               maxLength: 20,
               maxLines: 1,

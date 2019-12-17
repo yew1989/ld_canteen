@@ -13,7 +13,8 @@ class ApiDishEditPage extends StatefulWidget {
 
 class _ApiDishEditPageState extends State<ApiDishEditPage> {
 
-  TextEditingController controller = TextEditingController();
+  TextEditingController nameCtrl = TextEditingController();
+  TextEditingController priceCtrl = TextEditingController();
 
   @override
   void initState() {
@@ -29,27 +30,40 @@ class _ApiDishEditPageState extends State<ApiDishEditPage> {
   Widget build(BuildContext context) {
 
     var isAdd = widget.dish == null;
-    var initText = widget?.dish?.name ?? '';
-    controller.text = initText;
+    nameCtrl.text = widget?.dish?.name ?? '';
+    priceCtrl.text = widget?.dish?.price ?? '';
 
     return Scaffold(
       appBar: AppBar(
-        title: isAdd ? Text('新增菜品分类') : Text('编辑菜品分类'),
+        title: isAdd ? Text('新增菜品') : Text('编辑菜品'),
       ),
       body: Container(
         margin: EdgeInsets.all(40),
         child: ListView(
           children: <Widget>[
-            Text('菜品名称:',style: TextStyle(color: Colors.black,fontSize: 30),),
+
+            Text('菜品名称:',style: TextStyle(color: Colors.black,fontSize: 30)),
             TextField(
               maxLength: 20,
               maxLines: 1,
               style: TextStyle(color: Colors.black,fontSize: 30),
-              controller: controller,
+              controller: nameCtrl,
               decoration:InputDecoration(
 
               )
             ),
+            Text('菜品价格:',style: TextStyle(color: Colors.black,fontSize: 30)),
+            TextField(
+              maxLength: 20,
+              maxLines: 1,
+              style: TextStyle(color: Colors.black,fontSize: 30),
+              controller: priceCtrl,
+              decoration:InputDecoration(
+
+              )
+            ),
+
+
             FlatButton(
             padding: EdgeInsets.all(10),
             child: Text('确定',style: TextStyle(color: Colors.white,fontSize: 40)),
@@ -57,13 +71,14 @@ class _ApiDishEditPageState extends State<ApiDishEditPage> {
             onPressed: (){
                 // 新增
                 if(isAdd) {
-                    var item = Dish(name: controller.text ?? '');
+                    var item = Dish(name: nameCtrl.text ?? '',price: priceCtrl.text ?? '',isShow: true);
                     addDish(item);
                 }
                 // 更新
                 else {
                     var item = widget.dish;
-                    item.name = controller.text ?? '';
+                    item.name = nameCtrl.text ?? '';
+                    item.price = priceCtrl.text ?? '';
                     updateDish(item);
                 }
               },

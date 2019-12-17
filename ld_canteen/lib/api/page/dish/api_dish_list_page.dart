@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/api/component/edit_delete_button.dart';
 import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/api/page/category/api_category_edit_page.dart';
+import 'package:ld_canteen/api/page/dish/api_dish_edit_page.dart';
 import 'package:ld_canteen/model/dish.dart';
 
 class ApiDishListPage extends StatefulWidget {
@@ -75,6 +77,21 @@ class _ApiDishListPageState extends State<ApiDishListPage> {
     });
   }
 
+  // 更新菜品状态
+  void updateDishWithShowState(Dish dish,bool isShow) {
+
+    dish.isShow = isShow;
+
+    API.updateDish(dish.objectId, dish, (_,msg){
+
+      getDishesList(categoryId);
+
+    }, (_){
+
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +107,7 @@ class _ApiDishListPageState extends State<ApiDishListPage> {
   Widget dishesTile(BuildContext context,int index) {
     
     var dish  = dishes[index];
-
+    
     return Container(
       margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
       height: 60,
@@ -102,7 +119,20 @@ class _ApiDishListPageState extends State<ApiDishListPage> {
           children:[
             Expanded(
               flex: 3,
-              child: Center(child: Text('${dish.name}',style: TextStyle(color: Colors.black,fontSize: 20))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Center(child: Text('${dish.name}',style: TextStyle(color: Colors.black,fontSize: 20))),
+                  Center(child: Text('${dish.price}',style: TextStyle(color: Colors.black,fontSize: 20))),
+                  Center(child: CupertinoSwitch(
+                    value: dish.isShow,
+                    onChanged: (bool value){
+                      updateDishWithShowState(dish,value);
+                    },
+                  )),
+                ],
+              ),
             ),
             Expanded(
               flex: 1,
@@ -113,7 +143,7 @@ class _ApiDishListPageState extends State<ApiDishListPage> {
               },
               // 编辑菜品
               onEditPressed: (){
-                // pushToPage(context, ApiCategoryEditPage(category: category));
+                 pushToPage(context, ApiDishEditPage(dish: dish));
               }),
             )
           ],

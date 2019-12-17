@@ -93,6 +93,7 @@ class API{
     var queryParam = Map<String, dynamic>();
     queryParam['keys'] = '-ACL,-updatedAt,-createdAt';
     queryParam['count'] = '1';
+    queryParam['order'] = 'createdAt';
     if(objectId != null) {
         queryParam['where'] = '{"category":{"\$inQuery":{"where":{"objectId":"$objectId"},"className":"Category"}}}';
     }
