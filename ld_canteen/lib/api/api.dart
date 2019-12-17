@@ -116,7 +116,14 @@ class API{
     final path = host + dishPath;
     var param = dish.toJson();
     if(categoryId != null) {
-       param['category'] = '"category":{"__type":"Pointer","className":"Category","objectId":"$categoryId"}';
+      var category = Map<String,dynamic>();
+      category['__type'] = 'Pointer';
+      category['className'] = 'Category';
+      category['objectId'] = '$categoryId';
+      param['category'] = category;
+    }
+    if(param.containsKey('objectId')) {
+      param.remove('objectId');
     }
 
     HttpHelper.postHttp(path, param, (dynamic data,String msg){
