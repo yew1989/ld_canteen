@@ -111,10 +111,13 @@ class API{
 
 
   // 新增菜品
-  static void createDish(Dish dish,UpdateCallBack onSucc,HttpFailCallback onFail) {
+  static void createDish(String categoryId,Dish dish,UpdateCallBack onSucc,HttpFailCallback onFail) {
 
     final path = host + dishPath;
     var param = dish.toJson();
+    if(categoryId != null) {
+       param['category'] = '"category":{"__type":"Pointer","className":"Category","objectId":"$categoryId"}';
+    }
 
     HttpHelper.postHttp(path, param, (dynamic data,String msg){
         final map  = data as Map<String,dynamic>;

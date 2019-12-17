@@ -6,7 +6,9 @@ import 'package:ld_canteen/model/dish.dart';
 class ApiDishEditPage extends StatefulWidget {
 
   final Dish dish;
-  const ApiDishEditPage({Key key, this.dish}) : super(key: key);
+  final String categoryId;
+  
+  const ApiDishEditPage({Key key, this.dish, this.categoryId}) : super(key: key);
   @override
   _ApiDishEditPageState createState() => _ApiDishEditPageState();
 }
@@ -104,8 +106,8 @@ class _ApiDishEditPageState extends State<ApiDishEditPage> {
 
   // 新增
   void addDish(Dish dish) {
-
-    API.createDish(dish, (_,msg){
+    final categoryId = widget?.categoryId ?? '';
+    API.createDish(categoryId,dish, (_,msg){
 
       Navigator.of(context).pop();
       // 发送刷新通知

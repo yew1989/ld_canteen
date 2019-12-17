@@ -78,7 +78,7 @@ class _ApiTestPageState extends State<ApiTestPage> {
             // dish.isShow = true;
             // dish.sort = 8;
 
-            API.createDish(dish,(String objectId,String msg){
+            API.createDish(null,dish,(String objectId,String msg){
             
             debugPrint(msg);
             debugPrint(objectId);
