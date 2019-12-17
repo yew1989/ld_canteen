@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
+import 'package:ld_canteen/model/category.dart';
 import 'package:ld_canteen/model/dish.dart';
 import 'package:ld_canteen/page/dishlistpage.dart';
 import 'package:ld_canteen/page/main.dart';
@@ -11,89 +12,126 @@ class DishManagePage extends StatefulWidget {
   _DishManagePageState createState() => _DishManagePageState();
 }
 
-class _DishManagePageState extends State<DishManagePage> {
+class _DishManagePageState extends State<DishManagePage> with SingleTickerProviderStateMixin{
 
+  TabController _tabController;      // 先声明变量
   List<Dish> dishList = [];
+  List<Category> categoryList = [];
+
   
-  List<Widget> _tabs() {
-    List<Widget> tiles = [];
-    //var name = typeTest[index].name;
-    for(var item in typeTest){
-      var name = item.name;
-      tiles.add(
-        Tab(child: Text('$name',style: TextStyle(color: Colors.white),),)
-      );
-    }
-    return tiles;
+  // 请求菜品数据
+  void getDishList() {
+    
+    API.getDishList((List<Dish> dishes,String msg){
+
+      setState(() {
+        this.dishList = dishes;
+      });
+
+      debugPrint(msg);
+
+    }, (String msg){
+
+      debugPrint(msg);
+
+    },order: 'sort',//limit:limit,skip:skip
+    );
   }
 
-  List<Widget> _tabBarView(){
-    List<Widget> tiles = [];
-    for (var item in typeTest) {
-      // List<Dish> dishList = [];
-      API.getDishList((List<Dish> dishes,String msg){
-            setState(() {
-              dishList = dishes;
-            });
-          debugPrint(msg);
-          debugPrint(dishes.map((f)=>f.toJson()).toList().toString());
-          dishList = dishes;
-        }, (String msg){
-          debugPrint(msg);
-        },order:'sort',//limit: limit,skip: skip
-      );
-      tiles.add(DishListPage(dishList:dishList));
-    }
-    return tiles;
+  // 请求菜品分类数据
+  void getCategoryList() {
+    
+    API.getCategoryList((List<Category> categories,String msg){
+
+      setState(() {
+        this.categoryList = categories;
+      });
+      debugPrint(categoryList.length.toString());
+      debugPrint(msg);
+
+    }, (String msg){
+
+      debugPrint(msg);
+
+    });
+  }
+  
+  // 删除菜品
+  void deleteDish(Dish dish) {
+
+    // 删除分类
+    API.deleteDish(dish.objectId, (String msg){
+
+      debugPrint(msg);
+      // 刷新列表
+      getDishList();
+
+    }, (String msg) {
+
+      debugPrint(msg);
+
+    });
+  }
+
+  @override
+  void initState() {
+    getCategoryList();
+    getDishList();
+    this._tabController = new TabController(
+      vsync: this,    // 动画效果的异步处理
+      length: 10 // tab 个数
+    );
+    super.initState();
+    
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+
+    
+    return Container(
+      child: Scaffold(
+        appBar: new AppBar(
+          title: Text('菜品管理'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.add_box,size: 30),
+              onPressed: () {
+
+              }
+            )
+          ],
+        ),
+      body: DefaultTabController(
+        length: 10,
+        child: new Scaffold(
+          appBar:
+          new TabBar(
+            controller: this._tabController,
+            indicatorColor: Colors.white,
+            tabs: categoryList.map((Category category){
+              Container(child: new Tab(child: Text('$category.name',style: TextStyle(color: Colors.white))));
+            }).toList(),
+            isScrollable: true,
+          ),
+          body:
+          new TabBarView(
+            controller: this._tabController,
+            children: categoryList.map((Category category){
+              return new DishListPage(dishList:this.dishList);
+            }).toList(),
+          )
+        ), 
+      ),
+    ),
+    );
   }
 
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('菜品管理'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add_box,size: 30),
-            onPressed: () {
-
-            }
-          )
-        ],
-      ),
-      body: DefaultTabController(
-        length: typeTest.length,
-        child: Scaffold(
-          appBar: AppBar(
-            title: TabBar(
-              indicatorColor: Colors.white,
-              indicatorSize: TabBarIndicatorSize.tab,
-              tabs: _tabs(),
-            ),
-          actions: <Widget>[
-            Padding(padding:  EdgeInsets.all(20.0)),
-            IconButton(
-              icon: Icon(Icons.settings_applications,size: 30,),
-              onPressed: () {
-                
-              },
-            )
-          ],
-        ),
-        body: Stack(
-          children: <Widget>[
-            TabBarView(
-              children: _tabBarView(),
-            )
-            
-          ],
-        ),
-        ),
-        
-        ), 
-        
-      
-    );
+    void dispose() {
+        this._tabController .dispose();
+        super.dispose();
   }
 }
