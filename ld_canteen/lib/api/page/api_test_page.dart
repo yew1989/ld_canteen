@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/model/dish.dart';
+import 'package:ld_canteen/page/dishlistpage.dart';
 
 class ApiTestPage extends StatefulWidget {
   @override
@@ -14,14 +15,14 @@ class _ApiTestPageState extends State<ApiTestPage> {
   List<Color> itemColors = [Colors.blue,Colors.green,Colors.orange,Colors.red];
 
   // 单元列表项
-  Widget listTitle(int index) {
+  Widget listTitle(int index,BuildContext context) {
     var itemTitle = itemTitles[index]; 
     var itemColor = itemColors[index];
     return ListTile(
       title: FlatButton(
         color: itemColor,
         child: Text('$itemTitle',style: TextStyle(color:Colors.white,fontSize: 15)),
-        onPressed: ()=>handleTestAPI(index),
+        onPressed: ()=>handleTestAPI(index,context),
       ),
     );
   }
@@ -34,29 +35,36 @@ class _ApiTestPageState extends State<ApiTestPage> {
       ),
       body: ListView.builder(
         itemCount: itemTitles.length,
-        itemBuilder: (_,index) => listTitle(index),
+        itemBuilder: (_,index) => listTitle(index,context),
       ),
     );
   }
 
   // 请求测试
-  void handleTestAPI(int index) {
+  void handleTestAPI(int index,BuildContext context) {
     switch (index) {
 
       // 获取菜品列表
       case 0:
         {
-          
+          //var limit = 20;
+          //var skip = 0;
           API.getDishList((List<Dish> dishes,String msg){
             
-            debugPrint(msg);
-            debugPrint(dishes.map((f)=>f.toJson()).toList().toString());
+              debugPrint(msg);
+              debugPrint(dishes.map((f)=>f.toJson()).toList().toString());
+              Navigator.push(context,
+                MaterialPageRoute(builder: (context) 
+                => DishListPage(dishList:dishes)));
+            }, (String msg){
 
-          }, (String msg){
+              debugPrint(msg);
 
-            debugPrint(msg);
-
-          },order:'sort',limit: 20,skip: 0);
+            },order:'sort',//limit: limit,skip: skip
+              
+          );
+          
+          
         }
         break;
 

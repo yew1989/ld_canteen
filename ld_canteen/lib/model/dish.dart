@@ -7,13 +7,17 @@ class Dish {
   String name;
   // 菜价
   String price;
+  // 是否展示
+  bool isShow;
+  
 
-  Dish({this.name,this.objectId,this.price});
+  Dish({this.name,this.objectId,this.price,this.isShow});
 
   Dish.fromJson(Map<String, dynamic> json) {
     objectId = json['objectId'] ?? '';
     name = json['name'] ?? '';
     price = json['price'] ?? '';
+    isShow = json['isShow'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -21,6 +25,7 @@ class Dish {
     data['objectId'] = this.objectId ?? '';
     data['name'] = this.name ?? '';
     data['price'] = this.price ?? '';
+    data['isShow'] = this.isShow ?? false;
     return data;
   }
 }
