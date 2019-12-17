@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/api/page/category/api_category_list_page.dart';
+import 'package:ld_canteen/api/page/dish/api_dish_list_page.dart';
+import 'package:ld_canteen/api/page/dish/api_dish_tab_page.dart';
 
 class ApiDemoPage extends StatefulWidget {
   @override
@@ -39,7 +41,7 @@ class _ApiDemoPageState extends State<ApiDemoPage> {
 
         }
         else if (title == '菜品管理') { 
-
+          pushToPage(context,ApiDishTabBarPage());
         }
         else if(title == '展览位管理') {
 

@@ -40,7 +40,7 @@ class _DishManagePageState extends State<DishManagePage> {
           dishList = dishes;
         }, (String msg){
           debugPrint(msg);
-        },order:'sort',//limit: limit,skip: skip
+        },//limit: limit,skip: skip
       );
       tiles.add(DishListPage(dishList:dishList));
     }
