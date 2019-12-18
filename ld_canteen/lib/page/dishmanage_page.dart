@@ -32,7 +32,7 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
 
       debugPrint(msg);
 
-    },order: 'sort',//limit:limit,skip:skip
+    },//order: 'sort',//limit:limit,skip:skip
     );
   }
 

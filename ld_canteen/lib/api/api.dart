@@ -32,6 +32,7 @@ class API{
     final path = host + categoryPath;
     var queryParam = Map<String, dynamic>();
     queryParam['keys'] = '-ACL,-updatedAt,-createdAt';
+    queryParam['count'] = '1';
     if(limit != null) queryParam['limit'] = limit.toString();
     if(skip != null) queryParam['skip'] = skip.toString();
 
@@ -84,28 +85,20 @@ class API{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
   // 获取菜品列表
-  static void getDishList(DishListCallback onSucc,HttpFailCallback onFail,{int limit,int skip,String order}) {
+  static void getDishList(DishListCallback onSucc,HttpFailCallback onFail,{String objectId,int limit,int skip}) {
 
     final path = host + dishPath;
 
     var queryParam = Map<String, dynamic>();
     queryParam['keys'] = '-ACL,-updatedAt,-createdAt';
+    queryParam['count'] = '1';
+    queryParam['order'] = 'createdAt';
+    if(objectId != null) {
+        queryParam['where'] = '{"category":{"\$inQuery":{"where":{"objectId":"$objectId"},"className":"Category"}}}';
+    }
     if(limit != null) queryParam['limit'] = limit.toString();
     if(skip != null) queryParam['skip'] = skip.toString();
-    if(order != null) queryParam['order'] = order;
 
     HttpHelper.getHttp(path, queryParam, (dynamic data,String msg){
         final map  = data as Map<String,dynamic>;
@@ -117,15 +110,21 @@ class API{
   }
 
 
-
-
-
-
   // 新增菜品
-  static void addDish(Dish dish,UpdateCallBack onSucc,HttpFailCallback onFail) {
+  static void createDish(String categoryId,Dish dish,UpdateCallBack onSucc,HttpFailCallback onFail) {
 
     final path = host + dishPath;
     var param = dish.toJson();
+    if(categoryId != null) {
+      var category = Map<String,dynamic>();
+      category['__type'] = 'Pointer';
+      category['className'] = 'Category';
+      category['objectId'] = '$categoryId';
+      param['category'] = category;
+    }
+    if(param.containsKey('objectId')) {
+      param.remove('objectId');
+    }
 
     HttpHelper.postHttp(path, param, (dynamic data,String msg){
         final map  = data as Map<String,dynamic>;

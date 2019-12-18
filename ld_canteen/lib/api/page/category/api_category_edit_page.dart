@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
+import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/model/category.dart';
 
 class ApiCategoryEditPage extends StatefulWidget {
@@ -20,6 +21,11 @@ class _ApiCategoryEditPageState extends State<ApiCategoryEditPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     var isAdd = widget.category == null;
@@ -34,7 +40,7 @@ class _ApiCategoryEditPageState extends State<ApiCategoryEditPage> {
         margin: EdgeInsets.all(40),
         child: ListView(
           children: <Widget>[
-            Text('菜品名称:',style: TextStyle(color: Colors.black,fontSize: 30),),
+            Text('菜品分类名称:',style: TextStyle(color: Colors.black,fontSize: 30),),
             TextField(
               maxLength: 20,
               maxLines: 1,
@@ -74,7 +80,8 @@ class _ApiCategoryEditPageState extends State<ApiCategoryEditPage> {
     API.updateCategory(category.objectId, category, (_,msg){
 
       Navigator.of(context).pop();
-
+      // 发送刷新通知
+      EventBus().emit('REFRESH');
     }, (_){
 
     });
@@ -86,6 +93,8 @@ class _ApiCategoryEditPageState extends State<ApiCategoryEditPage> {
     API.createCategory(category, (_,msg){
 
       Navigator.of(context).pop();
+      // 发送刷新通知
+      EventBus().emit('REFRESH');
 
     }, (_){
 
