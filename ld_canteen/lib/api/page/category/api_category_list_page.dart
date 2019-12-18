@@ -52,10 +52,21 @@ class _ApiCategoryListPageState extends State<ApiCategoryListPage> {
   }
 
   // 删除菜品
-  void deleteCategory(Category category) {
-    // TODO 先删除该菜品分类下的所有菜
+  void deleteCategoryAndDishes(Category category) {
+    
+    // 先删除该菜品分类下的所有菜
+    API.deleteDishesByCategoryId(category.objectId, (_){
+      
+      deleteCategory(category);
 
-    // 删除分类
+    }, (_){});
+
+
+  }
+
+  // 删除分类
+  void deleteCategory(Category category) {
+        // 删除分类
     API.deleteCategory(category.objectId, (String msg){
 
       debugPrint(msg);
@@ -116,7 +127,7 @@ class _ApiCategoryListPageState extends State<ApiCategoryListPage> {
               child: EditAndDeleteButton(
               // 删除菜品
               onDeletePressed: (){
-                deleteCategory(category);
+                deleteCategoryAndDishes(category);
               },
               // 编辑菜品
               onEditPressed: (){
