@@ -169,6 +169,44 @@ class API{
     }, onFail);
   }
 
+  // 删除某一分类下所有菜品
+  static void deleteDishesByCategoryId(String categoryId,DeleteCallBack onSucc,HttpFailCallback onFail) {
+    
+    List<String> dishObjetcIdList = [];
+
+    // 1.查出所有菜
+    API.getDishList((List<Dish> dishes,_){
+      for (var dish in dishes) {
+        dishObjetcIdList.add(dish.objectId);
+      }
+      if(dishObjetcIdList.length == 0) {
+        if(onSucc != null) onSucc('操作成功');
+        return;
+      }
+      
+      // 2.批量删除改分类下所有菜品
+      final path = host + '/batch';
+      var param = Map<String,dynamic>();
+      List<Map<String,dynamic>> requests = [];
+   
+      for (final dishObjectId in dishObjetcIdList) {
+        var request = Map<String,dynamic>();
+        request['method'] = 'DELETE';
+        request['path'] = '/1.1/classes/Dish/$dishObjectId';
+        requests.add(request);
+      }
+      param['requests'] = requests;
+
+      HttpHelper.postHttp(path, param, (dynamic data,String msg){
+        if(onSucc != null) onSucc('操作成功');
+      }, (String msg){
+        if(onFail != null) onFail('操作失败');
+      });
+
+    }, onFail,objectId: categoryId);
+    
+  }
+
 
 
 
