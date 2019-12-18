@@ -53,9 +53,9 @@ class _ApiTestPageState extends State<ApiTestPage> {
             
               debugPrint(msg);
               debugPrint(dishes.map((f)=>f.toJson()).toList().toString());
-              Navigator.push(context,
-                MaterialPageRoute(builder: (context) 
-                => DishListPage(dishList:dishes)));
+              // Navigator.push(context,
+              //   MaterialPageRoute(builder: (context) 
+              //   => DishListPage(dishList:dishes)));
             }, (String msg){
 
               debugPrint(msg);

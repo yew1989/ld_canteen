@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/page/api_demo_page.dart';
 import 'package:ld_canteen/api/page/api_test_page.dart';
-import 'package:ld_canteen/page/dishmanage_page.dart';
+import 'package:ld_canteen/page/dishmanage/dish_manage_page.dart';
 
 
 void main() => runApp(MyApp());

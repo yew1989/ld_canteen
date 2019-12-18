@@ -14,27 +14,10 @@ class DishManagePage extends StatefulWidget {
 
 class _DishManagePageState extends State<DishManagePage> with SingleTickerProviderStateMixin{
 
-  List<Dish> dishList = [];
+  //List<Dish> dishList = [];
   List<Category> categoryList = [];
 
-  // 请求菜品数据
-  void getDishList() {
-    
-    API.getDishList((List<Dish> dishes,String msg){
-
-      setState(() {
-        this.dishList = dishes;
-      });
-
-      debugPrint(msg);
-
-    }, (String msg){
-
-      debugPrint(msg);
-
-    },//order: 'sort',//limit:limit,skip:skip
-    );
-  }
+  
 
   // 请求菜品分类数据
   void getCategoryList() {
@@ -54,27 +37,10 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
     });
   }
   
-  // 删除菜品
-  void deleteDish(Dish dish) {
-
-    // 删除分类
-    API.deleteDish(dish.objectId, (String msg){
-
-      debugPrint(msg);
-      // 刷新列表
-      getDishList();
-
-    }, (String msg) {
-
-      debugPrint(msg);
-
-    });
-  }
-
+  
   @override
   void initState() {
     getCategoryList();
-    getDishList();
     super.initState();
     
   }
@@ -111,7 +77,7 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
           body:
           new TabBarView(
             children: categoryList.map((Category category){
-              return new DishListPage(dishList:this.dishList);
+              return new DishListPage(categoryObjectId:category.objectId);
               //return Container(color: Colors.blueAccent,child: Text('${category.name}'),);
             }).toList(),
           )
@@ -123,7 +89,7 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
 
 
   @override
-    void dispose() {
-        super.dispose();
+  void dispose() {
+    super.dispose();
   }
 }

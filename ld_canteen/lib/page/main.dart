@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ld_canteen/page/dishmanage_page.dart';
+import 'package:ld_canteen/page/dishmanage/dish_manage_page.dart';
 
 class MainPage extends StatefulWidget {
   @override
