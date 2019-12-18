@@ -3,7 +3,6 @@ import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/model/category.dart';
 import 'package:ld_canteen/model/dish.dart';
-import 'package:ld_canteen/page/updatedishpage.dart';
 
 var selectItemValue;
 
@@ -21,13 +20,19 @@ class _DishEditPageState extends State<DishEditPage> {
   List<Category> categories =[];
   TextEditingController nameCtrl = TextEditingController();
   TextEditingController priceCtrl = TextEditingController();
-  var categoryObjectId;
+  String categoryObjectId;
   var isShow;
+  List<DropdownMenuItem<String>> items = [];
+  Category newCategory = Category(name: '请选择类型',objectId: '1111');
 
   @override
   void initState() {
-    categoryObjectId = widget?.categoryId ?? '';
+    //categoryObjectId = ;
     getCategoryList();
+    items.add(new DropdownMenuItem<String>(
+      child:Text('请选择类型',style: TextStyle(fontSize: 30,color: Colors.red),),
+      value: newCategory.objectId,
+    ));
     super.initState();
   }
 
@@ -92,7 +97,7 @@ class _DishEditPageState extends State<DishEditPage> {
                         categoryObjectId = v;
                       });
                     },
-                    value: categoryObjectId,
+                    value: widget?.categoryId ?? '',
                     iconSize: 50,
                     
                   ),
@@ -189,11 +194,7 @@ class _DishEditPageState extends State<DishEditPage> {
   }
 
   List<DropdownMenuItem<String>> getDropdowmList(){
-    List<DropdownMenuItem<String>> items = [];
-    items.add(new DropdownMenuItem<String>(
-      child:Text('请选择类型',style: TextStyle(fontSize: 30,color: Colors.red),),
-      value: '',
-    ));
+    
     for (Category item in categories) {
       items.add(
         new DropdownMenuItem<String>(

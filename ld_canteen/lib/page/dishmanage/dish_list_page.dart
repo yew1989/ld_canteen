@@ -7,10 +7,6 @@ import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/dish.dart';
 import 'package:ld_canteen/page/dishmanage/dish_edit_page.dart';
 
-enum Action {
-    Ok,
-    Cancel
-}
 
 class DishListPage extends StatefulWidget {
   final String categoryObjectId;
@@ -200,47 +196,5 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
     }
   }
 
-  String _choice = 'Nothing';
-
-  Future _openAlertDialog() async {
-      final action = await showDialog(
-        context: context,
-        barrierDismissible: false,//// user must tap button!
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('提示'),
-            content: Text('是否删除?'),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('取消'),
-                onPressed: () {
-                  Navigator.pop(context, Action.Cancel);
-                },
-              ),
-              FlatButton(
-                child: Text('确认'),
-                onPressed: () {
-                  Navigator.pop(context, Action.Ok);
-                },
-              ),
-            ],
-          );
-        },
-      );
-
-      switch (action) {
-        case Action.Ok:
-          setState(() {
-            _choice = 'Ok';
-          });
-          break;
-        case Action.Cancel:
-          setState(() {
-            _choice = 'Cancel';
-          });
-          break;
-        default:
-      }
-    }
 }
 

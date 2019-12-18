@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/category.dart';
-import 'package:ld_canteen/model/dish.dart';
 import 'package:ld_canteen/page/dishmanage/dish_edit_page.dart';
 import 'package:ld_canteen/page/dishmanage/dish_list_page.dart';
-import 'package:ld_canteen/page/main.dart';
-import 'package:ld_canteen/page/updatedishpage.dart';
-import 'package:ld_canteen/page/dart.dart';
+
 
 class DishManagePage extends StatefulWidget {
   @override
