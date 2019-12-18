@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
+import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/category.dart';
 import 'package:ld_canteen/model/dish.dart';
+import 'package:ld_canteen/page/dishmanage/dish_edit_page.dart';
 import 'package:ld_canteen/page/dishmanage/dish_list_page.dart';
 import 'package:ld_canteen/page/main.dart';
 import 'package:ld_canteen/page/updatedishpage.dart';
@@ -51,12 +53,12 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
     return Container(
       child: Scaffold(
         appBar: new AppBar(
-          title: Text('菜品管理'),
+          title: Text('菜品管理',style: TextStyle(fontSize: 30),),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add_box,size: 30),
               onPressed: () {
-
+                pushToPage(context, DishEditPage());
               }
             )
           ],
@@ -65,12 +67,17 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
         length: categoryList.length,
         
         child: new Scaffold(
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.white,
           appBar:
           new TabBar(
-            indicatorColor: Colors.white,
+            indicatorColor: Colors.blue,
             tabs: categoryList.map((Category category){
-              return Container(child: new Tab(child: Text('${category.name}',style: TextStyle(color: Colors.white))));
+              return Container(
+                padding: EdgeInsets.fromLTRB(20.0,0.0,20.0,0.0),
+                child: new Tab(
+                  child: Text('${category.name}',style: TextStyle(color: Colors.black,fontSize: 20))
+                )
+              );
             }).toList(),
             isScrollable: true,
           ),
