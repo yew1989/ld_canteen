@@ -135,10 +135,21 @@ class API{
   }
 
   // 更新菜品
-  static void updateDish(String objectId,Dish dish,UpdateCallBack onSucc,HttpFailCallback onFail) {
+  static void updateDish(String objectId,Dish dish,UpdateCallBack onSucc,HttpFailCallback onFail,{String categoryId}) {
 
     final path = host + dishPath + '/' + objectId;
     var param = dish.toJson();
+    
+    if(categoryId != null) {
+      var category = Map<String,dynamic>();
+      category['__type'] = 'Pointer';
+      category['className'] = 'Category';
+      category['objectId'] = '$categoryId';
+      param['category'] = category;
+    }
+    if(param.containsKey('objectId')) {
+      param.remove('objectId');
+    }
 
     HttpHelper.putHttp(path, param, (dynamic data,String msg){
         final map  = data as Map<String,dynamic>;
