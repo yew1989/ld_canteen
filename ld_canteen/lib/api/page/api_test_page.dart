@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/model/dish.dart';
-import 'package:ld_canteen/page/dishlistpage.dart';
+import 'package:ld_canteen/page/dishmanage/dish_list_page.dart';
 
 class ApiTestPage extends StatefulWidget {
   @override

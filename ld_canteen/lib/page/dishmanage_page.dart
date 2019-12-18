@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/model/category.dart';
 import 'package:ld_canteen/model/dish.dart';
-import 'package:ld_canteen/page/dishlistpage.dart';
+import 'package:ld_canteen/page/dishmanage/dish_list_page.dart';
 import 'package:ld_canteen/page/main.dart';
 import 'package:ld_canteen/page/updatedishpage.dart';
 import 'package:ld_canteen/page/dart.dart';
@@ -97,20 +97,22 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
         ),
       body: DefaultTabController(
         length: categoryList.length,
+        
         child: new Scaffold(
+          backgroundColor: Colors.blue,
           appBar:
           new TabBar(
             indicatorColor: Colors.white,
             tabs: categoryList.map((Category category){
-              return Container(child: new Tab(child: Text('${category.name}',style: TextStyle(color: Colors.black))));
+              return Container(child: new Tab(child: Text('${category.name}',style: TextStyle(color: Colors.white))));
             }).toList(),
             isScrollable: true,
           ),
           body:
           new TabBarView(
             children: categoryList.map((Category category){
-              // return new DishListPage(dishList:this.dishList);
-              return Container(color: Colors.blueAccent,child: Text('${category.name}'),);
+              return new DishListPage(dishList:this.dishList);
+              //return Container(color: Colors.blueAccent,child: Text('${category.name}'),);
             }).toList(),
           )
         ), 
