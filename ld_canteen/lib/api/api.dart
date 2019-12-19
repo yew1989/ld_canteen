@@ -1,4 +1,5 @@
 import 'package:ld_canteen/api/http_helper.dart';
+import 'package:ld_canteen/model/banner.dart';
 import 'package:ld_canteen/model/category.dart';
 import 'package:ld_canteen/model/dish.dart';
 import 'package:ld_canteen/model/update.dart';
@@ -7,6 +8,10 @@ import 'package:ld_canteen/model/update.dart';
 typedef CategoryListCallback = void Function(List<Category> categories, String msg);
 // 菜品列表回调
 typedef DishListCallback = void Function(List<Dish> dishes, String msg);
+// 广告列表回调
+typedef BannerListCallback = void Function(List<Banner> banners, String msg);
+
+
 // 更新/新增回调
 typedef UpdateCallBack   = void Function(String objectId,String msg);
 // 删除回调
@@ -45,35 +50,14 @@ class API{
     }, onFail);
   }
 
-  // 删除分类
-  static void deleteCategory(String objectId,DeleteCallBack onSucc,HttpFailCallback onFail) {
-
-    final path = host + categoryPath + '/' + objectId;
-
-    HttpHelper.deleteHttp(path, null, (_,String msg){
-        if(onSucc != null) onSucc(msg);
-    }, onFail);
-  }
-
-  // 更新分类
-  static void updateCategory(String objectId,Category category,UpdateCallBack onSucc,HttpFailCallback onFail) {
-
-    final path = host + categoryPath + '/' + objectId;
-    var param = category.toJson();
-
-    HttpHelper.putHttp(path, param, (dynamic data,String msg){
-        final map  = data as Map<String,dynamic>;
-        final resp = UpdateResp.fromJson(map);
-        final objectId = resp?.objectId ?? ''; 
-        if(onSucc != null) onSucc(objectId,msg);
-    }, onFail);
-  }
-
   // 新增分类
   static void createCategory(Category category,UpdateCallBack onSucc,HttpFailCallback onFail) {
 
     final path = host + categoryPath;
     var param = category.toJson();
+    if(param.containsKey('objectId')) {
+      param.remove('objectId');
+    }
 
     HttpHelper.postHttp(path, param, (dynamic data,String msg){
         final map  = data as Map<String,dynamic>;
@@ -83,6 +67,32 @@ class API{
     }, onFail);
   }
 
+  // 更新分类
+  static void updateCategory(String objectId,Category category,UpdateCallBack onSucc,HttpFailCallback onFail) {
+
+    final path = host + categoryPath + '/' + objectId;
+    var param = category.toJson();
+    if(param.containsKey('objectId')) {
+      param.remove('objectId');
+    }
+
+    HttpHelper.putHttp(path, param, (dynamic data,String msg){
+        final map  = data as Map<String,dynamic>;
+        final resp = UpdateResp.fromJson(map);
+        final objectId = resp?.objectId ?? ''; 
+        if(onSucc != null) onSucc(objectId,msg);
+    }, onFail);
+  }
+
+  // 删除分类
+  static void deleteCategory(String objectId,DeleteCallBack onSucc,HttpFailCallback onFail) {
+
+    final path = host + categoryPath + '/' + objectId;
+
+    HttpHelper.deleteHttp(path, null, (_,String msg){
+        if(onSucc != null) onSucc(msg);
+    }, onFail);
+  }
 
 
   // 获取菜品列表
@@ -208,7 +218,70 @@ class API{
   }
 
 
+  // 获取所有广告栏列表
+  static void getBannerList(BannerListCallback onSucc,HttpFailCallback onFail,{int limit,int skip}) {
 
+    final path = host + bannerPath;
+    var queryParam = Map<String, dynamic>();
+    queryParam['keys'] = '-ACL,-updatedAt,-createdAt';
+    queryParam['count'] = '1';
+    if(limit != null) queryParam['limit'] = limit.toString();
+    if(skip != null) queryParam['skip'] = skip.toString();
+
+    HttpHelper.getHttp(path, queryParam, (dynamic data,String msg){
+        final map  = data as Map<String,dynamic>;
+        final resp = BannerResp.fromJson(map);
+        final dishes = resp.results; 
+        if(onSucc != null) onSucc(dishes,msg);
+        
+    }, onFail);
+  }
+
+  // 新增广告栏
+  static void createBanner(Banner banner,UpdateCallBack onSucc,HttpFailCallback onFail) {
+
+    final path = host + bannerPath;
+    var param = banner.toJson();
+    if(param.containsKey('objectId')) {
+      param.remove('objectId');
+    }
+
+    HttpHelper.postHttp(path, param, (dynamic data,String msg){
+        final map  = data as Map<String,dynamic>;
+        final resp = UpdateResp.fromJson(map);
+        final objectId = resp?.objectId ?? ''; 
+        if(onSucc != null) onSucc(objectId,msg);
+    }, onFail);
+  }
+  
+  // 更新广告栏
+  static void updateBanner(String objectId,Banner banner,UpdateCallBack onSucc,HttpFailCallback onFail) {
+
+    final path = host + bannerPath + '/' + objectId;
+    var param = banner.toJson();
+    if(param.containsKey('objectId')) {
+      param.remove('objectId');
+    }
+
+    HttpHelper.putHttp(path, param, (dynamic data,String msg){
+        final map  = data as Map<String,dynamic>;
+        final resp = UpdateResp.fromJson(map);
+        final objectId = resp?.objectId ?? ''; 
+        if(onSucc != null) onSucc(objectId,msg);
+    }, onFail);
+  }
+  
+  // 删除广告栏
+  static void deleteBanner(String objectId,DeleteCallBack onSucc,HttpFailCallback onFail) {
+
+    final path = host + bannerPath + '/' + objectId;
+
+    HttpHelper.deleteHttp(path, null, (_,String msg){
+        if(onSucc != null) onSucc(msg);
+    }, onFail);
+  }
+
+  
 
 
 
