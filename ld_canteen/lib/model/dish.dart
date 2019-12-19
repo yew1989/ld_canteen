@@ -34,8 +34,9 @@ class Dish {
 class DishListResp {
 
   List<Dish> results;
+  int count;
 
-  DishListResp({this.results});
+  DishListResp({this.results,this.count});
 
   DishListResp.fromJson(Map<String, dynamic> json) {
     if (json['results'] != null) {
@@ -44,6 +45,7 @@ class DishListResp {
         results.add(Dish.fromJson(v));
       });
     }
+    count = json['count'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {
@@ -51,6 +53,7 @@ class DishListResp {
     if (this.results != null) {
       data['results'] = this.results.map((v) => v.toJson()).toList();
     }
+    data['count'] = this.count;
     return data;
   }
 }

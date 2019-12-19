@@ -24,8 +24,9 @@ class Category {
 class CategoryListResp {
 
   List<Category> results;
+  int count;
 
-  CategoryListResp({this.results});
+  CategoryListResp({this.results,this.count});
 
   CategoryListResp.fromJson(Map<String, dynamic> json) {
     if (json['results'] != null) {
@@ -34,6 +35,7 @@ class CategoryListResp {
         results.add(Category.fromJson(v));
       });
     }
+    count = json['count'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {
@@ -41,6 +43,7 @@ class CategoryListResp {
     if (this.results != null) {
       data['results'] = this.results.map((v) => v.toJson()).toList();
     }
+    data['count'] = this.count;
     return data;
   }
 }
