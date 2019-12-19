@@ -27,7 +27,6 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
       setState(() {
         this.categoryList = categories;
       });
-      debugPrint(categoryList.length.toString());
       debugPrint(msg);
 
     }, (String msg){

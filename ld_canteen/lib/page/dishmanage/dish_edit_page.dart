@@ -4,7 +4,6 @@ import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/model/category.dart';
 import 'package:ld_canteen/model/dish.dart';
 
-var selectItemValue;
 
 class DishEditPage extends StatefulWidget {
   final Dish dish;
@@ -26,7 +25,7 @@ class _DishEditPageState extends State<DishEditPage> {
 
   @override
   void initState() {
-    categoryObjectId = widget.categoryId;
+    categoryObjectId = widget?.categoryId ?? newCategory.objectId;
     getCategoryList();
     super.initState();
   }
@@ -107,6 +106,9 @@ class _DishEditPageState extends State<DishEditPage> {
                     isShow = v;
                   });
                 },
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0.0, 0.0, 50.0, 0.0),
               ),
             ]),
             FlatButton(

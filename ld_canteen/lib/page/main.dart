@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ld_canteen/api/component/public_tool.dart';
+import 'package:ld_canteen/page/categorymanage/category_manage_page.dart';
 import 'package:ld_canteen/page/dishmanage/dish_manage_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -8,32 +10,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
 
-  List<String> itemTitles = ['食堂菜单','菜单管理'];
-
-  Widget _itemBuilder(BuildContext context, int index){
-    var itemTitle = itemTitles[index];
-
-    return ListTile(
-      title: FlatButton(
-        padding: EdgeInsets.all(0),
-        color: Colors.blue,
-        child: Container(
-          height: 200,
-          alignment: Alignment.center,
-          child: 
-            Text(
-              '$itemTitle',
-              style: 
-                TextStyle(color: Colors.white,fontSize: 100),
-            ),
-        ),
-        onPressed: (){},
-      )
-    );
-      
-  }
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,30 +17,38 @@ class _MainPageState extends State<MainPage> {
         appBar: AppBar(
           title: Text('力得食堂'),
         ),
-        body: ListView.builder(
-          itemCount:itemTitles.length,
-          itemBuilder: (_,index) => _itemBuilder(context,index),
+        body: ListView(
+          children: <Widget>[
+            buttonTile('菜单展示窗'),
+            buttonTile('菜品管理'),
+            buttonTile('菜品分类管理'),
+            buttonTile('广告栏管理'),
+          ],
         ),
       ),
     );
   }
+  
+  Widget buttonTile(String title) {
+    return ListTile(
+      title: FlatButton(
+      padding: EdgeInsets.all(40),
+      child: Text(title,style: TextStyle(color: Colors.white,fontSize: 40)),
+      color: Colors.blueAccent,
+      onPressed: (){
+        if(title == '菜单展示窗'){
+          //pushToPage(context,ApiCategoryListPage());
+        }
+        else if(title == '菜品管理') {
+          pushToPage(context,DishManagePage());
+        }
+        else if (title == '菜品分类管理') { 
+          pushToPage(context,CategroyManagePage());
+        }
+        else if(title == '广告栏管理') {
 
-  void pageHandle(int index,BuildContext context){
-    switch(index){
-
-      case 0 :
-        {
-          
-        }break;
-      case 1 :
-        {
-          Navigator.push(context,
-                MaterialPageRoute(builder: (context) 
-                => DishManagePage()));
-          
-
-        }break;
-    }
+        }
+      },
+    ));
   }
-
 }
