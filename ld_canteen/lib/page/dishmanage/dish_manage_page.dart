@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
+import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/category.dart';
 import 'package:ld_canteen/page/dishmanage/dish_edit_page.dart';
@@ -40,6 +41,9 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
   @override
   void initState() {
     getCategoryList();
+    EventBus().on('REFRESH', (_) {
+      getCategoryList();
+    });
     super.initState();
     
   }

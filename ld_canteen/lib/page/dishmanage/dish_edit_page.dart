@@ -23,11 +23,10 @@ class _DishEditPageState extends State<DishEditPage> {
   var isShow;
   List<DropdownMenuItem<Category>> items = [];
   Category newCategory = Category(name: '请选择类型', objectId: '1111');
-  Category selectedCategory;
 
   @override
   void initState() {
-    selectedCategory = newCategory;
+    categoryObjectId = widget.categoryId;
     getCategoryList();
     super.initState();
   }
@@ -40,7 +39,6 @@ class _DishEditPageState extends State<DishEditPage> {
   @override
   Widget build(BuildContext context) {
     var isAdd = widget.dish == null;
-
     nameCtrl.text = widget?.dish?.name ?? '';
     priceCtrl.text = widget?.dish?.price ?? '';
     isShow = widget?.dish?.isShow ?? true;
@@ -91,7 +89,7 @@ class _DishEditPageState extends State<DishEditPage> {
                       categoryObjectId = category;
                     });
                   },
-                  value: widget.categoryId,
+                  value: categoryObjectId,
                   iconSize: 50,
                 ),
               ),
@@ -151,18 +149,19 @@ class _DishEditPageState extends State<DishEditPage> {
         // 发送刷新通知
         EventBus().emit('REFRESH');
       },
-      (_) {},
+      (_) {},categoryId:categoryObjectId
     );
   }
 
   // 新增
   void createDish(Dish dish, String categoryObjectId) {
     final categoryId = categoryObjectId;
-    API.createDish(categoryId, dish, (_, msg) {
-      Navigator.of(context).pop();
-      // 发送刷新通知
-      EventBus().emit('REFRESH');
-    }, (_) {});
+      API.createDish(categoryId, dish, (_, msg) {
+        Navigator.of(context).pop();
+        // 发送刷新通知
+        EventBus().emit('REFRESH');
+      }, (_) {},
+    );
   }
 
   // 请求菜品分类数据
