@@ -1,38 +1,42 @@
-// 菜品分类
-class Category {
+// 广告栏
+class Banner {
+
   // id
   String objectId;
-  // 菜品名称
+  // 名称
   String name;
+  // 图片地址 列表
+  List<String> images;
 
-  Category({this.name,this.objectId});
+  Banner({this.name, this.images, this.objectId});
 
-  Category.fromJson(Map<String, dynamic> json) {
+  Banner.fromJson(Map<String, dynamic> json) {
     name = json['name'] ?? '';
+    images = json['images'].cast<String>();
     objectId = json['objectId'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    data['name'] = this.name ?? '';
-    data['objectId'] = this.objectId ?? '';
+    data['name'] = this.name;
+    data['images'] = this.images;
+    data['objectId'] = this.objectId;
     return data;
   }
 }
 
-// 菜品分类列表 responese
-class CategoryListResp {
+class BannerResp {
 
-  List<Category> results;
+  List<Banner> results;
   int count;
 
-  CategoryListResp({this.results,this.count});
+  BannerResp({this.results, this.count});
 
-  CategoryListResp.fromJson(Map<String, dynamic> json) {
+  BannerResp.fromJson(Map<String, dynamic> json) {
     if (json['results'] != null) {
-      results = List<Category>();
+      results = List<Banner>();
       json['results'].forEach((v) {
-        results.add(Category.fromJson(v));
+        results.add(Banner.fromJson(v));
       });
     }
     count = json['count'] ?? 0;
