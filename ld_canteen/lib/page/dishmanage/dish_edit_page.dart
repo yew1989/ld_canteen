@@ -15,6 +15,7 @@ class DishEditPage extends StatefulWidget {
 }
 
 class _DishEditPageState extends State<DishEditPage> {
+
   List<Category> categories = [];
   TextEditingController nameCtrl = TextEditingController();
   TextEditingController priceCtrl = TextEditingController();
@@ -75,22 +76,22 @@ class _DishEditPageState extends State<DishEditPage> {
             Row(children: <Widget>[
               Expanded(
                 flex: 2,
-                child: DropdownButton<Category>(
+                child: DropdownButton<String>(
                   items: categories.map((category) {
-                    return DropdownMenuItem<Category>(
+                    return DropdownMenuItem<String>(
                       child: Text(
                         '${category.name}',
                         style: TextStyle(fontSize: 30),
                       ),
-                      value: category,
+                      value: category.objectId,
                     );
                   }).toList(),
-                  onChanged: (Category category) {
+                  onChanged: (String category) {
                     setState(() {
-                      selectedCategory = category;
+                      categoryObjectId = category;
                     });
                   },
-                  value: selectedCategory,
+                  value: widget.categoryId,
                   iconSize: 50,
                 ),
               ),
