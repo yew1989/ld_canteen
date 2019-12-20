@@ -18,11 +18,14 @@ class _BannerEditPageState extends State<BannerEditPage> {
 
   TextEditingController nameCtrl = TextEditingController();
   TextEditingController imageUrlCtrl = TextEditingController();
-  List<String> newImageUrl ;
+  List<String> newImageUrl  = [];
 
   @override
   void initState() {
-    newImageUrl = widget?.banner?.images ?? null;
+
+    final copyBanner = widget?.banner?.copy() ?? null;
+    newImageUrl = copyBanner?.images ?? List<String>();
+    
     EventBus().on('REFRESH', (_) {
       //newImageUrl;
     });

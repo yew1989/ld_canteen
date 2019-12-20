@@ -23,6 +23,21 @@ class BannerBean {
     data['objectId'] = this.objectId;
     return data;
   }
+
+  // 深拷贝
+  BannerBean copy() {
+    var banner = BannerBean(name:'',objectId: '');
+    List<String> copyImages = [];
+    if(this.images != null) {
+      for (var img in this.images) {
+        copyImages.add(img);
+      }
+      banner.images = copyImages;
+    }
+    banner.name = this.name;
+    banner.objectId = this.objectId;
+    return banner;
+  }
 }
 
 class BannerResp {
