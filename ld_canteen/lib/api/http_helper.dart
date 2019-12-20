@@ -163,4 +163,35 @@ class HttpHelper {
       onFail('请求错误');
     }
   }
+
+   // 上传文件
+  static void uploadHttp(String path, dynamic data,HttpSuccCallback onSucc,HttpFailCallback onFail) async { 
+
+    final dio = HttpHelper.initDio();
+    
+    try {
+      Response response = await dio.post(path,
+        options: Options(
+          headers: {
+          'X-LC-Id': leancloudID,
+          'X-LC-Key':leancloudKey,
+          },
+          receiveTimeout: HttpHelper.kTimeOutSeconds,
+          sendTimeout: HttpHelper.kTimeOutSeconds,
+        ),
+        data:data,
+      );
+      if (response == null) {
+        onFail('网络异常,请检查网络');
+        return;
+      }
+      if ((response.statusCode - 200) >= 100) {
+        onFail('请求错误 ( ' + response.statusCode.toString() + ' )');
+        return;
+      }
+      onSucc(response.data, '请求成功');
+    } catch (e) {
+      onFail('请求错误');
+    }
+  }
 }

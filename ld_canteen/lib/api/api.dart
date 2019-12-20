@@ -3,6 +3,7 @@ import 'package:ld_canteen/model/banner.dart';
 import 'package:ld_canteen/model/category.dart';
 import 'package:ld_canteen/model/dish.dart';
 import 'package:ld_canteen/model/menu.dart';
+import 'package:ld_canteen/model/picture.dart';
 import 'package:ld_canteen/model/update.dart';
 
 // 菜品分类回调
@@ -13,6 +14,8 @@ typedef DishListCallback = void Function(List<Dish> dishes, String msg);
 typedef BannerListCallback = void Function(List<Banner> banners, String msg);
 // 展示位列表回调
 typedef MenuListCallback = void Function(List<Menu> menus, String msg);
+// 素材库列表回调
+typedef PictureCallback = void Function(List<PictureBean> menus, String msg);
 
 // 更新/新增回调
 typedef UpdateCallBack   = void Function(String objectId,String msg);
@@ -32,6 +35,8 @@ class API{
   static final bannerPath     = '/classes/Banner';
   // 展览位
   static final menuPath       = '/classes/Menu';
+  // 素材库
+  static final filePath       = '/classes/_File';
 
   // 获取分类列表
   static void getCategoryList(CategoryListCallback onSucc,HttpFailCallback onFail,{int limit,int skip}) {
@@ -391,5 +396,49 @@ class API{
         if(onSucc != null) onSucc(msg);
     }, onFail);
   }
+
+
+  // 素材列表获取
+  static void getPictureList(PictureCallback onSucc,HttpFailCallback onFail,{int limit,int skip}) {
+
+    final path = host + filePath;
+    var queryParam = Map<String, dynamic>();
+    queryParam['keys'] = '-metaData,-updatedAt,-createdAt,-provider,-bucket';
+    queryParam['count'] = '1';
+    if(limit != null) queryParam['limit'] = limit.toString();
+    if(skip != null) queryParam['skip'] = skip.toString();
+
+    HttpHelper.getHttp(path, queryParam, (dynamic data,String msg){
+        final map  = data as Map<String,dynamic>;
+        final resp = PictureResp.fromJson(map);
+        final pictures = resp.results; 
+        if(onSucc != null) onSucc(pictures,msg);
+        
+    }, onFail);
+  }
+
+  // 删除素材
+  static void deletePicture(String objectId,DeleteCallBack onSucc,HttpFailCallback onFail) {
+
+    final path = host + 'files' + '/' + objectId;
+
+    HttpHelper.deleteHttp(path, null, (_,String msg){
+        if(onSucc != null) onSucc(msg);
+    }, onFail);
+  }
+
+  // 素材上传
+  static void uploadPicture(String fileName,dynamic file,UpdateCallBack onSucc,HttpFailCallback onFail) {
+
+    final path = host + 'files' + '/' + fileName;
+
+    HttpHelper.uploadHttp(path, file, (dynamic data,String msg){
+        final map  = data as Map<String,dynamic>;
+        final resp = UpdateResp.fromJson(map);
+        final objectId = resp?.objectId ?? ''; 
+        if(onSucc != null) onSucc(objectId,msg);
+    }, onFail);
+  }
+  
 
 }
