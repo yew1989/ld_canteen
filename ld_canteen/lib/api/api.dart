@@ -420,7 +420,7 @@ class API{
   // 删除素材
   static void deletePicture(String objectId,DeleteCallBack onSucc,HttpFailCallback onFail) {
 
-    final path = host + 'files' + '/' + objectId;
+    final path = host + '/files/' + objectId;
 
     HttpHelper.deleteHttp(path, null, (_,String msg){
         if(onSucc != null) onSucc(msg);
@@ -430,7 +430,7 @@ class API{
   // 素材上传
   static void uploadPicture(String fileName,dynamic file,UpdateCallBack onSucc,HttpFailCallback onFail) {
 
-    final path = host + 'files' + '/' + fileName;
+    final path = host + '/files/' + fileName;
 
     HttpHelper.uploadHttp(path, file, (dynamic data,String msg){
         final map  = data as Map<String,dynamic>;
