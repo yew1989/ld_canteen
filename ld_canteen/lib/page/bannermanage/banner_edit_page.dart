@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/api/component/event_bus.dart';
@@ -20,7 +23,9 @@ class _BannerEditPageState extends State<BannerEditPage> {
   @override
   void initState() {
     newImageUrl = widget?.banner?.images ?? null;
-    
+    EventBus().on('REFRESH', (_) {
+      //newImageUrl;
+    });
     super.initState();
   }
 
@@ -56,7 +61,7 @@ class _BannerEditPageState extends State<BannerEditPage> {
                 Expanded(
                   flex: 5,
                   child:TextField(
-                  maxLength: 200,
+                  //maxLength: 1000,
                   maxLines: 1,
                   style: TextStyle(color: Colors.black, fontSize: 30),
                   controller: imageUrlCtrl,
@@ -70,9 +75,10 @@ class _BannerEditPageState extends State<BannerEditPage> {
                       style: TextStyle(color: Colors.white, fontSize: 40)),
                     color: Colors.blueAccent,
                     onPressed: () {
-                      EventBus().on('REFRESH', (_) {
-                        imageLoad(imageUrlCtrl.text);
+                      setState((){
+                        loading();
                       });
+                      //imageLoad(imageUrlCtrl.text);
                     }, 
                   )
                 ),
@@ -141,12 +147,31 @@ class _BannerEditPageState extends State<BannerEditPage> {
       list.add(Text('未上传图片！', style: TextStyle(color: Colors.red, fontSize: 30)));
       return list;
     } else {
+
       return newImageUrl.map((imageUrl){
         try {
-          return Image(
-            image: NetworkImage('${imageUrl.toString()}'),
+          return Expanded(
+              flex: 1,
+              child: Row(
+                children: <Widget>[
+                  Image(
+                    image: NetworkImage(imageUrl),
+                  ),
+                  Padding(padding: EdgeInsets.all(20),),
+                  FlatButton(
+                    child: Text('删除',
+                    style: TextStyle(color: Colors.white, fontSize: 40)),
+                    color: Colors.redAccent,
+                    onPressed: () {
+                      setState(() {
+                        newImageUrl.remove(imageUrl);
+                      });
+                      //EventBus().emit('REFRESH');
+                    },
+                  )
+                ],
+              )
           );
-          
         } catch (e) {
           print(e);
           newImageUrl.remove(imageUrl);
@@ -157,12 +182,27 @@ class _BannerEditPageState extends State<BannerEditPage> {
 
   void imageLoad(String str){
     try {
-      Image.network(str);
+      NetworkImage(str);
       newImageUrl.add(str);
+      
       print('加载成功');
     } catch (e) {
-      print('加载失败');
+      print('加载失败:'+e);
     }
+    EventBus().emit('REFRESH');
   }
-      
+   //http://t10.baidu.com/it/u=875841156,2349147183&fm=173&app=49&f=JPEG?w=640&h=411&s=FF054686585253D419BF9C3E0300D049     
+
+  void loading() async {
+      var responseBody;
+      var url='http://t10.baidu.com/it/u=875841156,2349147183&fm=173&app=49&f=JPEG?w=640&h=411&s=FF054686585253D419BF9C3E0300D049';
+      var httpClient = new HttpClient();
+      var request = await httpClient.getUrl(Uri.parse(url));
+      var response = await request.close();
+      if (response.statusCode == 200) {
+        print("OK");
+      }else{
+        print("error");
+      }
+   }
 }

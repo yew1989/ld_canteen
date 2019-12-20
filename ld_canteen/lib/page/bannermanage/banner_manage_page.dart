@@ -74,7 +74,7 @@ class _BannerManagePageState extends State<BannerManagePage> {
     return Container(
       child: Scaffold(
         appBar: new AppBar(
-          title: Text('菜品分类管理',style: TextStyle(fontSize: 30),),
+          title: Text('广告栏管理',style: TextStyle(fontSize: 30),),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add_box,size: 30),
