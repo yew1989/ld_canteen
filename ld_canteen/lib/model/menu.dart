@@ -7,7 +7,7 @@ class Menu {
   // 关联到菜谱
   Category category;
   // 关联到展示位
-  Banner banner;
+  BannerBean banner;
   // 类型
   String type;
   // 排序
@@ -17,7 +17,7 @@ class Menu {
 
   Menu.fromJson(Map<String, dynamic> json) {
     category = json['category'] != null ? Category.fromJson(json['category']) : null;
-    banner = json['banner'] != null ? Banner.fromJson(json['banner']) : null;
+    banner = json['banner'] != null ? BannerBean.fromJson(json['banner']) : null;
     type = json['type'] ?? '';
     sort = json['sort'] ?? 0;
     objectId = json['objectId'] ?? '';

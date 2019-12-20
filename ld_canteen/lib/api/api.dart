@@ -10,7 +10,7 @@ typedef CategoryListCallback = void Function(List<Category> categories, String m
 // 菜品列表回调
 typedef DishListCallback = void Function(List<Dish> dishes, String msg);
 // 广告列表回调
-typedef BannerListCallback = void Function(List<Banner> banners, String msg);
+typedef BannerListCallback = void Function(List<BannerBean> banners, String msg);
 // 展示位列表回调
 typedef MenuListCallback = void Function(List<Menu> menus, String msg);
 
@@ -240,7 +240,7 @@ class API{
   }
 
   // 新增广告栏
-  static void createBanner(Banner banner,UpdateCallBack onSucc,HttpFailCallback onFail) {
+  static void createBanner(BannerBean banner,UpdateCallBack onSucc,HttpFailCallback onFail) {
 
     final path = host + bannerPath;
     var param = banner.toJson();
@@ -257,7 +257,7 @@ class API{
   }
   
   // 更新广告栏
-  static void updateBanner(String objectId,Banner banner,UpdateCallBack onSucc,HttpFailCallback onFail) {
+  static void updateBanner(String objectId,BannerBean banner,UpdateCallBack onSucc,HttpFailCallback onFail) {
 
     final path = host + bannerPath + '/' + objectId;
     var param = banner.toJson();

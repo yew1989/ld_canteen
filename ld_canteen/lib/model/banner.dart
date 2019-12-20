@@ -1,5 +1,5 @@
 // 广告栏
-class Banner {
+class BannerBean {
 
   // id
   String objectId;
@@ -8,9 +8,9 @@ class Banner {
   // 图片地址 列表
   List<String> images;
 
-  Banner({this.name, this.images, this.objectId});
+  BannerBean({this.name, this.images, this.objectId});
 
-  Banner.fromJson(Map<String, dynamic> json) {
+  BannerBean.fromJson(Map<String, dynamic> json) {
     name = json['name'] ?? '';
     images = json['images'].cast<String>();
     objectId = json['objectId'] ?? '';
@@ -27,16 +27,16 @@ class Banner {
 
 class BannerResp {
 
-  List<Banner> results;
+  List<BannerBean> results;
   int count;
 
   BannerResp({this.results, this.count});
 
   BannerResp.fromJson(Map<String, dynamic> json) {
     if (json['results'] != null) {
-      results = List<Banner>();
+      results = List<BannerBean>();
       json['results'].forEach((v) {
-        results.add(Banner.fromJson(v));
+        results.add(BannerBean.fromJson(v));
       });
     }
     count = json['count'] ?? 0;
