@@ -428,11 +428,11 @@ class API{
   }
 
   // 素材上传
-  static void uploadPicture(String fileName,dynamic file,UpdateCallBack onSucc,HttpFailCallback onFail) {
+  static void uploadPicture(String fileName,String filePath,UpdateCallBack onSucc,HttpFailCallback onFail) {
 
     final path = host + '/files/' + fileName;
 
-    HttpHelper.uploadHttp(path, file, (dynamic data,String msg){
+    HttpHelper.uploadHttp(path, filePath,fileName,(dynamic data,String msg){
         final map  = data as Map<String,dynamic>;
         final resp = UpdateResp.fromJson(map);
         final objectId = resp?.objectId ?? ''; 

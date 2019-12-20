@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/model/picture.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ApiPicturePage extends StatefulWidget {
   @override
@@ -8,6 +11,9 @@ class ApiPicturePage extends StatefulWidget {
 }
 
 class _ApiPicturePageState extends State<ApiPicturePage> {
+
+  File image;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +24,14 @@ class _ApiPicturePageState extends State<ApiPicturePage> {
         children: <Widget>[
           RaisedButton(child: Text('素材列表'),onPressed:onTapPictureList),
           RaisedButton(child: Text('删除素材'),onPressed:onTapDeletePicture),
-          RaisedButton(child: Text('添加素材'),onPressed:onTapAddPicture),
+          RaisedButton(child: Text('添加素材'),onPressed:pickerImage),
+          image == null? SizedBox(
+            height: 200,
+            width: 400,
+            child: Center(child: Text('图片未选择'))) : SizedBox(
+            height: 200,
+            width: 400,
+            child: Image.file(image))
         ],
       ),
     );
@@ -52,12 +65,31 @@ class _ApiPicturePageState extends State<ApiPicturePage> {
   }
 
   // 添加素材
-  void onTapAddPicture() async {
+  void onTapAddPicture(File file) async {
+
+    final fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+    final filePath = file.uri.toFilePath();
     
-    API.uploadPicture('', '', (objectId,msg){
+    API.uploadPicture(fileName, filePath, (objectId,msg){
+
+      debugPrint(objectId);
+      debugPrint(msg);
+      onTapPictureList();
 
     }, (msg){
 
+      debugPrint(msg);
+
     });
   }
+
+  // 选择相片素材
+  void pickerImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      this.image = image;
+    });
+    onTapAddPicture(image);
+  }
+
 }
