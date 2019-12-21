@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/api/component/event_bus.dart';
@@ -36,9 +33,9 @@ class _BannerEditPageState extends State<BannerEditPage> {
   void dispose() {
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    
 
     var isAdd = widget.banner == null;
     nameCtrl.text = widget?.banner?.name ?? '';
@@ -58,28 +55,22 @@ class _BannerEditPageState extends State<BannerEditPage> {
                 style: TextStyle(color: Colors.black, fontSize: 30),
                 controller: nameCtrl,
                 decoration: InputDecoration()),
-            Text('插入图片:', style: TextStyle(color: Colors.black, fontSize: 30)),
             Row(
               children: <Widget>[
                 Expanded(
-                  flex: 5,
-                  child:TextField(
-                  //maxLength: 1000,
-                  maxLines: 1,
-                  style: TextStyle(color: Colors.black, fontSize: 30),
-                  controller: imageUrlCtrl,
-                  decoration: InputDecoration()),
+                  flex: 4,
+                  child:Text('图片预览:', style: TextStyle(color: Colors.black, fontSize: 30)),
                 ),
                 Expanded(
                   flex: 1,
                   child: FlatButton(
                     padding: EdgeInsets.all(1),
-                    child: Text('加载图片',
+                    child: Text('选择图片',
                       style: TextStyle(color: Colors.white, fontSize: 40)),
                     color: Colors.blueAccent,
                     onPressed: () {
                       setState((){
-                        loading();
+                        //loading();
                       });
                       //imageLoad(imageUrlCtrl.text);
                     }, 
@@ -87,10 +78,17 @@ class _BannerEditPageState extends State<BannerEditPage> {
                 ),
               ],
             ),
-            Text('图片预览:', style: TextStyle(color: Colors.black, fontSize: 30)),
-            Row(
-              children: _imagePreview(),
+            Container(
+              height: 400,
+              child: GridView.count(
+                
+                crossAxisCount: 5,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
+                children: _imagePreview(),
+              ),
             ),
+            Padding(padding: EdgeInsets.all(20.0),),
             FlatButton(
               padding: EdgeInsets.all(10),
               child: Text('确定',
@@ -145,41 +143,41 @@ class _BannerEditPageState extends State<BannerEditPage> {
 
   List<Widget> _imagePreview(){
     List<Widget> list = [];
-    if (newImageUrl == null) {
+    if (newImageUrl.isEmpty) {
       //Text('插入图片:', style: TextStyle(color: Colors.black, fontSize: 30));
-      list.add(Text('未上传图片！', style: TextStyle(color: Colors.red, fontSize: 30)));
+      list.add(Container(
+            child:Text('未上传图片！', style: TextStyle(color: Colors.red, fontSize: 30))));
       return list;
     } else {
-
-      return newImageUrl.map((imageUrl){
+      list = newImageUrl.map((imageUrl){
         try {
-          return Expanded(
-              flex: 1,
-              child: Row(
-                children: <Widget>[
-                  Image(
-                    image: NetworkImage(imageUrl),
-                  ),
-                  Padding(padding: EdgeInsets.all(20),),
-                  FlatButton(
-                    child: Text('删除',
-                    style: TextStyle(color: Colors.white, fontSize: 40)),
-                    color: Colors.redAccent,
-                    onPressed: () {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Stack(
+                children:<Widget>[
+                  Image(image: NetworkImage(imageUrl)),
+                  Container(),
+                  IconButton(
+                    icon: Icon(Icons.close,size: 30,color: Colors.red,),
+                    onPressed: (){
                       setState(() {
                         newImageUrl.remove(imageUrl);
                       });
-                      //EventBus().emit('REFRESH');
                     },
-                  )
+                    //alignment: Alignment.topCenter,
+                  ),
                 ],
-              )
+              ),
+            ],
           );
         } catch (e) {
           print(e);
           newImageUrl.remove(imageUrl);
         }
       }).toList();
+
+      return list;
     }
   }
 
@@ -194,18 +192,4 @@ class _BannerEditPageState extends State<BannerEditPage> {
     }
     EventBus().emit('REFRESH');
   }
-   //http://t10.baidu.com/it/u=875841156,2349147183&fm=173&app=49&f=JPEG?w=640&h=411&s=FF054686585253D419BF9C3E0300D049     
-
-  void loading() async {
-      var responseBody;
-      var url='http://t10.baidu.com/it/u=875841156,2349147183&fm=173&app=49&f=JPEG?w=640&h=411&s=FF054686585253D419BF9C3E0300D049';
-      var httpClient = new HttpClient();
-      var request = await httpClient.getUrl(Uri.parse(url));
-      var response = await request.close();
-      if (response.statusCode == 200) {
-        print("OK");
-      }else{
-        print("error");
-      }
-   }
 }

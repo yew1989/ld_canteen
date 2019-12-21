@@ -3,6 +3,7 @@ import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/page/bannermanage/banner_manage_page.dart';
 import 'package:ld_canteen/page/categorymanage/category_manage_page.dart';
 import 'package:ld_canteen/page/dishmanage/dish_manage_page.dart';
+import 'package:ld_canteen/page/picturemanage/picture_manage_page.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -24,6 +25,7 @@ class _MainPageState extends State<MainPage> {
             buttonTile('菜品管理'),
             buttonTile('菜品分类管理'),
             buttonTile('广告栏管理'),
+            buttonTile('素材管理'),
           ],
         ),
       ),
@@ -48,6 +50,9 @@ class _MainPageState extends State<MainPage> {
         }
         else if(title == '广告栏管理') {
           pushToPage(context,BannerManagePage());
+        }
+        else if(title == '素材管理') {
+          pushToPage(context,PictureManagePage());
         }
       },
     ));
