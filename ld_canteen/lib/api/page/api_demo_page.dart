@@ -3,6 +3,7 @@ import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/api/page/category/api_category_list_page.dart';
 import 'package:ld_canteen/api/page/dish/api_dish_list_page.dart';
 import 'package:ld_canteen/api/page/dish/api_dish_tab_page.dart';
+import 'package:ld_canteen/api/page/picture/api_picture_page.dart';
 
 class ApiDemoPage extends StatefulWidget {
   @override
@@ -22,6 +23,7 @@ class _ApiDemoPageState extends State<ApiDemoPage> {
           buttonTile('广告栏管理'),
           buttonTile('菜品管理'),
           buttonTile('展览位管理'),
+          buttonTile('素材管理'),
         ],
       ),
     );
@@ -45,6 +47,9 @@ class _ApiDemoPageState extends State<ApiDemoPage> {
         }
         else if(title == '展览位管理') {
 
+        }
+       else if(title == '素材管理') {
+          pushToPage(context,ApiPicturePage());
         }
       },
     ));

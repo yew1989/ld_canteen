@@ -163,4 +163,43 @@ class HttpHelper {
       onFail('请求错误');
     }
   }
+
+   // 上传文件
+  static void uploadHttp(String path,String filePath,String fileName,
+  
+  HttpSuccCallback onSucc,HttpFailCallback onFail) async { 
+
+    final file = await MultipartFile.fromFile(filePath,filename: fileName);
+
+    final dio = HttpHelper.initDio();
+    
+    FormData formData = FormData.fromMap({
+      "file": file,
+    });
+
+    try {
+      Response response = await dio.post(path,
+        options: Options(
+          headers: {
+          'X-LC-Id': leancloudID,
+          'X-LC-Key':leancloudKey,
+          },
+          receiveTimeout: HttpHelper.kTimeOutSeconds,
+          sendTimeout: HttpHelper.kTimeOutSeconds,
+        ),
+        data:formData,
+      );
+      if (response == null) {
+        onFail('网络异常,请检查网络');
+        return;
+      }
+      if ((response.statusCode - 200) >= 100) {
+        onFail('请求错误 ( ' + response.statusCode.toString() + ' )');
+        return;
+      }
+      onSucc(response.data, '请求成功');
+    } catch (e) {
+      onFail('请求错误');
+    }
+  }
 }
