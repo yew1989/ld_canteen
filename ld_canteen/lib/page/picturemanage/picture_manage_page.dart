@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/api/component/event_bus.dart';
+import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/picture.dart';
+import 'package:ld_canteen/page/picturemanage/picture_operation_page.dart';
 
 class PictureManagePage extends StatefulWidget {
   @override
@@ -28,9 +30,9 @@ class _PictureManagePageState extends State<PictureManagePage> {
   
   //获取素材库里的图片
   void getPictureList(){
-    API.getPictureList((List<PictureBean> pictureBean,String msg){
+    API.getPictureList((List<PictureBean> pictureBeans,String msg){
       setState(() {
-        this.pictureList = pictureBean;
+        this.pictureList = pictureBeans;
       });
       debugPrint(msg);
     }, (String msg){
@@ -53,14 +55,26 @@ class _PictureManagePageState extends State<PictureManagePage> {
     return Container(
       child: Scaffold(
         appBar: new AppBar(
-          title: Text('图片管理',style: TextStyle(fontSize: 30),),
+          title: Text('图片管理',style: TextStyle(fontSize: 30)),
           actions: <Widget>[
-            
+            IconButton(
+              icon: Icon(Icons.settings_applications,size: 30),
+              onPressed: () {
+                pushToPage(context, PictureOperationPage(pictureList:pictureList));
+              }
+            ),
+            IconButton(
+              icon: Icon(Icons.add_box,size: 30),
+              onPressed: () {
+                //pushToPage(context, DishEditPage());
+              }
+            )
           ],
         ),
         body: Container(
           //height: 400,
           child: GridView.count(
+            padding: EdgeInsets.all(10.0),
             crossAxisCount: 5,
             crossAxisSpacing: 10.0,
             mainAxisSpacing: 10.0,
@@ -82,6 +96,7 @@ class _PictureManagePageState extends State<PictureManagePage> {
       list = pictureList.map((pic){
         try {
           return Stack(
+            alignment:AlignmentDirectional.topEnd,
             children:<Widget>[
               Image(image: NetworkImage(pic.url)),
               Container(),
@@ -107,10 +122,10 @@ class _PictureManagePageState extends State<PictureManagePage> {
                     )
                   );
                 },
-                //alignment: Alignment.topCenter,
               ),
             ],
-          );
+          )
+          ;
         } catch (e) {
           print(e);
           //newImageUrl.remove(imageUrl);

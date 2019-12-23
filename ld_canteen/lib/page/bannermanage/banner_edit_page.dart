@@ -155,6 +155,7 @@ class _BannerEditPageState extends State<BannerEditPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Stack(
+                alignment:AlignmentDirectional.topEnd,
                 children:<Widget>[
                   Image(image: NetworkImage(imageUrl)),
                   Container(),
