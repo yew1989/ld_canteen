@@ -24,6 +24,7 @@ class _ApiPicturePageState extends State<ApiPicturePage> {
         children: <Widget>[
           RaisedButton(child: Text('素材列表'),onPressed:onTapPictureList),
           RaisedButton(child: Text('删除素材'),onPressed:onTapDeletePicture),
+          RaisedButton(child: Text('批量素材'),onPressed:onTapDeleteMultiPicture),
           RaisedButton(child: Text('添加素材'),onPressed:pickerImage),
           image == null? SizedBox(
             height: 200,
@@ -31,7 +32,8 @@ class _ApiPicturePageState extends State<ApiPicturePage> {
             child: Center(child: Text('图片未选择'))) : SizedBox(
             height: 200,
             width: 400,
-            child: Image.file(image))
+            child: Image.file(image)),
+            
         ],
       ),
     );
@@ -57,6 +59,16 @@ class _ApiPicturePageState extends State<ApiPicturePage> {
   // 删除素材
   void onTapDeletePicture() async {
     API.deletePicture('5dfc81725620710093d86d89', (msg){
+      debugPrint(msg);
+      onTapPictureList();
+    }, (msg){
+      debugPrint(msg);
+    });
+  }
+
+  // 批量删除素材
+  void onTapDeleteMultiPicture() async {
+    API.deleteMultiPictures(['5e015a4821460d007fdfd905','5e015a405620710093df22aa','5e015a325620710093df22a9'],(msg){
       debugPrint(msg);
       onTapPictureList();
     }, (msg){

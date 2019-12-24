@@ -417,16 +417,6 @@ class API{
     }, onFail);
   }
 
-  // 删除素材
-  static void deletePicture(String objectId,DeleteCallBack onSucc,HttpFailCallback onFail) {
-
-    final path = host + '/files/' + objectId;
-
-    HttpHelper.deleteHttp(path, null, (_,String msg){
-        if(onSucc != null) onSucc(msg);
-    }, onFail);
-  }
-
   // 素材上传
   static void uploadPicture(String fileName,String filePath,UpdateCallBack onSucc,HttpFailCallback onFail) {
 
@@ -438,6 +428,38 @@ class API{
         final objectId = resp?.objectId ?? ''; 
         if(onSucc != null) onSucc(objectId,msg);
     }, onFail);
+  }
+
+  // 删除素材
+  static void deletePicture(String objectId,DeleteCallBack onSucc,HttpFailCallback onFail) {
+
+    final path = host + '/files/' + objectId;
+
+    HttpHelper.deleteHttp(path, null, (_,String msg){
+        if(onSucc != null) onSucc(msg);
+    }, onFail);
+  }
+
+
+  // 素材批量删除
+  static void deleteMultiPictures(List<String> objectIdList,DeleteCallBack onSucc,HttpFailCallback onFail) {
+      final path = host + '/batch';
+      var param = Map<String,dynamic>();
+      List<Map<String,dynamic>> requests = [];
+   
+      for (final objectId in objectIdList) {
+        var request = Map<String,dynamic>();
+        request['method'] = 'DELETE';
+        request['path'] = '/1.1/classes/_File/$objectId';
+        requests.add(request);
+      }
+      param['requests'] = requests;
+
+      HttpHelper.postHttp(path, param, (dynamic data,String msg){
+        if(onSucc != null) onSucc('批量删除成功');
+      }, (String msg){
+        if(onFail != null) onFail('批量删除失败');
+      });
   }
   
 
