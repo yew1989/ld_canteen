@@ -3,6 +3,7 @@ import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/page/bannermanage/banner_manage_page.dart';
 import 'package:ld_canteen/page/categorymanage/category_manage_page.dart';
 import 'package:ld_canteen/page/dishmanage/dish_manage_page.dart';
+import 'package:ld_canteen/page/menumanage/menu_show_page.dart';
 import 'package:ld_canteen/page/picturemanage/picture_manage_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -40,7 +41,7 @@ class _MainPageState extends State<MainPage> {
       color: Colors.blueAccent,
       onPressed: (){
         if(title == '菜单展示窗'){
-          //pushToPage(context,ApiCategoryListPage());
+          pushToPage(context,MenuShowPage());
         }
         else if(title == '菜品管理') {
           pushToPage(context,DishManagePage());
