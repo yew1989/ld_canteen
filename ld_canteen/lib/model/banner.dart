@@ -12,7 +12,9 @@ class BannerBean {
 
   BannerBean.fromJson(Map<String, dynamic> json) {
     name = json['name'] ?? '';
-    images = json['images'].cast<String>();
+    if(json.containsKey('images')) {
+      images = json['images'].cast<String>();
+    }
     objectId = json['objectId'] ?? '';
   }
 
