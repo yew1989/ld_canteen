@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
+import 'package:ld_canteen/api/component/edit_delete_button.dart';
 import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/model/picture.dart';
 
@@ -14,7 +15,7 @@ class PictureOperationPage extends StatefulWidget {
 class _PictureOperationPageState extends State<PictureOperationPage> {
   
   List<Map<String,dynamic>> mapList = [];   //图片与是否选中绑定
-  List<PictureBean> newPictureList = [];
+  List<String> objectIds = [];
   List<PictureBean> pictureBeans = [];
   
   @override
@@ -44,8 +45,6 @@ class _PictureOperationPageState extends State<PictureOperationPage> {
   @override
   Widget build(BuildContext context) {
     
-
-
     return Scaffold(
       appBar: AppBar(
         title: Text('操作',style: TextStyle(fontSize: 30),),
@@ -68,7 +67,25 @@ class _PictureOperationPageState extends State<PictureOperationPage> {
                   style: TextStyle(color: Colors.white, fontSize: 40)),
               color: Colors.blueAccent,
               onPressed: (){
-                deleteCheck();
+                showDialog(
+                  context:context,
+                  child: CupertinoAlertDialog(
+                    title:Text('提示'),
+                    content:Center(
+                      child: Text('是否确定删除该项'),
+                    ),
+                    actions: <Widget>[
+                      CupertinoDialogAction(isDestructiveAction: true,child: Text('确定'),onPressed: (){
+                        deleteCheck(objectIds);
+                        Navigator.of(context).pop();
+                      }),
+                      CupertinoDialogAction(child: Text('取消'),onPressed: (){
+                        Navigator.of(context).pop();
+                      }),
+                    ],
+                  )
+                );
+                deleteCheck(objectIds);
               },
           ),
         ],
@@ -111,14 +128,19 @@ class _PictureOperationPageState extends State<PictureOperationPage> {
     }
   }
 
-  void deleteCheck(){
+  void deleteCheck(List<String> objectIdList){
     
+    API.deleteMultiPictures(objectIdList, (String msg){
+      debugPrint(msg);
+    }, (String msg){
+      debugPrint(msg);
+    });
   }
 
-  void selectCheckTrue(){
-    mapList.map((Map<String,dynamic> pic){
+  List<String> selectCheckTrue(){
+    return mapList.map((Map<String,dynamic> pic){
       while(pic['check'] == true) {
-        newPictureList.add(pic['pictureBean']);
+        objectIds.add(pic['pictureBean'].objectId);
       }
     }).toList();
   }
