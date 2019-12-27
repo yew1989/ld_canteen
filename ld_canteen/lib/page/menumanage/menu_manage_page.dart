@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
+import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/banner.dart';
 import 'package:ld_canteen/model/category.dart';
 import 'package:ld_canteen/model/menu.dart';
+import 'package:ld_canteen/page/menumanage/menu_show_page.dart';
 
 class MenuManagePage extends StatefulWidget {
   @override
@@ -20,9 +22,6 @@ class _MenuManagePageState extends State<MenuManagePage> {
   
   var types = [{'name':'选择展示框内容分类','value':'xxxx'},{'name':'菜品类型','value':'category'},{'name':'广告图片','value':'banner'}];
   List<Menu> menuList = [];
-  List<Category> categoryList = [];
-  List<BannerBean> bannerList = [];
-  String _typeValue = 'xxxx';
 
   // 请求展示列表数据
   void getMenuList() {
@@ -36,36 +35,10 @@ class _MenuManagePageState extends State<MenuManagePage> {
     },limit:6,skip: 0
     );
   }
-  
-  // 请求菜品分类数据
-  void getCategoryList() {
-    API.getCategoryList((List<Category> categories,String msg){
-      setState(() {
-        this.categoryList = categories;
-      });
-      debugPrint(msg);
-    }, (String msg){
-      debugPrint(msg);
-    });
-  }
-
-  // 请求菜广告栏数据
-  void getBannerList() {
-    API.getBannerList((List<BannerBean> banners,String msg){
-      setState(() {
-        this.bannerList = banners;
-      });
-      debugPrint(msg);
-    }, (String msg){
-      debugPrint(msg);
-    });
-  }
 
   @override
   void initState() {
     getMenuList();
-    //getCategoryList();
-    //getBannerList();
     super.initState();
   }
 
@@ -74,6 +47,10 @@ class _MenuManagePageState extends State<MenuManagePage> {
     super.dispose();
   }
 
+  int  _getListCount(){
+    int menuListCount = menuList?.length ?? 0;
+    return menuListCount + 1;
+  }  
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +62,7 @@ class _MenuManagePageState extends State<MenuManagePage> {
       body:Container(
         child:ListView.builder(
           itemBuilder: (BuildContext context, int index)  => _widgetList(context,index),
-          itemCount: menuList.length,
+          itemCount: _getListCount(),
         )
       )
     );
@@ -93,48 +70,121 @@ class _MenuManagePageState extends State<MenuManagePage> {
 
   Widget _widgetList(BuildContext context, int index){
 
-    return Row(
-      children: <Widget>[
-        Text('第${index}行'),
-        // DropdownButton<String>(
-        //   items: types.map((type) {
-        //     return DropdownMenuItem<String>(
-        //       child: Text(
-        //         type['name'],
-        //         style: TextStyle(fontSize: 30),
-        //       ),
-        //       value: type['value'],
-        //     );
-        //   }).toList(),
-        //   onChanged: (String v) {
-        //     setState(() {
-        //       _typeValue = v;
-        //     });
-        //   },
-        //   value: _typeValue = menuList[index]?.type ?? _typeValue,
-        //   iconSize: 50,
-        // ),
-        // DropdownButton<String>(
-        //   items: types.map((type) {
-        //     return DropdownMenuItem<String>(
-        //       child: Text(
-        //         type['name'],
-        //         style: TextStyle(fontSize: 30),
-        //       ),
-        //       value: type['value'],
-        //     );
-        //   }).toList(),
-        //   onChanged: (String category) {
-        //     setState(() {
-        //       _typeValue = category;
-        //     });
-        //   },
-        //   value: _typeValue,
-        //   iconSize: 50,
-        // ),
-      ],
-    );
+    if (index == 0) {
+      return Container(
+        margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
+        height: 60,
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children:[
+              Expanded(
+                flex: 1,
+                child: Center(child: Text('展示栏',style: TextStyle(color: Colors.black,fontSize: 20))),
+              ),
+              Expanded(
+                flex: 1,
+                child: Center(child: Text('展示类型',style: TextStyle(color: Colors.black,fontSize: 20))),
+              ),
+              Expanded(
+                flex: 1,
+                child: Center(child: Text('详细分类',style: TextStyle(color: Colors.black,fontSize: 20))),
+              ),
+              Expanded(
+                flex: 1,
+                child: Center(child: Text('操作',style: TextStyle(color: Colors.black,fontSize: 20))),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else {
+      var menu  = menuList[index-1];
+      //var valueb = dish.isShow;
+      return Container(
+        margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
+        height: 60,
+        // color: Colors.white,
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children:[
+              Expanded(
+                flex: 1,
+                child: Center(child: Text('第${index}格',style: TextStyle(color: Colors.black,fontSize: 30))),
+              ),
+              Expanded(
+                flex: 1,
+                child: Center(child: Text('${menu.type == "category" ? "菜品类型" : "广告图片"}',style: TextStyle(color: Colors.black,fontSize: 30))),
+              ),
+              Expanded(
+                flex: 1,
+                child: Center(child: Text('${menu.type == "category" ? (menu.category.name) : (menu.banner.name)}',style: TextStyle(color: Colors.black,fontSize: 30))),
+              ),
+              Expanded(
+                flex: 1,
+                child: FlatButton(
+                  color: Colors.green,
+                  child: Text('编辑',style: TextStyle(color: Colors.white,fontSize: 20)), 
+                  onPressed: () {
+                    pushToPage(context, MenuShowPage(menu:menu));
+                  },
+                )
+              )
+            ],
+          ),
+        ),
+      );
+    }
+    
+    // Row(
+    //       children: <Widget>[
+    //         Text('第${index+1}格',style: TextStyle(fontSize: 40),),
 
+    //         Text(data)
+    //         // DropdownButton<String>(
+    //         //   items: types.map((type) {
+    //         //     return DropdownMenuItem<String>(
+    //         //       child: Text(
+    //         //         type['name'],
+    //         //         style: TextStyle(fontSize: 30),
+    //         //       ),
+    //         //       value: type['value'],
+    //         //     );
+    //         //   }).toList(),
+    //         //   onChanged: (String v) {
+    //         //     setState(() {
+    //         //       _typeValue = v;
+    //         //       menuList[index].type = v;
+    //         //     });
+    //         //   },
+    //         //   value: _typeValue = menuList[index]?.type ?? _typeValue,
+    //         //   iconSize: 50,
+    //         // ),
+        
+    //       // DropdownButton<String>(
+    //       //   items: types.map((type) {
+    //       //     return DropdownMenuItem<String>(
+    //       //       child: Text(
+    //       //         type['name'],
+    //       //         style: TextStyle(fontSize: 30),
+    //       //       ),
+    //       //       value: type['value'],
+    //       //     );
+    //       //   }).toList(),
+    //       //   onChanged: (String category) {
+    //       //     setState(() {
+    //       //       _typeValue = category;
+    //       //     });
+    //       //   },
+    //       //   value: _typeValue,
+    //       //   iconSize: 50,
+    //       // ),
+    //     ],
+      
+    // );
   }
 
 }

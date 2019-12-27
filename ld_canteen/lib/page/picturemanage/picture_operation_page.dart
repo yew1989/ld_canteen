@@ -76,7 +76,7 @@ class _PictureOperationPageState extends State<PictureOperationPage> {
                     ),
                     actions: <Widget>[
                       CupertinoDialogAction(isDestructiveAction: true,child: Text('确定'),onPressed: (){
-                        deleteCheck(objectIds);
+                        deleteCheck();
                         Navigator.of(context).pop();
                       }),
                       CupertinoDialogAction(child: Text('取消'),onPressed: (){
@@ -85,7 +85,6 @@ class _PictureOperationPageState extends State<PictureOperationPage> {
                     ],
                   )
                 );
-                deleteCheck(objectIds);
               },
           ),
         ],
@@ -128,8 +127,8 @@ class _PictureOperationPageState extends State<PictureOperationPage> {
     }
   }
 
-  void deleteCheck(List<String> objectIdList){
-    
+  void deleteCheck(){
+    List<String> objectIdList = selectCheckTrue();
     API.deleteMultiPictures(objectIdList, (String msg){
       debugPrint(msg);
     }, (String msg){
@@ -139,7 +138,7 @@ class _PictureOperationPageState extends State<PictureOperationPage> {
 
   List<String> selectCheckTrue(){
     return mapList.map((Map<String,dynamic> pic){
-      while(pic['check'] == true) {
+      if(pic['check'] == true) {
         objectIds.add(pic['pictureBean'].objectId);
       }
     }).toList();

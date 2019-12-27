@@ -299,6 +299,7 @@ class API{
     keys += '-banner.className,-banner.updatedAt,-banner.createdAt';
     queryParam['keys'] = keys;
     queryParam['count'] = '1';
+    queryParam['include'] = 'category,banner';
     if(limit != null) queryParam['limit'] = limit.toString();
     if(skip != null) queryParam['skip'] = skip.toString();
 
@@ -461,6 +462,4 @@ class API{
         if(onFail != null) onFail('批量删除失败');
       });
   }
-  
-
 }
