@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
+import 'package:ld_canteen/model/banner.dart';
 import 'package:ld_canteen/model/dish.dart';
 import 'package:ld_canteen/page/dishmanage/dish_list_page.dart';
 
@@ -47,12 +48,13 @@ class _ApiTestPageState extends State<ApiTestPage> {
       // 获取菜品列表
       case 0:
         {
-          //var limit = 20;
+          //var limit = 20;5df7621d43c2570080d2ddd7
           //var skip = 0;
-          API.getDishList((List<Dish> dishes,String msg){
+          String bannerid = '5df7621d43c2570080d2ddd7';
+          API.getBanner(bannerid ,(BannerBean bannerBean,String msg){
             
               debugPrint(msg);
-              debugPrint(dishes.map((f)=>f.toJson()).toList().toString());
+              debugPrint(bannerBean.toJson().toString());
               // Navigator.push(context,
               //   MaterialPageRoute(builder: (context) 
               //   => DishListPage(dishList:dishes)));
@@ -61,7 +63,6 @@ class _ApiTestPageState extends State<ApiTestPage> {
               debugPrint(msg);
 
             },//limit: limit,skip: skip
-              
           );
           
           

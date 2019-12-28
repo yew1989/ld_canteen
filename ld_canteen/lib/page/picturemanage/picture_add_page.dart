@@ -79,7 +79,7 @@ class _PictureAddPageState extends State<PictureAddPage> {
                     widget.pictureUrlList.add(pic['pictureBean'].url);
                   }
                 }).toList();
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(widget.pictureUrlList);
               },
           ),
         ],

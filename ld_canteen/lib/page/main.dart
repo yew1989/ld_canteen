@@ -24,11 +24,11 @@ class _MainPageState extends State<MainPage> {
         ),
         body: ListView(
           children: <Widget>[
-            buttonTile('菜单展示窗'),
-            buttonTile('菜品管理'),
             buttonTile('菜品分类管理'),
-            buttonTile('广告栏管理'),
+            buttonTile('菜品管理'),
             buttonTile('素材管理'),
+            buttonTile('广告栏管理'),
+            buttonTile('菜单展示窗'),
           ],
         ),
       ),

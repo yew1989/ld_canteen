@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/api/component/public_tool.dart';
-import 'package:ld_canteen/model/banner.dart';
-import 'package:ld_canteen/model/category.dart';
 import 'package:ld_canteen/model/menu.dart';
 import 'package:ld_canteen/page/menumanage/menu_show_page.dart';
 
@@ -13,13 +11,6 @@ class MenuManagePage extends StatefulWidget {
 }
 
 class _MenuManagePageState extends State<MenuManagePage> {
-
-  // String menuOneId = '5df7626043c2570080d2de2b';
-  // String menuTwoId = '5df7626b43c2570080d2de2c';
-  // String menuThreeId = '5df7627f0a8a84007f004bc6';
-  // String menuFourId = '5df7629243c2570080d2e025';
-  // String menuFiveId = '5df7629f0a8a84007f004c68';
-  // String menuSixId = '5df762c543c2570080d2e1f5';
   
   var types = [{'name':'选择展示框内容分类','value':'xxxx'},{'name':'菜品类型','value':'category'},{'name':'广告图片','value':'banner'}];
   List<Menu> menuList = [];
@@ -40,7 +31,7 @@ class _MenuManagePageState extends State<MenuManagePage> {
   @override
   void initState() {
     getMenuList();
-    EventBus().on('REFRESH', (_) {
+    EventBus().on('REFRESHLIST', (_) {
       getMenuList();
     });
     super.initState();

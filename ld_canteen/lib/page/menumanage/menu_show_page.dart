@@ -1,12 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/api/component/event_bus.dart';
+import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/banner.dart';
 import 'package:ld_canteen/model/category.dart';
 import 'package:ld_canteen/model/menu.dart';
 import 'package:ld_canteen/page/dishmanage/dish_list_page.dart';
+import 'package:ld_canteen/page/picturemanage/picture_add_page.dart';
 
 class MenuShowPage extends StatefulWidget {
   final Menu menu;
@@ -31,7 +31,9 @@ class _MenuShowPageState extends State<MenuShowPage> {
   BannerBean _bannerBean = new BannerBean(name: '选择广告',objectId: '2222');
   String _categoryChange = '';
   String _bannerBeanChange = '';
-  
+  List<String> imageUrlList = [];
+  BannerBean banner = BannerBean();
+
   // 请求菜品分类数据
   void getCategoryList() {
     API.getCategoryList((List<Category> categories,String msg){
@@ -63,12 +65,17 @@ class _MenuShowPageState extends State<MenuShowPage> {
     this.menu = widget?.menu ?? null ;
     change = widget?.menu?.type ?? '';
     _categoryChange = this.menu.category?.objectId ?? _category.objectId ;
-    _bannerBeanChange = this.menu.banner?.objectId ?? _bannerBean.objectId  ;
+    _bannerBeanChange = this.menu.banner?.objectId ?? _bannerBean.objectId ;
     getCategoryList();
     getBannerList();
+    getBanner(_bannerBeanChange);
     EventBus().on('REFRESH', (_) {
-      _page(change,_categoryChange);
+      _page(change,_categoryChange,_bannerBeanChange);
     });
+    EventBus().on('REFRESH_BANNERID', (_bannerBeanChange) {
+      getBanner(_bannerBeanChange);
+    });
+
     super.initState();
   }
 
@@ -80,6 +87,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
 
   //更新展览框
   void updateMenu(String categoryId,String bannerId,Menu menu,String type){
+    menu.type = type;
     if (type == 'category') {
       API.updateMenu(
         menu.objectId,
@@ -87,7 +95,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
         (_, msg) {
           Navigator.of(context).pop();
           // 发送刷新通知
-          EventBus().emit('REFRESH');
+          EventBus().emit('REFRESHLIST');
         },
         (_) {},categoryId:categoryId
       );
@@ -98,11 +106,38 @@ class _MenuShowPageState extends State<MenuShowPage> {
         (_, msg) {
           Navigator.of(context).pop();
           // 发送刷新通知
-          EventBus().emit('REFRESH');
+          EventBus().emit('REFRESHLIST');
         },
         (_) {},bannerId:bannerId
       );
     }
+  }
+
+  // 更新广告栏
+  void updateBanner(BannerBean banner) {
+    API.updateBanner(
+      banner.objectId,
+      banner,
+      (_, msg) {
+        // 发送刷新通知
+        EventBus().emit('REFRESH');
+      },
+      (_) {}
+    );
+  }
+
+  // 请求菜广告栏数据
+  void getBanner(String bannerId) {
+    API.getBanner(bannerId,(BannerBean banner,String msg){
+      setState(() {
+        //imageUrlList = widget?.urlList ?? List<String>();
+        this.banner = banner;
+        imageUrlList = this.banner.images;
+      });
+      debugPrint(msg);
+    }, (String msg){
+      debugPrint(msg);
+    });
   }
 
   @override
@@ -132,7 +167,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
                   onChanged: (String v) {
                     setState(() {
                       change = v;
-                      _page(change,_categoryChange);
+                      _page(change,_categoryChange,_bannerBeanChange);
                       // _categoryChange = this.menu.category ?? _category ;
                       // _bannerBeanChange = this.menu.banner ?? _bannerBean  ;
                     });
@@ -149,7 +184,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
           ),
           Expanded(
             flex: 1,
-            child: _page(change,_categoryChange),
+            child: _page(change,_categoryChange,_bannerBeanChange),
             //DishListPage(categoryObjectId:_categoryChange),
           )
           
@@ -159,13 +194,20 @@ class _MenuShowPageState extends State<MenuShowPage> {
         children: <Widget>[
           
           FlatButton(
-              padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-              child: Text('确定',
-                  style: TextStyle(color: Colors.white, fontSize: 40)),
-              color: Colors.blueAccent,
-              onPressed: (){
+            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+            child: Text('确定',
+                style: TextStyle(color: Colors.white, fontSize: 40)),
+            color: Colors.blueAccent,
+            onPressed: (){
+              setState(() {
+                if(change == 'banner'){
+                  banner.images = imageUrlList;
+                  updateBanner(banner);
+                }
                 updateMenu(_categoryChange,_bannerBeanChange,menu,change);
-              }
+                EventBus().emit('REFRESHLIST');
+              });
+            }
           ),
           Padding(padding: EdgeInsets.all(20),),
         ],
@@ -173,6 +215,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
     );
   }
 
+  //下拉框
   Widget _dropdownButton(){
     
     if (change == 'category') {
@@ -211,7 +254,8 @@ class _MenuShowPageState extends State<MenuShowPage> {
         onChanged: (String v) {
           setState(() {
             _bannerBeanChange = v;
-            //EventBus().emit('REFRESH_CATEGORYID',_bannerBeanChange);
+            EventBus().emit('REFRESH_BANNERID',_bannerBeanChange);
+            //imageUrlList
           });
         },
         value: _bannerBeanChange ,
@@ -222,16 +266,110 @@ class _MenuShowPageState extends State<MenuShowPage> {
     }
   }
   
-  Widget _page(String change,String categoryObjectId){
+  //下拉框下方加载页面
+  Widget _page(String change,String categoryId,String bannerId){
    
       if (change == 'category') {
-        return DishListPage(categoryObjectId:_categoryChange);
+        return DishListPage(categoryObjectId:categoryId);
       }else if (change == 'banner') {
-        
+        //return MenuEditPage(bannerId: bannerId,urlList:imageUrlList);
+        return bannerPage();
       }else{
         return Column();
       }
 
   }
+  
+  //广告分支页
+  Widget bannerPage(){
+    
+    return Container(
+      margin: EdgeInsets.all(40),
+      child: ListView(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Expanded(
+                flex: 4,
+                child:Text('图片预览:', style: TextStyle(color: Colors.black, fontSize: 30)),
+              ),
+              Expanded(
+                flex: 1,
+                child: FlatButton(
+                  padding: EdgeInsets.all(1),
+                  child: Text('选择图片',
+                    style: TextStyle(color: Colors.white, fontSize: 40)),
+                  color: Colors.blueAccent,
+                  onPressed: () {
+                    setState((){
+                      pushToPage(context, PictureAddPage(pictureUrlList: banner.images));  
+                    });
+                  }, 
+                )
+              ),
+            ],
+          ),
+          Container(
+            height: 300,
+            child: GridView.count(
+              
+              crossAxisCount: 5,
+              crossAxisSpacing: 10.0,
+              mainAxisSpacing: 10.0,
+              children: _imagePreview(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  //广告分支加载图片
+  List<Widget> _imagePreview(){
+    List<Widget> list = [];
+    if (imageUrlList == null) {
+      //Text('插入图片:', style: TextStyle(color: Colors.black, fontSize: 30));
+      list.add(Container(
+            child:Text('未上传图片！', style: TextStyle(color: Colors.red, fontSize: 30))));
+      return list;
+    } else {
+      list = imageUrlList.map((imageUrl){
+        try {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Stack(
+                alignment:AlignmentDirectional.topEnd,
+                children:<Widget>[
+                  Image(image: NetworkImage(imageUrl)),
+                  Container(),
+                  IconButton(
+                    icon: Icon(Icons.close,size: 30,color: Colors.red,),
+                    onPressed: (){
+                      setState(() {
+                        imageUrlList.remove(imageUrl);
+                      });
+                    },
+                    //alignment: Alignment.topCenter,
+                  ),
+                ],
+              ),
+            ],
+          );
+        } catch (e) {
+          print(e);
+          imageUrlList.remove(imageUrl);
+        }
+      }).toList();
+
+      return list;
+    }
+  }
+
+  
+  
+
+
   
 }

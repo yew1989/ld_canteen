@@ -12,6 +12,8 @@ typedef CategoryListCallback = void Function(List<Category> categories, String m
 typedef DishListCallback = void Function(List<Dish> dishes, String msg);
 // 广告列表回调
 typedef BannerListCallback = void Function(List<BannerBean> banners, String msg);
+// 广告栏回调
+typedef BannerCallback = void Function(BannerBean banner, String msg);
 // 展示位列表回调
 typedef MenuListCallback = void Function(List<Menu> menus, String msg);
 // 素材库列表回调
@@ -240,6 +242,24 @@ class API{
         final resp = BannerResp.fromJson(map);
         final banners = resp.results; 
         if(onSucc != null) onSucc(banners,msg);
+        
+    }, onFail);
+  }
+
+  // 根据id获取广告栏
+  static void getBanner(String bannerId,BannerCallback onSucc,HttpFailCallback onFail,{int limit,int skip}) {
+
+    final path = host + bannerPath + '/' + bannerId;
+    var queryParam = Map<String, dynamic>();
+    queryParam['keys'] = '-ACL,-updatedAt,-createdAt';
+    queryParam['count'] = '1';
+    if(limit != null) queryParam['limit'] = limit.toString();
+    if(skip != null) queryParam['skip'] = skip.toString();
+
+    HttpHelper.getHttp(path, queryParam, (dynamic data,String msg){
+        
+        final banner = BannerBean.fromJson(data); 
+        if(onSucc != null) onSucc(banner,msg);
         
     }, onFail);
   }
