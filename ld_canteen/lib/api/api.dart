@@ -383,6 +383,12 @@ class API{
     if(param.containsKey('objectId')) {
       param.remove('objectId');
     }
+    if(param.containsKey('category')) {
+      param.remove('category');
+    }
+    if(param.containsKey('banner')) {
+      param.remove('banner');
+    }
     
     if(categoryId != null) {
       var category = Map<String,dynamic>();

@@ -120,7 +120,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
       banner,
       (_, msg) {
         // 发送刷新通知
-        EventBus().emit('REFRESH');
+        // EventBus().emit('REFRESH');
       },
       (_) {}
     );
