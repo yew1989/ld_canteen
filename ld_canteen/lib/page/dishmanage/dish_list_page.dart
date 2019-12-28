@@ -29,6 +29,14 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
     EventBus().on('REFRESH', (_) {
       getDishList(categoryId);
     });
+
+    EventBus().on('REFRESH_CATEGORYID',(id){
+      if(id is String) {
+        final categoryId = id;
+        getDishList(categoryId);
+      }
+    });
+
     super.initState();
   }
 
@@ -36,6 +44,7 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
   void dispose() {
     // 取消监听 ‘REFRESH’ 刷新页面通知
     EventBus().off('REFRESH');
+    EventBus().off('REFRESH_CATEGORYID');
     super.dispose();
   }
 

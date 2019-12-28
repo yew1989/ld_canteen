@@ -25,6 +25,7 @@ class _PictureManagePageState extends State<PictureManagePage> {
 
   @override
   void dispose() {
+    EventBus().off('REFRESH');
     super.dispose();
   }
   

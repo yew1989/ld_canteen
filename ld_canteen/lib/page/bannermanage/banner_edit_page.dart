@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/api/component/event_bus.dart';
+import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/banner.dart';
+import 'package:ld_canteen/page/picturemanage/picture_add_page.dart';
+import 'package:ld_canteen/page/picturemanage/picture_operation_page.dart';
 
 class BannerEditPage extends StatefulWidget {
 
@@ -14,7 +17,6 @@ class BannerEditPage extends StatefulWidget {
 class _BannerEditPageState extends State<BannerEditPage> {
 
   TextEditingController nameCtrl = TextEditingController();
-  TextEditingController imageUrlCtrl = TextEditingController();
   List<String> newImageUrl  = [];
 
   @override
@@ -31,6 +33,7 @@ class _BannerEditPageState extends State<BannerEditPage> {
 
   @override
   void dispose() {
+    EventBus().off('REFRESH');
     super.dispose();
   }
 
@@ -70,7 +73,7 @@ class _BannerEditPageState extends State<BannerEditPage> {
                     color: Colors.blueAccent,
                     onPressed: () {
                       setState((){
-                        //loading();
+                        pushToPage(context, PictureAddPage(pictureUrlList: newImageUrl));
                       });
                       //imageLoad(imageUrlCtrl.text);
                     }, 

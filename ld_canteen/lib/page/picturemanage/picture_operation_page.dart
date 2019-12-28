@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
-import 'package:ld_canteen/api/component/edit_delete_button.dart';
 import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/model/picture.dart';
 
@@ -107,15 +106,22 @@ class _PictureOperationPageState extends State<PictureOperationPage> {
             alignment:AlignmentDirectional.topEnd,
             children:<Widget>[
               Image(image: NetworkImage(pic['pictureBean'].url)),
-              Container(),
-              Checkbox(
-                value: pic['check'],
-                activeColor: Colors.blue,
-                onChanged: (bool val) {
-                  this.setState(() {
-                    pic['check'] = !pic['check'];
-                  });
-                },
+              Container(
+                height: 20,
+                width: 20,
+                color: Colors.white,
+                child:Checkbox(
+                  value: pic['check'],
+                  activeColor: Colors.blue,
+                  // hoverColor: Colors.white,
+                  // focusColor: Colors.white,
+                  //checkColor: Colors.blue,
+                  onChanged: (bool val) {
+                    this.setState(() {
+                      pic['check'] = !pic['check'];
+                    });
+                  },
+                ),
               ),
             ],
           );
@@ -131,16 +137,20 @@ class _PictureOperationPageState extends State<PictureOperationPage> {
     List<String> objectIdList = selectCheckTrue();
     API.deleteMultiPictures(objectIdList, (String msg){
       debugPrint(msg);
+      Navigator.of(context).pop();
+        // 发送刷新通知
+      EventBus().emit('REFRESH');
     }, (String msg){
       debugPrint(msg);
     });
   }
 
   List<String> selectCheckTrue(){
-    return mapList.map((Map<String,dynamic> pic){
+    mapList.map((Map<String,dynamic> pic){
       if(pic['check'] == true) {
         objectIds.add(pic['pictureBean'].objectId);
       }
     }).toList();
+    return objectIds;
   }
 }

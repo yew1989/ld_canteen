@@ -102,9 +102,7 @@ class _DishEditPageState extends State<DishEditPage> {
                 activeColor: Colors.blue,
                 inactiveTrackColor: Colors.blue.shade50,
                 onChanged: (bool v) {
-                  setState(() {
-                    isShow = v;
-                  });
+                  isShow = v;
                 },
               ),
               Padding(
@@ -130,7 +128,7 @@ class _DishEditPageState extends State<DishEditPage> {
                   var item = widget.dish;
                   item.name = nameCtrl.text ?? '';
                   item.price = priceCtrl.text ?? '';
-                  item.isShow = isShow ?? true;
+                  item.isShow = isShow;
                   updateDish(item, categoryObjectId);
                 }
               },

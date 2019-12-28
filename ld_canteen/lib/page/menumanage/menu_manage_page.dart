@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
+import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/banner.dart';
 import 'package:ld_canteen/model/category.dart';
@@ -39,6 +40,9 @@ class _MenuManagePageState extends State<MenuManagePage> {
   @override
   void initState() {
     getMenuList();
+    EventBus().on('REFRESH', (_) {
+      getMenuList();
+    });
     super.initState();
   }
 
@@ -138,53 +142,6 @@ class _MenuManagePageState extends State<MenuManagePage> {
         ),
       );
     }
-    
-    // Row(
-    //       children: <Widget>[
-    //         Text('第${index+1}格',style: TextStyle(fontSize: 40),),
-
-    //         Text(data)
-    //         // DropdownButton<String>(
-    //         //   items: types.map((type) {
-    //         //     return DropdownMenuItem<String>(
-    //         //       child: Text(
-    //         //         type['name'],
-    //         //         style: TextStyle(fontSize: 30),
-    //         //       ),
-    //         //       value: type['value'],
-    //         //     );
-    //         //   }).toList(),
-    //         //   onChanged: (String v) {
-    //         //     setState(() {
-    //         //       _typeValue = v;
-    //         //       menuList[index].type = v;
-    //         //     });
-    //         //   },
-    //         //   value: _typeValue = menuList[index]?.type ?? _typeValue,
-    //         //   iconSize: 50,
-    //         // ),
-        
-    //       // DropdownButton<String>(
-    //       //   items: types.map((type) {
-    //       //     return DropdownMenuItem<String>(
-    //       //       child: Text(
-    //       //         type['name'],
-    //       //         style: TextStyle(fontSize: 30),
-    //       //       ),
-    //       //       value: type['value'],
-    //       //     );
-    //       //   }).toList(),
-    //       //   onChanged: (String category) {
-    //       //     setState(() {
-    //       //       _typeValue = category;
-    //       //     });
-    //       //   },
-    //       //   value: _typeValue,
-    //       //   iconSize: 50,
-    //       // ),
-    //     ],
-      
-    // );
   }
 
 }
