@@ -4,6 +4,7 @@ import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/menu.dart';
 import 'package:ld_canteen/page/menumanage/menu_show_page.dart';
+import 'package:ld_canteen/page/static_style.dart';
 
 class MenuManagePage extends StatefulWidget {
   @override
@@ -51,7 +52,7 @@ class _MenuManagePageState extends State<MenuManagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('菜品展示管理'),
+        title: Text('菜品展示管理',style: STATIC_STYLE.appbar,),
       ),
       
       body:Container(
@@ -76,19 +77,19 @@ class _MenuManagePageState extends State<MenuManagePage> {
             children:[
               Expanded(
                 flex: 1,
-                child: Center(child: Text('展示栏',style: TextStyle(color: Colors.black,fontSize: 20))),
+                child: Center(child: Text('展示栏',style: STATIC_STYLE.listView)),
               ),
               Expanded(
                 flex: 1,
-                child: Center(child: Text('展示类型',style: TextStyle(color: Colors.black,fontSize: 20))),
+                child: Center(child: Text('展示类型',style: STATIC_STYLE.listView)),
               ),
               Expanded(
                 flex: 1,
-                child: Center(child: Text('详细分类',style: TextStyle(color: Colors.black,fontSize: 20))),
+                child: Center(child: Text('详细分类',style: STATIC_STYLE.listView)),
               ),
               Expanded(
                 flex: 1,
-                child: Center(child: Text('操作',style: TextStyle(color: Colors.black,fontSize: 20))),
+                child: Center(child: Text('操作',style: STATIC_STYLE.listView)),
               ),
             ],
           ),
@@ -108,21 +109,29 @@ class _MenuManagePageState extends State<MenuManagePage> {
             children:[
               Expanded(
                 flex: 1,
-                child: Center(child: Text('第${index}格',style: TextStyle(color: Colors.black,fontSize: 30))),
+                child: Center(child: Text('第${index}格',style: STATIC_STYLE.listView)),
               ),
               Expanded(
                 flex: 1,
-                child: Center(child: Text('${menu.type == "category" ? "菜品类型" : "广告图片"}',style: TextStyle(color: Colors.black,fontSize: 30))),
+                child: Center(
+                  child: Text('${menu.type == "category" ? "菜品类型" : "广告图片"}',
+                    style: STATIC_STYLE.listView
+                  )
+                ),
               ),
               Expanded(
                 flex: 1,
-                child: Center(child: Text('${menu.type == "category" ? (menu.category.name) : (menu.banner.name)}',style: TextStyle(color: Colors.black,fontSize: 30))),
+                child: Center(
+                  child: Text('${menu.type == "category" ? (menu.category.name) : (menu.banner.name)}',
+                    style: STATIC_STYLE.listView
+                  )
+                ),
               ),
               Expanded(
                 flex: 1,
                 child: FlatButton(
                   color: Colors.green,
-                  child: Text('编辑',style: TextStyle(color: Colors.white,fontSize: 20)), 
+                  child: Text('编辑',style: TextStyle(fontSize: 12.0,color: Colors.white)), 
                   onPressed: () {
                     pushToPage(context, MenuShowPage(menu:menu));
                   },

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/model/category.dart';
+import 'package:ld_canteen/page/static_style.dart';
 
 class CategoryEditPage extends StatefulWidget {
   final Category category;
@@ -32,23 +33,27 @@ class _CategoryEditPageState extends State<CategoryEditPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: isAdd ? Text('新增菜品分类') : Text('编辑菜品分类'),
+        title: isAdd ? Text('新增菜品分类',style: STATIC_STYLE.appbar,) : Text('编辑菜品分类',style: STATIC_STYLE.appbar,),
       ),
       body: Container(
         margin: EdgeInsets.all(40),
         child: ListView(
           children: <Widget>[
-            Text('菜品分类名称:', style: TextStyle(color: Colors.black, fontSize: 30)),
+            Text('菜品分类名称:', style: STATIC_STYLE.tab),
             TextField(
                 maxLength: 20,
                 maxLines: 1,
-                style: TextStyle(color: Colors.black, fontSize: 30),
+                style: STATIC_STYLE.textField,
                 controller: nameCtrl,
                 decoration: InputDecoration()),
-            FlatButton(
+            
+          ],
+        ),
+      ),
+      bottomNavigationBar: FlatButton(
               padding: EdgeInsets.all(10),
               child: Text('确定',
-                  style: TextStyle(color: Colors.white, fontSize: 40)),
+                  style: STATIC_STYLE.buttonText),
               color: Colors.blueAccent,
               onPressed: () {
                 // 新增
@@ -65,9 +70,6 @@ class _CategoryEditPageState extends State<CategoryEditPage> {
                 }
               },
             ),
-          ],
-        ),
-      ),
     );
   }
 

@@ -3,6 +3,7 @@ import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/model/category.dart';
 import 'package:ld_canteen/model/dish.dart';
+import 'package:ld_canteen/page/static_style.dart';
 
 
 class DishEditPage extends StatefulWidget {
@@ -44,30 +45,30 @@ class _DishEditPageState extends State<DishEditPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: isAdd ? Text('新增菜品') : Text('编辑菜品'),
+        title: isAdd ? Text('新增菜品',style: STATIC_STYLE.appbar,) : Text('编辑菜品',style: STATIC_STYLE.appbar,),
       ),
       body: Container(
         margin: EdgeInsets.all(40),
         child: ListView(
           children: <Widget>[
-            Text('菜品名称:', style: TextStyle(color: Colors.black, fontSize: 30)),
+            Text('菜品名称:', style: STATIC_STYLE.tab),
             TextField(
                 maxLength: 20,
                 maxLines: 1,
-                style: TextStyle(color: Colors.black, fontSize: 30),
+                style: STATIC_STYLE.textField,
                 controller: nameCtrl,
                 decoration: InputDecoration()),
-            Text('菜品价格:', style: TextStyle(color: Colors.black, fontSize: 30)),
+            Text('菜品价格:', style: STATIC_STYLE.tab),
             TextField(
                 maxLength: 20,
                 maxLines: 1,
-                style: TextStyle(color: Colors.black, fontSize: 30),
+                style: STATIC_STYLE.textField,
                 controller: priceCtrl,
                 decoration: InputDecoration()),
             Row(
               children: <Widget>[
                 Text('菜品类型:',
-                    style: TextStyle(color: Colors.black, fontSize: 30)),
+                    style: STATIC_STYLE.tab),
               ],
             ),
             Row(children: <Widget>[
@@ -78,7 +79,7 @@ class _DishEditPageState extends State<DishEditPage> {
                     return DropdownMenuItem<String>(
                       child: Text(
                         '${category.name}',
-                        style: TextStyle(fontSize: 30),
+                        style: STATIC_STYLE.textField,
                       ),
                       value: category.objectId,
                     );
@@ -89,13 +90,13 @@ class _DishEditPageState extends State<DishEditPage> {
                     });
                   },
                   value: categoryObjectId,
-                  iconSize: 50,
+                  iconSize: 25,
                 ),
               ),
               Expanded(
                 flex: 1,
                 child: Text('是否展示:',
-                    style: TextStyle(color: Colors.black, fontSize: 30)),
+                    style: STATIC_STYLE.tab),
               ),
               Switch(
                 value: isShow,
@@ -104,37 +105,39 @@ class _DishEditPageState extends State<DishEditPage> {
                 onChanged: (bool v) {
                   isShow = v;
                 },
+                
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(0.0, 0.0, 50.0, 0.0),
               ),
             ]),
-            FlatButton(
-              padding: EdgeInsets.all(10),
-              child: Text('确定',
-                  style: TextStyle(color: Colors.white, fontSize: 40)),
-              color: Colors.blueAccent,
-              onPressed: () {
-                // 新增
-                if (isAdd) {
-                  var item = Dish(
-                      name: nameCtrl.text ?? '',
-                      price: priceCtrl.text ?? '',
-                      isShow: isShow);
-                  createDish(item, categoryObjectId);
-                }
-                // 更新
-                else {
-                  var item = widget.dish;
-                  item.name = nameCtrl.text ?? '';
-                  item.price = priceCtrl.text ?? '';
-                  item.isShow = isShow;
-                  updateDish(item, categoryObjectId);
-                }
-              },
-            ),
+            
           ],
         ),
+      ),
+      bottomNavigationBar: FlatButton(
+        padding: EdgeInsets.all(10),
+        child: Text('确定',
+            style: STATIC_STYLE.buttonText),
+        color: Colors.blueAccent,
+        onPressed: () {
+          // 新增
+          if (isAdd) {
+            var item = Dish(
+                name: nameCtrl.text ?? '',
+                price: priceCtrl.text ?? '',
+                isShow: isShow);
+            createDish(item, categoryObjectId);
+          }
+          // 更新
+          else {
+            var item = widget.dish;
+            item.name = nameCtrl.text ?? '';
+            item.price = priceCtrl.text ?? '';
+            item.isShow = isShow;
+            updateDish(item, categoryObjectId);
+          }
+        },
       ),
     );
   }

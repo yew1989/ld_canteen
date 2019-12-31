@@ -5,6 +5,7 @@ import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/category.dart';
 import 'package:ld_canteen/page/dishmanage/dish_edit_page.dart';
 import 'package:ld_canteen/page/dishmanage/dish_list_page.dart';
+import 'package:ld_canteen/page/static_style.dart';
 
 
 class DishManagePage extends StatefulWidget {
@@ -53,7 +54,7 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
     return Container(
       child: Scaffold(
         appBar: new AppBar(
-          title: Text('菜品管理',style: TextStyle(fontSize: 30),),
+          title: Text('菜品管理',style: STATIC_STYLE.appbar,),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add_box,size: 30),
@@ -75,7 +76,7 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
               return Container(
                 padding: EdgeInsets.fromLTRB(20.0,0.0,20.0,0.0),
                 child: new Tab(
-                  child: Text('${category.name}',style: TextStyle(color: Colors.black,fontSize: 20))
+                  child: Text('${category.name}',style: STATIC_STYLE.tab)
                 )
               );
             }).toList(),

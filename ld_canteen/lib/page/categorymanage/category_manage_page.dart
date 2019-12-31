@@ -5,6 +5,7 @@ import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/category.dart';
 import 'package:ld_canteen/page/categorymanage/category_edit_page.dart';
+import 'package:ld_canteen/page/static_style.dart';
 
 class CategroyManagePage extends StatefulWidget {
   @override
@@ -12,6 +13,8 @@ class CategroyManagePage extends StatefulWidget {
 }
 
 class _CategroyManagePageState extends State<CategroyManagePage> {
+
+  
 
   List<Category> categoryList = [];
   
@@ -59,10 +62,10 @@ class _CategroyManagePageState extends State<CategroyManagePage> {
     return Container(
       child: Scaffold(
         appBar: new AppBar(
-          title: Text('菜品分类管理',style: TextStyle(fontSize: 30),),
+          title: Text('菜品分类管理',style: STATIC_STYLE.appbar),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.add_box,size: 30),
+              icon: Icon(Icons.add_box,size: 25),
               onPressed: () {
                 pushToPage(context, CategoryEditPage());
               }
@@ -91,12 +94,12 @@ class _CategroyManagePageState extends State<CategroyManagePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children:[
               Expanded(
-                flex: 3,
-                child: Center(child: Text('菜品类型名称',style: TextStyle(color: Colors.black,fontSize: 20))),
+                flex: 2,
+                child: Center(child: Text('菜品类型名称',style: STATIC_STYLE.tab)),
               ),
               Expanded(
                 flex: 1,
-                child: Center(child: Text('操作',style: TextStyle(color: Colors.black,fontSize: 20))),
+                child: Center(child: Text('操作',style: STATIC_STYLE.tab)),
               ),
             ],
           ),
@@ -104,37 +107,46 @@ class _CategroyManagePageState extends State<CategroyManagePage> {
       );
     } else {
       var category  = categoryList[index-1];
-      return Container(
-        margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
-        height: 60,
-        // color: Colors.white,
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children:[
-              Expanded(
-                flex: 3,
-                child: Center(child: Text('${category.name}',style: TextStyle(color: Colors.black,fontSize: 20))),
-              ),
-              Expanded(
-                flex: 1,
-                child: EditAndDeleteButton(
-                // 删除菜品分类
-                onDeletePressed: (){
-                  deleteCategoryAndDishes(category);
-                },
-                // 编辑菜品分类
-                onEditPressed: (){
-                  pushToPage(context, CategoryEditPage(category: category));
-                }),
-              )
-            ],
+      return GestureDetector(
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
+          height: 60,
+          // color: Colors.white,
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children:[
+                Expanded(
+                  flex: 2,
+                  child: Center(child: Text('${category.name}',style: STATIC_STYLE.listView)),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: EditAndDeleteButton(
+                  // 删除菜品分类
+                  onDeletePressed: (){
+                    deleteCategoryAndDishes(category);
+                  },
+                  // onEditPressed: (){
+                  //   pushToPage(context, CategoryEditPage(category: category));
+                  // }
+                  ),
+                )
+              ],
+              
+            ),
           ),
         ),
+        onTap: (){
+          // 编辑菜品分类
+          pushToPage(context, CategoryEditPage(category: category));
+        },
+        
       );
     }
   }
+  
   // 删除菜品
   void deleteCategoryAndDishes(Category category) {
     

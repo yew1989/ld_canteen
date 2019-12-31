@@ -6,6 +6,7 @@ import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/banner.dart';
 import 'package:ld_canteen/page/bannermanage/banner_edit_page.dart';
+import 'package:ld_canteen/page/static_style.dart';
 
 class BannerManagePage extends StatefulWidget {
   @override
@@ -13,24 +14,19 @@ class BannerManagePage extends StatefulWidget {
 }
 
 class _BannerManagePageState extends State<BannerManagePage> {
+
   List<BannerBean> bannerList = [];
 
   // 请求菜广告栏数据
   void getBannerList() {
-    
     API.getBannerList((List<BannerBean> banners,String msg){
-
       setState(() {
         this.bannerList = banners;
       });
       debugPrint(msg);
-
     }, (String msg){
-
       debugPrint(msg);
-
     });
-
   }
 
   @override
@@ -40,7 +36,6 @@ class _BannerManagePageState extends State<BannerManagePage> {
       getBannerList();
     });
     super.initState();
-    
   }
 
   @override
@@ -75,7 +70,7 @@ class _BannerManagePageState extends State<BannerManagePage> {
     return Container(
       child: Scaffold(
         appBar: new AppBar(
-          title: Text('广告栏管理',style: TextStyle(fontSize: 30),),
+          title: Text('广告栏管理',style: STATIC_STYLE.appbar),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add_box,size: 30),
@@ -109,15 +104,15 @@ class _BannerManagePageState extends State<BannerManagePage> {
             children:[
               Expanded(
                 flex: 1,
-                child: Center(child: Text('广告栏名称',style: TextStyle(color: Colors.black,fontSize: 20))),
+                child: Center(child: Text('广告栏名称',style: STATIC_STYLE.listView)),
               ),
               Expanded(
                 flex: 2,
-                child: Center(child: Text('图片预览',style: TextStyle(color: Colors.black,fontSize: 20))),
+                child: Center(child: Text('图片预览',style: STATIC_STYLE.listView)),
               ),
               Expanded(
                 flex: 1,
-                child: Center(child: Text('操作',style: TextStyle(color: Colors.black,fontSize: 20))),
+                child: Center(child: Text('操作',style: STATIC_STYLE.listView)),
               ),
             ],
           ),
@@ -126,48 +121,55 @@ class _BannerManagePageState extends State<BannerManagePage> {
     } else {
       var  banner  = bannerList[index-1];
       List<String> str = banner.images;
-      return Container(
-        margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
-        height: 60,
-        // color: Colors.white,
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children:[
-              Expanded(
-                flex: 1,
-                child: Center(child: Text('${banner.name}',style: TextStyle(color: Colors.black,fontSize: 20))),
-              ),
-              Expanded(
-                flex: 2,
-                child: Row(
-                  children:str.map((imageUrl) {
-                    try {
-                      return Image(
-                        image: NetworkImage('${imageUrl.toString()}'),
-                      );
-                    } catch (e) {
-                      print(e);
-                    }
-                  }).toList(),
+      return GestureDetector(
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
+          height: 60,
+          // color: Colors.white,
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children:[
+                Expanded(
+                  flex: 1,
+                  child: Center(child: Text('${banner.name}',style: STATIC_STYLE.listView)),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children:str.map((imageUrl) {
+                      try {
+                        return Image(
+                          image: NetworkImage('${imageUrl.toString()}'),
+                        );
+                      } catch (e) {
+                        print(e);
+                      }
+                    }).toList(),
+                  )
+                ),
+                Expanded(
+                  flex: 1,
+                  child: EditAndDeleteButton(
+                  // 删除广告栏
+                  onDeletePressed: (){
+                    deleteBanner(banner);
+                  },
+                  // 编辑广告栏
+                  // onEditPressed: (){
+                  //   pushToPage(context, BannerEditPage(banner: banner));
+                  // }
+                  ),
                 )
-              ),
-              Expanded(
-                flex: 1,
-                child: EditAndDeleteButton(
-                // 删除广告栏
-                onDeletePressed: (){
-                  deleteBanner(banner);
-                },
-                // 编辑广告栏
-                onEditPressed: (){
-                  pushToPage(context, BannerEditPage(banner: banner));
-                }),
-              )
-            ],
+              ],
+            ),
           ),
         ),
+        onTap: (){
+          pushToPage(context, BannerEditPage(banner: banner));
+        },
       );
     }
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/model/picture.dart';
+import 'package:ld_canteen/page/static_style.dart';
 
 class PictureOperationPage extends StatefulWidget {
   final List<PictureBean> pictureList;
@@ -46,13 +47,13 @@ class _PictureOperationPageState extends State<PictureOperationPage> {
     
     return Scaffold(
       appBar: AppBar(
-        title: Text('操作',style: TextStyle(fontSize: 30),),
+        title: Text('操作',style: STATIC_STYLE.appbar),
       ),
       body: Container(
         //height: 400,
         child: GridView.count(
           padding: EdgeInsets.all(10.0),
-          crossAxisCount: 5,
+          crossAxisCount: 2,
           crossAxisSpacing: 10.0,
           mainAxisSpacing: 10.0,
           children: _imagePreview(),
@@ -63,7 +64,7 @@ class _PictureOperationPageState extends State<PictureOperationPage> {
           FlatButton(
               padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
               child: Text('删除',
-                  style: TextStyle(color: Colors.white, fontSize: 40)),
+                  style: STATIC_STYLE.buttonText),
               color: Colors.blueAccent,
               onPressed: (){
                 showDialog(

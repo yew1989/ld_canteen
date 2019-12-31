@@ -4,6 +4,7 @@ import 'package:ld_canteen/api/page/menu/api_menu_test_page.dart';
 import 'package:ld_canteen/page/bannermanage/banner_manage_page.dart';
 import 'package:ld_canteen/page/categorymanage/category_manage_page.dart';
 import 'package:ld_canteen/page/dishmanage/dish_manage_page.dart';
+import 'package:ld_canteen/page/menu/menu_page.dart';
 import 'package:ld_canteen/page/menumanage/menu_manage_page.dart';
 import 'package:ld_canteen/page/menumanage/menu_show_page.dart';
 import 'package:ld_canteen/page/picturemanage/picture_manage_page.dart';
@@ -29,6 +30,7 @@ class _MainPageState extends State<MainPage> {
             buttonTile('素材管理'),
             buttonTile('广告栏管理'),
             buttonTile('菜单展示窗'),
+            buttonTile('今日菜单'),
           ],
         ),
       ),
@@ -39,7 +41,7 @@ class _MainPageState extends State<MainPage> {
     return ListTile(
       title: FlatButton(
       padding: EdgeInsets.all(40),
-      child: Text(title,style: TextStyle(color: Colors.white,fontSize: 40)),
+      child: Text(title,style: TextStyle(color: Colors.white,fontSize: 25)),
       color: Colors.blueAccent,
       onPressed: (){
         if(title == '菜单展示窗'){
@@ -56,6 +58,9 @@ class _MainPageState extends State<MainPage> {
         }
         else if(title == '素材管理') {
           pushToPage(context,PictureManagePage());
+        }
+        else if(title == '今日菜单') {
+          pushToPage(context,MenuPage());
         }
       },
     ));

@@ -5,6 +5,7 @@ import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/banner.dart';
 import 'package:ld_canteen/page/picturemanage/picture_add_page.dart';
 import 'package:ld_canteen/page/picturemanage/picture_operation_page.dart';
+import 'package:ld_canteen/page/static_style.dart';
 
 class BannerEditPage extends StatefulWidget {
 
@@ -45,31 +46,31 @@ class _BannerEditPageState extends State<BannerEditPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: isAdd ? Text('新增广告栏') : Text('编辑广告栏'),
+        title: isAdd ? Text('新增广告栏',style: STATIC_STYLE.appbar,) : Text('编辑广告栏',style: STATIC_STYLE.appbar,),
       ),
       body: Container(
         margin: EdgeInsets.all(40),
         child: ListView(
           children: <Widget>[
-            Text('广告栏名称:', style: TextStyle(color: Colors.black, fontSize: 30)),
+            Text('广告栏名称:', style: STATIC_STYLE.tab),
             TextField(
                 maxLength: 20,
                 maxLines: 1,
-                style: TextStyle(color: Colors.black, fontSize: 30),
+                style: STATIC_STYLE.textField,
                 controller: nameCtrl,
                 decoration: InputDecoration()),
             Row(
               children: <Widget>[
                 Expanded(
-                  flex: 4,
-                  child:Text('图片预览:', style: TextStyle(color: Colors.black, fontSize: 30)),
+                  flex: 3,
+                  child:Text('图片预览:', style: STATIC_STYLE.tab),
                 ),
                 Expanded(
                   flex: 1,
                   child: FlatButton(
                     padding: EdgeInsets.all(1),
                     child: Text('选择图片',
-                      style: TextStyle(color: Colors.white, fontSize: 40)),
+                      style: STATIC_STYLE.buttonText),
                     color: Colors.blueAccent,
                     onPressed: () {
                       setState((){
@@ -85,37 +86,37 @@ class _BannerEditPageState extends State<BannerEditPage> {
               height: 400,
               child: GridView.count(
                 
-                crossAxisCount: 5,
+                crossAxisCount: 2,
                 crossAxisSpacing: 10.0,
                 mainAxisSpacing: 10.0,
                 children: _imagePreview(),
               ),
             ),
-            Padding(padding: EdgeInsets.all(20.0),),
-            FlatButton(
-              padding: EdgeInsets.all(10),
-              child: Text('确定',
-                  style: TextStyle(color: Colors.white, fontSize: 40)),
-              color: Colors.blueAccent,
-              onPressed: () {
-                // 新增
-                if (isAdd) {
-                  var item = BannerBean(
-                      name: nameCtrl.text ?? '',
-                      images: newImageUrl);
-                  createBanner(item);
-                }
-                // 更新
-                else {
-                  var item = widget.banner;
-                  item.name = nameCtrl.text ?? '';
-                  item.images = newImageUrl;
-                  updateBanner(item);
-                }
-              },
-            ),
+            //Padding(padding: EdgeInsets.all(20.0),),
           ],
         ),
+      ),
+      bottomNavigationBar: FlatButton(
+        padding: EdgeInsets.all(10),
+        child: Text('确定',
+            style: STATIC_STYLE.buttonText),
+        color: Colors.blueAccent,
+        onPressed: () {
+          // 新增
+          if (isAdd) {
+            var item = BannerBean(
+                name: nameCtrl.text ?? '',
+                images: newImageUrl);
+            createBanner(item);
+          }
+          // 更新
+          else {
+            var item = widget.banner;
+            item.name = nameCtrl.text ?? '';
+            item.images = newImageUrl;
+            updateBanner(item);
+          }
+        },
       ),
     );
   }

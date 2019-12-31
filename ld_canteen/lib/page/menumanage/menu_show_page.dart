@@ -7,6 +7,7 @@ import 'package:ld_canteen/model/category.dart';
 import 'package:ld_canteen/model/menu.dart';
 import 'package:ld_canteen/page/dishmanage/dish_list_page.dart';
 import 'package:ld_canteen/page/picturemanage/picture_add_page.dart';
+import 'package:ld_canteen/page/static_style.dart';
 
 class MenuShowPage extends StatefulWidget {
   final Menu menu;
@@ -144,7 +145,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('编辑'),
+        title: Text('编辑',style: STATIC_STYLE.appbar,),
       ),
       
       body:Column(
@@ -159,7 +160,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
                     return DropdownMenuItem<String>(
                       child: Text(
                         type['name'],
-                        style: TextStyle(fontSize: 30),
+                        style: STATIC_STYLE.tab,
                       ),
                       value: type['value'],
                     );
@@ -190,27 +191,21 @@ class _MenuShowPageState extends State<MenuShowPage> {
           
         ],
       ),
-       bottomNavigationBar: ButtonBar(
-        children: <Widget>[
-          
-          FlatButton(
-            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: Text('确定',
-                style: TextStyle(color: Colors.white, fontSize: 40)),
-            color: Colors.blueAccent,
-            onPressed: (){
-              setState(() {
-                if(change == 'banner'){
-                  banner.images = imageUrlList;
-                  updateBanner(banner);
-                }
-                updateMenu(_categoryChange,_bannerBeanChange,menu,change);
-                EventBus().emit('REFRESHLIST');
-              });
+      bottomNavigationBar: FlatButton(
+        padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+        child: Text('确定',
+            style: STATIC_STYLE.buttonText),
+        color: Colors.blueAccent,
+        onPressed: (){
+          setState(() {
+            if(change == 'banner'){
+              banner.images = imageUrlList;
+              updateBanner(banner);
             }
-          ),
-          Padding(padding: EdgeInsets.all(20),),
-        ],
+            updateMenu(_categoryChange,_bannerBeanChange,menu,change);
+            EventBus().emit('REFRESHLIST');
+          });
+        }
       ),
     );
   }
@@ -225,7 +220,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
           return DropdownMenuItem<String>(
             child: Text(
               category.name,
-              style: TextStyle(fontSize: 30),
+              style: STATIC_STYLE.tab,
             ),
             value: category.objectId,
           );
@@ -246,7 +241,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
           return DropdownMenuItem<String>(
             child: Text(
               banner.name,
-              style: TextStyle(fontSize: 30),
+              style: STATIC_STYLE.tab,
             ),
             value: banner.objectId,
           );
@@ -270,9 +265,12 @@ class _MenuShowPageState extends State<MenuShowPage> {
   Widget _page(String change,String categoryId,String bannerId){
    
       if (change == 'category') {
+        //EventBus().emit('REFRESH_CATEGORYID',_categoryChange);
         return DishListPage(categoryObjectId:categoryId);
       }else if (change == 'banner') {
         //return MenuEditPage(bannerId: bannerId,urlList:imageUrlList);
+        //bannerId
+        EventBus().emit('REFRESH_BANNERID',_bannerBeanChange);
         return bannerPage();
       }else{
         return Column();
@@ -290,15 +288,15 @@ class _MenuShowPageState extends State<MenuShowPage> {
           Row(
             children: <Widget>[
               Expanded(
-                flex: 4,
-                child:Text('图片预览:', style: TextStyle(color: Colors.black, fontSize: 30)),
+                flex: 3,
+                child:Text('图片预览:', style: STATIC_STYLE.tab),
               ),
               Expanded(
                 flex: 1,
                 child: FlatButton(
                   padding: EdgeInsets.all(1),
                   child: Text('选择图片',
-                    style: TextStyle(color: Colors.white, fontSize: 40)),
+                    style: STATIC_STYLE.buttonText),
                   color: Colors.blueAccent,
                   onPressed: () {
                     setState((){

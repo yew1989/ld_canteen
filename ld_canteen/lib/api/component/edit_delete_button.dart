@@ -16,15 +16,15 @@ class EditAndDeleteButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-            FlatButton(
-              color: Colors.green,
-              child: Text('编辑',style: TextStyle(color: Colors.white,fontSize: 20)),onPressed: (){
-                if(onEditPressed != null)onEditPressed();
-              }),
-            SizedBox(width: 8),
+            // FlatButton(
+            //   color: Colors.green,
+            //   child: Text('编辑',style: TextStyle(color: Colors.white,fontSize: 12)),onPressed: (){
+            //     if(onEditPressed != null)onEditPressed();
+            //   }),
+            // SizedBox(width: 8),
             FlatButton(
               color: Colors.red,
-              child: Text('删除',style: TextStyle(color: Colors.white,fontSize: 20)),onPressed: (){
+              child: Text('删除',style: TextStyle(color: Colors.white,fontSize: 12)),onPressed: (){
                 showDialog(
                   context:context,
                   child: CupertinoAlertDialog(

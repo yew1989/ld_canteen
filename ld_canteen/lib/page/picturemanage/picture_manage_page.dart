@@ -5,6 +5,7 @@ import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/picture.dart';
 import 'package:ld_canteen/page/picturemanage/picture_operation_page.dart';
+import 'package:ld_canteen/page/static_style.dart';
 
 class PictureManagePage extends StatefulWidget {
   @override
@@ -56,7 +57,7 @@ class _PictureManagePageState extends State<PictureManagePage> {
     return Container(
       child: Scaffold(
         appBar: new AppBar(
-          title: Text('图片管理',style: TextStyle(fontSize: 30)),
+          title: Text('图片管理',style: STATIC_STYLE.appbar),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.settings_applications,size: 30),
@@ -71,12 +72,13 @@ class _PictureManagePageState extends State<PictureManagePage> {
               }
             )
           ],
+          centerTitle: true,
         ),
         body: Container(
           //height: 400,
           child: GridView.count(
             padding: EdgeInsets.all(10.0),
-            crossAxisCount: 5,
+            crossAxisCount: 2,
             crossAxisSpacing: 10.0,
             mainAxisSpacing: 10.0,
             children: _imagePreview(),

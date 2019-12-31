@@ -6,6 +6,7 @@ import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/dish.dart';
 import 'package:ld_canteen/page/dishmanage/dish_edit_page.dart';
+import 'package:ld_canteen/page/static_style.dart';
 
 
 class DishListPage extends StatefulWidget {
@@ -126,19 +127,19 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
             children:[
               Expanded(
                 flex: 1,
-                child: Center(child: Text('菜品名称',style: TextStyle(color: Colors.black,fontSize: 20))),
+                child: Center(child: Text('菜品名称',style: STATIC_STYLE.listView)),
               ),
               Expanded(
                 flex: 1,
-                child: Center(child: Text('价格（元）',style: TextStyle(color: Colors.black,fontSize: 20))),
+                child: Center(child: Text('价格（元）',style: STATIC_STYLE.listView)),
               ),
               Expanded(
                 flex: 1,
-                child: Center(child: Text('是否展示',style: TextStyle(color: Colors.black,fontSize: 20))),
+                child: Center(child: Text('是否展示',style: STATIC_STYLE.listView)),
               ),
               Expanded(
                 flex: 1,
-                child: Center(child: Text('操作',style: TextStyle(color: Colors.black,fontSize: 20))),
+                child: Center(child: Text('操作',style: STATIC_STYLE.listView)),
               ),
             ],
           ),
@@ -147,49 +148,55 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
     } else {
       var dish  = dishList[index-1];
       var valueb = dish.isShow;
-      return Container(
-        margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
-        height: 60,
-        // color: Colors.white,
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children:[
-              Expanded(
-                flex: 1,
-                child: Center(child: Text('${dish.name}',style: TextStyle(color: Colors.black,fontSize: 20))),
-              ),
-              Expanded(
-                flex: 1,
-                child: Center(child: Text('${dish.price}',style: TextStyle(color: Colors.black,fontSize: 20))),
-              ),
-              Expanded(
-                flex: 1,
-                child: Center(child:Switch(
-                  value: valueb,
-                  activeColor: Colors.blue,
-                  inactiveTrackColor: Colors.blue.shade50,
-                  onChanged: (bool v) { 
-                    updateDishWithShowState(dish,v);
-                  },
-                ),),
-              ),
-              Expanded(
-                flex: 1,
-                child: EditAndDeleteButton(
-                // 删除菜品
-                onDeletePressed: (){
-                  deleteDish(dish);
-                },
-                // 编辑菜品
-                onEditPressed: (){
-                  pushToPage(context, DishEditPage(categoryId: categoryId,dish: dish));
-                }),
-              )
-            ],
+      return GestureDetector(
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
+          height: 60,
+          // color: Colors.white,
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children:[
+                Expanded(
+                  flex: 1,
+                  child: Center(child: Text('${dish.name}',style: STATIC_STYLE.listView)),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Center(child: Text('${dish.price}',style: STATIC_STYLE.listView)),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Center(child:Switch(
+                    value: valueb,
+                    activeColor: Colors.blue,
+                    inactiveTrackColor: Colors.blue.shade50,
+                    onChanged: (bool v) { 
+                      updateDishWithShowState(dish,v);
+                    },
+                  ),),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: EditAndDeleteButton(
+                    // 删除菜品
+                    onDeletePressed: (){
+                      deleteDish(dish);
+                    },
+                  // 编辑菜品
+                  // onEditPressed: (){
+                  //   pushToPage(context, DishEditPage(categoryId: categoryId,dish: dish));
+                  // }
+                  ),
+                )
+              ],
+            ),
           ),
         ),
+        onTap: (){
+          pushToPage(context, DishEditPage(categoryId: categoryId,dish: dish));
+        },
       );
     }
   }
