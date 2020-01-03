@@ -35,12 +35,15 @@ class PictureUploader{
       ),
       compressQuality: 50,
       androidUiSettings: AndroidUiSettings(
+          hideBottomControls: true,
           toolbarTitle: 'Cropper',
           toolbarColor: Colors.deepOrange,
           toolbarWidgetColor: Colors.white,
           initAspectRatio: CropAspectRatioPreset.original,
           lockAspectRatio: false),
       iosUiSettings: IOSUiSettings(
+        aspectRatioPickerButtonHidden:true,
+        rotateButtonsHidden: true,
         minimumAspectRatio: 1.0,
       )
     );
