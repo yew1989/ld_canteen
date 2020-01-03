@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/picture.dart';
 import 'package:ld_canteen/page/picturemanage/picture_operation_page.dart';
+import 'package:ld_canteen/page/picturemanage/picture_uploader.dart';
 import 'package:ld_canteen/page/static_style.dart';
+
 
 class PictureManagePage extends StatefulWidget {
   @override
@@ -68,7 +71,7 @@ class _PictureManagePageState extends State<PictureManagePage> {
             IconButton(
               icon: Icon(Icons.add_box,size: 30),
               onPressed: () {
-                //pushToPage(context, DishEditPage());
+                uploadPicture(context);
               }
             )
           ],
@@ -138,4 +141,14 @@ class _PictureManagePageState extends State<PictureManagePage> {
       return list;
     }
   }
+
+  // 上传图片
+  void uploadPicture(BuildContext context) {
+    PictureUploader.uploadPicture(context,(_,msg){
+      debugPrint(msg.toString());
+      getPictureList();
+    },(_){});
+  }
+  
+
 }
