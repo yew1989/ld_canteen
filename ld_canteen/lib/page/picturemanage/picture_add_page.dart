@@ -102,7 +102,7 @@ class _PictureAddPageState extends State<PictureAddPage> {
           return Stack(
             alignment:AlignmentDirectional.topEnd,
             children:<Widget>[
-              Image(image: NetworkImage(pic['pictureBean'].url)),
+              Image(image: NetworkImage(pic['pictureBean'].url),fit: BoxFit.cover),
               Container(
                 height: 20,
                 width: 20,

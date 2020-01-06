@@ -142,7 +142,7 @@ class _BannerManagePageState extends State<BannerManagePage> {
                     children:str.map((imageUrl) {
                       try {
                         return Image(
-                          image: NetworkImage('${imageUrl.toString()}'),
+                          image: NetworkImage('${imageUrl.toString()}'),fit: BoxFit.cover,
                         );
                       } catch (e) {
                         print(e);

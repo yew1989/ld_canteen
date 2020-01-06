@@ -161,7 +161,7 @@ class _BannerEditPageState extends State<BannerEditPage> {
               Stack(
                 alignment:AlignmentDirectional.topEnd,
                 children:<Widget>[
-                  Image(image: NetworkImage(imageUrl)),
+                  Image(image: NetworkImage(imageUrl),fit: BoxFit.cover),
                   Container(),
                   IconButton(
                     icon: Icon(Icons.close,size: 30,color: Colors.red,),

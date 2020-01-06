@@ -104,7 +104,7 @@ class _PictureManagePageState extends State<PictureManagePage> {
           return Stack(
             alignment:AlignmentDirectional.topEnd,
             children:<Widget>[
-              Image(image: NetworkImage(pic.url)),
+              Image(image: NetworkImage(pic.url),fit: BoxFit.cover),
               Container(),
               IconButton(
                 icon: Icon(Icons.close,size: 30,color: Colors.red,),

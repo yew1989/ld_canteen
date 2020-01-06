@@ -4,7 +4,7 @@ import 'package:ld_canteen/api/page/menu/api_menu_test_page.dart';
 import 'package:ld_canteen/page/bannermanage/banner_manage_page.dart';
 import 'package:ld_canteen/page/categorymanage/category_manage_page.dart';
 import 'package:ld_canteen/page/dishmanage/dish_manage_page.dart';
-// import 'package:ld_canteen/page/menu/menu_page.dart';
+import 'package:ld_canteen/page/menu/menu_page.dart';
 import 'package:ld_canteen/page/menumanage/menu_manage_page.dart';
 import 'package:ld_canteen/page/menumanage/menu_show_page.dart';
 import 'package:ld_canteen/page/picturemanage/picture_manage_page.dart';
@@ -60,7 +60,7 @@ class _MainPageState extends State<MainPage> {
           pushToPage(context,PictureManagePage());
         }
         else if(title == '今日菜单') {
-          // pushToPage(context,MenuPage());
+          pushToPage(context,MenuPage());
         }
       },
     ));
