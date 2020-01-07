@@ -16,10 +16,11 @@ class _MenuListPageState extends State<MenuListPage> {
 
   List<Dish> dishList = [];
   String categoryObjectId;
-
+  int limit; 
   @override
   void initState() {
     categoryObjectId = widget?.categoryObjectId;
+    limit = widget?.limit ?? 8; 
     getDishList(categoryObjectId);
     super.initState();
   }
@@ -31,13 +32,13 @@ class _MenuListPageState extends State<MenuListPage> {
 
   @override
   Widget build(BuildContext context) {
-    int limit = widget?.limit ?? 8;
+    var list;
     int pageNum = (dishList.length + limit -1)~/limit;
     if (dishList != null) {
       return Swiper(
         itemCount: pageNum,
         itemBuilder: (BuildContext context, int index) {
-          List<Dish> list = dishList.sublist(index*limit , (index+1)*limit < dishList.length ? index*limit : dishList.length);
+          list = dishList.sublist(index*this.limit , (index+1)*this.limit < dishList.length ? index*this.limit : dishList.length);
           return ListView.builder(
             
             itemBuilder: (BuildContext context, int index) {
@@ -68,7 +69,9 @@ class _MenuListPageState extends State<MenuListPage> {
   void getDishList(String categoryObjectId) {
     
     API.getDishList((List<Dish> dishes,String msg){
-      this.dishList = dishes;
+      setState(() {
+        this.dishList = dishes;
+      });
       debugPrint(msg);
     }, (String msg){
       debugPrint(msg);

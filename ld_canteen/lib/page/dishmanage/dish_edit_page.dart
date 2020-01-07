@@ -85,9 +85,7 @@ class _DishEditPageState extends State<DishEditPage> {
                     );
                   }).toList(),
                   onChanged: (String category) {
-                    setState(() {
-                      categoryObjectId = category;
-                    });
+                    categoryObjectId = category;
                   },
                   value: categoryObjectId,
                   iconSize: 25,

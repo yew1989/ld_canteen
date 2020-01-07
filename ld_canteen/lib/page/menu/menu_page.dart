@@ -102,7 +102,7 @@ class _MenuPageState extends State<MenuPage> {
                 title: Text(menu.category.name),
                 automaticallyImplyLeading: false
               ),
-              body: MenuListPage(categoryObjectId:menu.category.objectId,limit:8),
+              body: MenuListPage(categoryObjectId:menu.category.objectId,limit:6),
             ),
           ),
         );
