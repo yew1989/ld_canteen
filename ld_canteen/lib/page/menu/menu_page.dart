@@ -76,38 +76,6 @@ class _MenuPageState extends State<MenuPage> {
     }, limit: limit, skip: skip);
   }
 
-  Widget firstLineWidget(List<Widget> originalWidgets) {
-    if (originalWidgets.length < 3) return Container();
-    return Expanded(
-      flex: 1,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          originalWidgets[0],
-          originalWidgets[1],
-          originalWidgets[2],
-        ],
-      ),
-    );
-  }
-
-  Widget secondLineWidget(List<Widget> originalWidgets) {
-    if (originalWidgets.length < 6) return Container();
-    return Expanded(
-      flex: 1,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          originalWidgets[3],
-          originalWidgets[4],
-          originalWidgets[5],
-        ],
-      ),
-    );
-  }
-
   Widget girdView(BuildContext context) {
     if(_cardList().length < 6) return Container(child: Center(child: Text('菜单栏个数不满6个')));
 
