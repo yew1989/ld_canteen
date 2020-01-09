@@ -112,20 +112,21 @@ class _MenuPageState extends State<MenuPage> {
 
   Widget girdView(BuildContext context) {
     if(_cardList().length < 6) return Container(child: Center(child: Text('菜单栏个数不满6个')));
+
     final deviceHeight = MediaQuery.of(context).size.height;
     final statusHeight = MediaQuery.of(context).padding.top;
     final navBarHeight = kToolbarHeight;
     final areaHeight = deviceHeight - statusHeight - navBarHeight;
     final gap = 10.0;
     final gridHeight = (areaHeight - 3 * gap) / 2;
-    final gridWidth  = gridHeight * 1.2;
+    final gridWidth  = gridHeight * 1.3;
 
     return Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(height: gridHeight,width: gridWidth,child:_cardList()[0]),
@@ -169,6 +170,7 @@ class _MenuPageState extends State<MenuPage> {
           child: SafeArea(
             child: Scaffold(
               appBar: AppBar(
+                centerTitle: true,
                   title: Text(menu.category.name),
                   automaticallyImplyLeading: false),
               body: MenuListPage(
