@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/model/dish.dart';
-import 'package:ld_canteen/page/static_style.dart';
 
 class MenuListPage extends StatefulWidget {
   final String categoryObjectId;
