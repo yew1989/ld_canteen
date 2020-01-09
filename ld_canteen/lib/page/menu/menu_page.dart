@@ -15,11 +15,10 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-
-  DateTime date ;
+  DateTime date;
   String weekday = '';
   List<Menu> menuList = [];
-  PageController _pageController = PageController(initialPage:1);
+  PageController _pageController = PageController(initialPage: 1);
   ScrollController _scrollController = new ScrollController();
   AnimationController _animationController;
   int _curIndex = 1;
@@ -41,27 +40,34 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   //星期  数字转汉字
-  String _numToText(int i){
+  String _numToText(int i) {
     switch (i) {
-      case 1 : return '一';
+      case 1:
+        return '一';
         break;
-      case 2 : return '二';
+      case 2:
+        return '二';
         break;
-      case 3 : return '三';
+      case 3:
+        return '三';
         break;
-      case 4 : return '四';
+      case 4:
+        return '四';
         break;
-      case 5 : return '五';
+      case 5:
+        return '五';
         break;
-      case 6 : return '六';
+      case 6:
+        return '六';
         break;
-      case 7 : return '日';
+      case 7:
+        return '日';
         break;
     }
   }
 
-  // 请求展示列表数据 
-  void getMenuList(int limit,int skip) {
+  // 请求展示列表数据
+  void getMenuList(int limit, int skip) {
     API.getMenuList((List<Menu> menus, String msg) {
       setState(() {
         this.menuList = menus;
@@ -69,55 +75,123 @@ class _MenuPageState extends State<MenuPage> {
       debugPrint(msg);
     }, (String msg) {
       debugPrint(msg);
-    },limit:limit,skip: skip
+    }, limit: limit, skip: skip);
+  }
+
+  Widget firstLineWidget(List<Widget> originalWidgets) {
+    if (originalWidgets.length < 3) return Container();
+    return Expanded(
+      flex: 1,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          originalWidgets[0],
+          originalWidgets[1],
+          originalWidgets[2],
+        ],
+      ),
     );
   }
-  
+
+  Widget secondLineWidget(List<Widget> originalWidgets) {
+    if (originalWidgets.length < 6) return Container();
+    return Expanded(
+      flex: 1,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          originalWidgets[3],
+          originalWidgets[4],
+          originalWidgets[5],
+        ],
+      ),
+    );
+  }
+
+  Widget girdView(BuildContext context) {
+    if(_cardList().length < 6) return Container(child: Center(child: Text('菜单栏个数不满6个')));
+    final deviceHeight = MediaQuery.of(context).size.height;
+    final statusHeight = MediaQuery.of(context).padding.top;
+    final navBarHeight = kToolbarHeight;
+    final areaHeight = deviceHeight - statusHeight - navBarHeight;
+    final gap = 10.0;
+    final gridHeight = (areaHeight - 3 * gap) / 2;
+    final gridWidth  = gridHeight * 1.2;
+
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(height: gridHeight,width: gridWidth,child:_cardList()[0]),
+              Container(height: gridHeight,width: gridWidth,child:_cardList()[1]),
+              Container(height: gridHeight,width: gridWidth,child:_cardList()[2]),
+            ],
+          ),
+         Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(height: gridHeight,width: gridWidth,child:_cardList()[3]),
+              Container(height: gridHeight,width: gridWidth,child:_cardList()[4]),
+              Container(height: gridHeight,width: gridWidth,child:_cardList()[5]),
+            ],
+          ),
+        ],
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('今日菜单',style: TextStyle(fontSize: 30)),
+        title: Text('今日菜单', style: TextStyle(fontSize: 30)),
         actions: <Widget>[
-          Text('${date.year}年${date.month}月${date.day}日  星期'+weekday ,style: TextStyle(fontSize: 25),)
+          Text(
+            '${date.year}年${date.month}月${date.day}日  星期' + weekday,
+            style: TextStyle(fontSize: 25),
+          )
         ],
       ),
-      body: GridView.count(
-        crossAxisCount: 3,
-        crossAxisSpacing: 10.0,
-        mainAxisSpacing: 10.0,
-        children: _cardList(),
-      ),
+      body: girdView(context),
     );
   }
-  
-  List<Widget> _cardList(){
+
+  List<Widget> _cardList() {
     List<Widget> list = [];
-    menuList.map((menu){
+    menuList.map((menu) {
       if (menu.type == 'category') {
         Widget _c = Card(
           child: SafeArea(
             child: Scaffold(
               appBar: AppBar(
-                title: Text(menu.category.name),
-                automaticallyImplyLeading: false
-              ),
-              body: MenuListPage(categoryObjectId:menu.category.objectId,limit:8),
+                  title: Text(menu.category.name),
+                  automaticallyImplyLeading: false),
+              body: MenuListPage(
+                  categoryObjectId: menu.category.objectId, limit: 8),
             ),
           ),
         );
         list.add(_c);
-      }else if (menu.type == 'banner') {
+      } else if (menu.type == 'banner') {
         var length = menu.banner.images.length;
         Widget _b = Card(
           child: Container(
             child: Swiper(
               itemBuilder: (BuildContext context, int index) {
-                if(menu.banner.images != null){
-                  return Image(image: NetworkImage(menu.banner.images[index]),fit: BoxFit.cover,);
+                if (menu.banner.images != null) {
+                  return Image(
+                    image: NetworkImage(menu.banner.images[index]),
+                    fit: BoxFit.cover,
+                  );
                 }
-              }, 
-              itemCount: menu.banner.images  == null ? 0 : menu.banner.images.length,
+              },
+              itemCount:
+                  menu.banner.images == null ? 0 : menu.banner.images.length,
               autoplay: true,
               autoplayDelay: 5000,
             ),
@@ -126,9 +200,7 @@ class _MenuPageState extends State<MenuPage> {
         list.add(_b);
       }
     }).toList();
-    
+
     return list;
   }
-
- 
 }
