@@ -56,6 +56,7 @@ class _PictureAddPageState extends State<PictureAddPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('选择图片',style: STATIC_STYLE.appbar),
+        backgroundColor: STATIC_STYLE.backgroundColor,
       ),
       body: Container(
         //height: 400,

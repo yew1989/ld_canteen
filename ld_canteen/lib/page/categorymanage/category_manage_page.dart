@@ -63,6 +63,7 @@ class _CategroyManagePageState extends State<CategroyManagePage> {
       child: Scaffold(
         appBar: new AppBar(
           title: Text('菜品分类管理',style: STATIC_STYLE.appbar),
+          backgroundColor: STATIC_STYLE.backgroundColor,
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add_box,size: 25),
@@ -88,6 +89,7 @@ class _CategroyManagePageState extends State<CategroyManagePage> {
       return Container(
         margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
         height: 60,
+        color: Color.fromRGBO(241, 241, 241, 1.0),
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -105,7 +107,46 @@ class _CategroyManagePageState extends State<CategroyManagePage> {
           ),
         ),
       );
-    } else {
+    } else if(index.isEven){
+      var category  = categoryList[index-1];
+      return GestureDetector(
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
+          height: 60,
+          color: Color.fromRGBO(241, 241, 241, 1.0),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children:[
+                Expanded(
+                  flex: 2,
+                  child: Center(child: Text('${category.name}',style: STATIC_STYLE.listView)),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: EditAndDeleteButton(
+                  // 删除菜品分类
+                  onDeletePressed: (){
+                    deleteCategoryAndDishes(category);
+                  },
+                  // onEditPressed: (){
+                  //   pushToPage(context, CategoryEditPage(category: category));
+                  // }
+                  ),
+                )
+              ],
+              
+            ),
+          ),
+        ),
+        onTap: (){
+          // 编辑菜品分类
+          pushToPage(context, CategoryEditPage(category: category));
+        },
+        
+      );
+    }else {
       var category  = categoryList[index-1];
       return GestureDetector(
         child: Container(

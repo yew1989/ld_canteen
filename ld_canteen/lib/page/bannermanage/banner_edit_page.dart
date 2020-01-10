@@ -47,9 +47,10 @@ class _BannerEditPageState extends State<BannerEditPage> {
     return Scaffold(
       appBar: AppBar(
         title: isAdd ? Text('新增广告栏',style: STATIC_STYLE.appbar,) : Text('编辑广告栏',style: STATIC_STYLE.appbar,),
+        backgroundColor: STATIC_STYLE.backgroundColor,
       ),
       body: Container(
-        margin: EdgeInsets.all(40),
+        margin: EdgeInsets.all(10),
         child: ListView(
           children: <Widget>[
             Text('广告栏名称:', style: STATIC_STYLE.tab),
@@ -63,7 +64,7 @@ class _BannerEditPageState extends State<BannerEditPage> {
               children: <Widget>[
                 Expanded(
                   flex: 3,
-                  child:Text('图片预览:', style: STATIC_STYLE.tab),
+                  child:Text('图片预览:', style: STATIC_STYLE.textField),
                 ),
                 Expanded(
                   flex: 1,
@@ -150,7 +151,7 @@ class _BannerEditPageState extends State<BannerEditPage> {
     if (newImageUrl.isEmpty) {
       //Text('插入图片:', style: TextStyle(color: Colors.black, fontSize: 30));
       list.add(Container(
-            child:Text('未上传图片！', style: TextStyle(color: Colors.red, fontSize: 30))));
+            child:Text('未上传图片！', style: TextStyle(color: Colors.red, fontSize: 25))));
       return list;
     } else {
       list = newImageUrl.map((imageUrl){

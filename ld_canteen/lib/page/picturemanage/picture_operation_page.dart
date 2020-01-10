@@ -48,6 +48,7 @@ class _PictureOperationPageState extends State<PictureOperationPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('操作',style: STATIC_STYLE.appbar),
+        backgroundColor: STATIC_STYLE.backgroundColor,
       ),
       body: Container(
         //height: 400,

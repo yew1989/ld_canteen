@@ -120,6 +120,7 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
       return Container(
         margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
         height: 60,
+        color: Color.fromRGBO(241, 241, 241, 1.0),
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -131,7 +132,7 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
               ),
               Expanded(
                 flex: 1,
-                child: Center(child: Text('价格（元）',style: STATIC_STYLE.listView)),
+                child: Center(child: Text('价格',style: STATIC_STYLE.listView)),
               ),
               Expanded(
                 flex: 1,
@@ -145,7 +146,61 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
           ),
         ),
       );
-    } else {
+    } else if (index.isEven) {
+      var dish  = dishList[index-1];
+      var valueb = dish.isShow;
+      return GestureDetector(
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
+          height: 60,
+          color: Color.fromRGBO(241, 241, 241, 1.0),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children:[
+                Expanded(
+                  flex: 1,
+                  child: Center(child: Text('${dish.name}',style: STATIC_STYLE.listView)),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Center(child: Text('${dish.price}',style: STATIC_STYLE.listView)),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Center(child:Switch(
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    value: valueb,
+                    activeColor: Colors.blue,
+                    inactiveTrackColor: Colors.blue.shade50,
+                    onChanged: (bool v) { 
+                      updateDishWithShowState(dish,v);
+                    },
+                  ),),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: EditAndDeleteButton(
+                    // 删除菜品
+                    onDeletePressed: (){
+                      deleteDish(dish);
+                    },
+                  // 编辑菜品
+                  // onEditPressed: (){
+                  //   pushToPage(context, DishEditPage(categoryId: categoryId,dish: dish));
+                  // }
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        onTap: (){
+          pushToPage(context, DishEditPage(categoryId: categoryId,dish: dish));
+        },
+      );
+    }else{
       var dish  = dishList[index-1];
       var valueb = dish.isShow;
       return GestureDetector(

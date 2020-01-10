@@ -34,6 +34,7 @@ class _CategoryEditPageState extends State<CategoryEditPage> {
     return Scaffold(
       appBar: AppBar(
         title: isAdd ? Text('新增菜品分类',style: STATIC_STYLE.appbar,) : Text('编辑菜品分类',style: STATIC_STYLE.appbar,),
+        backgroundColor: STATIC_STYLE.backgroundColor,
       ),
       body: Container(
         margin: EdgeInsets.all(40),

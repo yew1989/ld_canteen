@@ -40,7 +40,7 @@ class _BannerManagePageState extends State<BannerManagePage> {
 
   @override
   void dispose() {
-    //EventBus().off('REFRESH');
+    EventBus().off('REFRESH');
     super.dispose();
   }
 
@@ -71,6 +71,7 @@ class _BannerManagePageState extends State<BannerManagePage> {
       child: Scaffold(
         appBar: new AppBar(
           title: Text('广告栏管理',style: STATIC_STYLE.appbar),
+          backgroundColor: STATIC_STYLE.backgroundColor,
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add_box,size: 30),
@@ -97,6 +98,7 @@ class _BannerManagePageState extends State<BannerManagePage> {
       return Container(
         margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
         height: 60,
+        color: Color.fromRGBO(241, 241, 241, 1.0),
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -117,6 +119,59 @@ class _BannerManagePageState extends State<BannerManagePage> {
             ],
           ),
         ),
+      );
+    }else if(index.isEven){
+      var  banner  = bannerList[index-1];
+      List<String> str = banner.images;
+      return GestureDetector(
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
+          height: 60,
+          color: Color.fromRGBO(241, 241, 241, 1.0),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children:[
+                Expanded(
+                  flex: 1,
+                  child: Center(child: Text('${banner.name}',style: STATIC_STYLE.listView)),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children:str.map((imageUrl) {
+                      try {
+                        return Image(
+                          image: NetworkImage('${imageUrl.toString()}'),fit: BoxFit.cover,
+                        );
+                      } catch (e) {
+                        print(e);
+                      }
+                    }).toList(),
+                  )
+                ),
+                Expanded(
+                  flex: 1,
+                  child: EditAndDeleteButton(
+                  // 删除广告栏
+                  onDeletePressed: (){
+                    deleteBanner(banner);
+                  },
+                  // 编辑广告栏
+                  // onEditPressed: (){
+                  //   pushToPage(context, BannerEditPage(banner: banner));
+                  // }
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        onTap: (){
+          pushToPage(context, BannerEditPage(banner: banner));
+        },
       );
     } else {
       var  banner  = bannerList[index-1];

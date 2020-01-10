@@ -19,7 +19,7 @@ class MenuShowPage extends StatefulWidget {
 class _MenuShowPageState extends State<MenuShowPage> {
 
   //选取分类
-  var types = [{'name':'选择展示框内容分类','value':'xxxx'},{'name':'菜品类型','value':'category'},{'name':'广告图片','value':'banner'}];
+  var types = [{'name':'选择展示框分类','value':'xxxx'},{'name':'菜品类型','value':'category'},{'name':'广告图片','value':'banner'}];
 
   //String _typeValue = 'xxxx';
 
@@ -146,11 +146,12 @@ class _MenuShowPageState extends State<MenuShowPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('编辑',style: STATIC_STYLE.appbar,),
+        backgroundColor: STATIC_STYLE.backgroundColor,
       ),
       
       body:Column(
         children: <Widget>[
-          Padding(padding: EdgeInsets.all(15),),
+          Padding(padding: EdgeInsets.all(10),),
           Row(
             children: <Widget>[
               Expanded(
@@ -174,9 +175,10 @@ class _MenuShowPageState extends State<MenuShowPage> {
                     });
                   },
                   value: change ,
-                  iconSize: 50,
+                  iconSize: 25,
                 ),
               ),
+              Padding(padding: EdgeInsets.all(10),),
               Expanded(
                 flex: 1,
                 child: _dropdownButton(),
@@ -232,7 +234,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
           });
         },
         value: _categoryChange,
-        iconSize: 50,
+        iconSize: 25,
       );
     }
     else if (change == 'banner') {
@@ -254,7 +256,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
           });
         },
         value: _bannerBeanChange ,
-        iconSize: 50,
+        iconSize: 25,
       );
     }else{
       return null;
@@ -282,7 +284,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
   Widget bannerPage(){
     
     return Container(
-      margin: EdgeInsets.all(40),
+      margin: EdgeInsets.all(10),
       child: ListView(
         children: <Widget>[
           Row(

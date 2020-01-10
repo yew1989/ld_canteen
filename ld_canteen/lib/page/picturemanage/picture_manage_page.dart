@@ -61,6 +61,7 @@ class _PictureManagePageState extends State<PictureManagePage> {
       child: Scaffold(
         appBar: new AppBar(
           title: Text('图片管理',style: STATIC_STYLE.appbar),
+          backgroundColor: STATIC_STYLE.backgroundColor,
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.settings_applications,size: 30),

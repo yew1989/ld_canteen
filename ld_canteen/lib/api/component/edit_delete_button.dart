@@ -24,7 +24,7 @@ class EditAndDeleteButton extends StatelessWidget {
             // SizedBox(width: 8),
             FlatButton(
               color: Colors.red,
-              child: Text('删除',style: TextStyle(color: Colors.white,fontSize: 12)),onPressed: (){
+              child: Text('删除',style: TextStyle(color: Colors.white,fontSize: 18)),onPressed: (){
                 showDialog(
                   context:context,
                   child: CupertinoAlertDialog(

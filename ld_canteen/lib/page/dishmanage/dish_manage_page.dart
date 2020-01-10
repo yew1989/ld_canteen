@@ -55,6 +55,7 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
       child: Scaffold(
         appBar: new AppBar(
           title: Text('菜品管理',style: STATIC_STYLE.appbar,),
+          backgroundColor: STATIC_STYLE.backgroundColor,
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add_box,size: 30),

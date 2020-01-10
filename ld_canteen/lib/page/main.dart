@@ -8,6 +8,7 @@ import 'package:ld_canteen/page/menu/menu_page.dart';
 import 'package:ld_canteen/page/menumanage/menu_manage_page.dart';
 import 'package:ld_canteen/page/menumanage/menu_show_page.dart';
 import 'package:ld_canteen/page/picturemanage/picture_manage_page.dart';
+import 'package:ld_canteen/page/static_style.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -22,6 +23,7 @@ class _MainPageState extends State<MainPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('力得食堂'),
+          backgroundColor: STATIC_STYLE.backgroundColor,
         ),
         body: ListView(
           children: <Widget>[
@@ -40,8 +42,8 @@ class _MainPageState extends State<MainPage> {
   Widget buttonTile(String title) {
     return ListTile(
       title: FlatButton(
-      padding: EdgeInsets.all(40),
-      child: Text(title,style: TextStyle(color: Colors.white,fontSize: 25)),
+      padding: EdgeInsets.all(25),
+      child: Text(title,style: TextStyle(color: Colors.white,fontSize: 18)),
       color: Colors.blueAccent,
       onPressed: (){
         if(title == '菜单展示窗'){

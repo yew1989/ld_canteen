@@ -46,6 +46,7 @@ class _DishEditPageState extends State<DishEditPage> {
     return Scaffold(
       appBar: AppBar(
         title: isAdd ? Text('新增菜品',style: STATIC_STYLE.appbar,) : Text('编辑菜品',style: STATIC_STYLE.appbar,),
+        backgroundColor: STATIC_STYLE.backgroundColor,
       ),
       body: Container(
         margin: EdgeInsets.all(40),
@@ -73,7 +74,7 @@ class _DishEditPageState extends State<DishEditPage> {
             ),
             Row(children: <Widget>[
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: DropdownButton<String>(
                   items: categories.map((category) {
                     return DropdownMenuItem<String>(
@@ -92,7 +93,7 @@ class _DishEditPageState extends State<DishEditPage> {
                 ),
               ),
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: Text('是否展示:',
                     style: STATIC_STYLE.tab),
               ),
@@ -103,13 +104,8 @@ class _DishEditPageState extends State<DishEditPage> {
                 onChanged: (bool v) {
                   isShow = v;
                 },
-                
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0.0, 0.0, 50.0, 0.0),
               ),
             ]),
-            
           ],
         ),
       ),

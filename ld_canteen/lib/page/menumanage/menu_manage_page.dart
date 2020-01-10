@@ -53,6 +53,7 @@ class _MenuManagePageState extends State<MenuManagePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('菜品展示管理',style: STATIC_STYLE.appbar,),
+        backgroundColor: STATIC_STYLE.backgroundColor,
       ),
       
       body:Container(
@@ -70,6 +71,7 @@ class _MenuManagePageState extends State<MenuManagePage> {
       return Container(
         margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
         height: 60,
+        color: Color.fromRGBO(241, 241, 241, 1.0),
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -95,13 +97,59 @@ class _MenuManagePageState extends State<MenuManagePage> {
           ),
         ),
       );
-    } else {
+    } else if(index.isEven){
       var menu  = menuList[index-1];
       //var valueb = dish.isShow;
       return Container(
         margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
         height: 60,
-        // color: Colors.white,
+        color: Color.fromRGBO(241, 241, 241, 1.0),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children:[
+              Expanded(
+                flex: 1,
+                child: Center(child: Text('第${index}格',style: STATIC_STYLE.listView)),
+              ),
+              Expanded(
+                flex: 1,
+                child: Center(
+                  child: Text('${menu.type == "category" ? "菜品类型" : "广告图片"}',
+                    style: STATIC_STYLE.listView
+                  )
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Center(
+                  child: Text('${menu.type == "category" ? (menu.category.name) : (menu.banner.name)}',
+                    style: STATIC_STYLE.listView
+                  )
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: FlatButton(
+                  color: Colors.green,
+                  child: Text('编辑',style: TextStyle(fontSize: 12.0,color: Colors.white)), 
+                  onPressed: () {
+                    pushToPage(context, MenuShowPage(menu:menu));
+                  },
+                )
+              )
+            ],
+          ),
+        ),
+      );
+    }else{
+      var menu  = menuList[index-1];
+      //var valueb = dish.isShow;
+      return Container(
+        margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
+        height: 60,
+        //color: Color.fromRGBO(241, 241, 241, 1.0),
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
