@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -22,6 +23,14 @@ class _MenuPageState extends State<MenuPage> {
   int _curIndex = 1;
   Timer _timer;
   bool lastPage = false;
+
+  final List<Color> listColor = [
+      Color.fromRGBO(252, 86, 9, 1.0),
+      Color.fromRGBO(16, 123, 229, 1.0),
+      Color.fromRGBO(26, 193, 65, 1.0),
+      Color.fromRGBO(47, 29, 27, 1.0),
+      Color.fromRGBO(40, 44, 49, 1.0),
+      Color.fromRGBO(40, 44, 49, 1.0),];
 
   @override
   void initState() {
@@ -87,7 +96,14 @@ class _MenuPageState extends State<MenuPage> {
     final gridHeight = (areaHeight - 3 * gap) / 2;
     final gridWidth  = gridHeight * 1.3;
 
-    return Column(
+    return Container(
+      decoration: BoxDecoration(
+        image:DecorationImage(
+          image: AssetImage('images/bg2.jpg'),
+          fit: BoxFit.cover,
+        )
+      ),
+      child:Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -101,7 +117,7 @@ class _MenuPageState extends State<MenuPage> {
             ],
           ),
          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(height: gridHeight,width: gridWidth,child:_cardList()[3]),
@@ -110,21 +126,34 @@ class _MenuPageState extends State<MenuPage> {
             ],
           ),
         ],
+      )
     );
   }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('今日菜单', style: TextStyle(fontSize: 30)),
-        actions: <Widget>[
-          Text(
-            '${date.year}年${date.month}月${date.day}日  星期' + weekday,
-            style: TextStyle(fontSize: 25),
-          )
-        ],
+    return Container(
+      decoration: BoxDecoration(
+        image:DecorationImage(
+          image: AssetImage('images/bg2.jpg'),
+          fit: BoxFit.cover,
+        )
       ),
-      body: girdView(context),
+      child:Scaffold(
+        appBar: AppBar(
+          title: Text('今日菜单', style: TextStyle(fontSize: 30)),
+          actions: <Widget>[
+            Text(
+              '${date.year}年${date.month}月${date.day}日  星期' + weekday,
+              style: TextStyle(fontSize: 20),
+            )
+          ],
+          backgroundColor: Color.fromRGBO(40, 44, 49, 1.0),
+          centerTitle: true,
+        ),
+        //backgroundColor: Color.fromRGBO(40, 44, 49, 1.0),
+        body: girdView(context),
+      )
     );
   }
 
@@ -137,10 +166,12 @@ class _MenuPageState extends State<MenuPage> {
             child: Scaffold(
               appBar: AppBar(
                 centerTitle: true,
-                title: Text(menu.category.name),
-                automaticallyImplyLeading: false),
+                title: Text(menu.category.name,style: TextStyle(fontSize: 25),),
+                automaticallyImplyLeading: false,
+                backgroundColor: listColor[menu.sort-1],
+              ),
               body: MenuListPage(
-                  categoryObjectId: menu.category.objectId, limit: 8),
+                  categoryObjectId: menu.category.objectId, limit: 6),
             ),
           ),
         );

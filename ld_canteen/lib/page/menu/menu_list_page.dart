@@ -37,29 +37,52 @@ class _MenuListPageState extends State<MenuListPage> {
       return Swiper(
         itemCount: pageNum,
         itemBuilder: (BuildContext context, int index) {
-          list = dishList.sublist(index*this.limit , (index+1)*this.limit < dishList.length ? index*this.limit : dishList.length);
+          list = dishList.sublist(index*this.limit , (index+1)*this.limit < dishList.length ? (index+1)*this.limit : dishList.length);
           return ListView.builder(
             
             itemBuilder: (BuildContext context, int index) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children:[
-                  Expanded(
-                    flex: 1,
-                    child: Center(child: Text('${list[index].name}',style: TextStyle(fontSize: 40))),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Center(child: Text('${list[index].price}',style: TextStyle(fontSize: 40))),
-                  ),
-                ]
-              );
+              if(index.isEven){
+                return  Container(
+                  color: Color.fromRGBO(241, 241, 241, 1.0),
+                  child:Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children:[
+                      Expanded(
+                        flex: 1,
+                        child: Center(child: Text('${list[index].name}',style: TextStyle(fontSize: 29))),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Center(child: Text('${list[index].price}',style: TextStyle(fontSize: 29))),
+                      ),
+                    ]
+                  )
+                );
+              }
+              if(index.isOdd){
+                return  Container(
+                  child:Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children:[
+                      Expanded(
+                        flex: 1,
+                        child: Center(child: Text('${list[index].name}',style: TextStyle(fontSize: 29))),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Center(child: Text('${list[index].price}',style: TextStyle(fontSize: 29))),
+                      ),
+                    ]
+                  )
+                );
+              }
             },
             itemCount: list.length,
           );
         },
-        autoplay: true,
+        autoplay: pageNum == 1 || pageNum == 0 ? false : true ,
         autoplayDelay: 5000,
       );
     }

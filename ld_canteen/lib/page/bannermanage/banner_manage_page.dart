@@ -40,7 +40,7 @@ class _BannerManagePageState extends State<BannerManagePage> {
 
   @override
   void dispose() {
-    EventBus().off('REFRESH');
+    //EventBus().off('REFRESH');
     super.dispose();
   }
 
