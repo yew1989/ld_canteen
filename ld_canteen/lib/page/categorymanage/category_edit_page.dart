@@ -17,6 +17,7 @@ class _CategoryEditPageState extends State<CategoryEditPage> {
 
   @override
   void initState() {
+    nameCtrl.text = widget?.category?.name ?? '';
     super.initState();
   }
 
@@ -29,8 +30,6 @@ class _CategoryEditPageState extends State<CategoryEditPage> {
   Widget build(BuildContext context) {
 
     var isAdd = widget.category == null;
-    nameCtrl.text = widget?.category?.name ?? '';
-
     return Scaffold(
       appBar: AppBar(
         title: isAdd ? Text('新增菜品分类',style: STATIC_STYLE.appbar,) : Text('编辑菜品分类',style: STATIC_STYLE.appbar,),

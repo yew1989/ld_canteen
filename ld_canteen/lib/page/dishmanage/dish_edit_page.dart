@@ -27,6 +27,9 @@ class _DishEditPageState extends State<DishEditPage> {
   @override
   void initState() {
     categoryObjectId = widget?.categoryId ?? newCategory.objectId;
+    nameCtrl.text = widget?.dish?.name ?? '';
+    priceCtrl.text = widget?.dish?.price ?? '';
+    isShow = widget?.dish?.isShow ?? true;
     getCategoryList();
     super.initState();
   }
@@ -39,10 +42,7 @@ class _DishEditPageState extends State<DishEditPage> {
   @override
   Widget build(BuildContext context) {
     var isAdd = widget.dish == null;
-    nameCtrl.text = widget?.dish?.name ?? '';
-    priceCtrl.text = widget?.dish?.price ?? '';
-    isShow = widget?.dish?.isShow ?? true;
-
+    
     return Scaffold(
       appBar: AppBar(
         title: isAdd ? Text('新增菜品',style: STATIC_STYLE.appbar,) : Text('编辑菜品',style: STATIC_STYLE.appbar,),
@@ -86,7 +86,9 @@ class _DishEditPageState extends State<DishEditPage> {
                     );
                   }).toList(),
                   onChanged: (String category) {
-                    categoryObjectId = category;
+                    setState(() {
+                      categoryObjectId = category;
+                    });
                   },
                   value: categoryObjectId,
                   iconSize: 25,
@@ -168,7 +170,6 @@ class _DishEditPageState extends State<DishEditPage> {
         this.categories = categories;
         categories.insert(0, newCategory);
       });
-
       debugPrint(msg);
     }, (String msg) {
       debugPrint(msg);

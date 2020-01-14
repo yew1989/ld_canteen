@@ -25,7 +25,7 @@ class _BannerEditPageState extends State<BannerEditPage> {
 
     final copyBanner = widget?.banner?.copy() ?? null;
     newImageUrl = copyBanner?.images ?? List<String>();
-    
+     nameCtrl.text = widget?.banner?.name ?? '';
     EventBus().on('REFRESH', (_) {
       //newImageUrl;
     });
@@ -42,8 +42,6 @@ class _BannerEditPageState extends State<BannerEditPage> {
   Widget build(BuildContext context) {
 
     var isAdd = widget.banner == null;
-    nameCtrl.text = widget?.banner?.name ?? '';
-
     return Scaffold(
       appBar: AppBar(
         title: isAdd ? Text('新增广告栏',style: STATIC_STYLE.appbar,) : Text('编辑广告栏',style: STATIC_STYLE.appbar,),
@@ -86,7 +84,6 @@ class _BannerEditPageState extends State<BannerEditPage> {
             Container(
               height: 400,
               child: GridView.count(
-                
                 crossAxisCount: 2,
                 crossAxisSpacing: 10.0,
                 mainAxisSpacing: 10.0,
@@ -191,7 +188,6 @@ class _BannerEditPageState extends State<BannerEditPage> {
     try {
       NetworkImage(str);
       newImageUrl.add(str);
-      
       print('加载成功');
     } catch (e) {
       print('加载失败:'+e);
