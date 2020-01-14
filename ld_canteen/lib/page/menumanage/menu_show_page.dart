@@ -27,8 +27,8 @@ class _MenuShowPageState extends State<MenuShowPage> {
   String change = '';
   Category _category = new Category(name: '选择菜品类型',objectId: '1111');
   BannerBean _bannerBean = new BannerBean(name: '选择广告',objectId: '2222');
-  String _categoryChange = '';
-  String _bannerBeanChange = '';
+  String _categoryChange = '1111';
+  String _bannerBeanChange = '2222';
   List<String> imageUrlList = [];
   BannerBean banner = BannerBean();
 
@@ -62,8 +62,8 @@ class _MenuShowPageState extends State<MenuShowPage> {
   void initState() {
     this.menu = widget?.menu ?? null ;
     change = widget?.menu?.type ?? '';
-    _categoryChange = this.menu.category?.objectId ?? _category.objectId ;
-    _bannerBeanChange = this.menu.banner?.objectId ?? _bannerBean.objectId ;
+    _categoryChange = this.menu?.category?.objectId ?? _category.objectId ;
+    _bannerBeanChange = this.menu?.banner?.objectId ?? _bannerBean.objectId ;
     getCategoryList();
     getBannerList();
     getBanner(_bannerBeanChange);
@@ -205,9 +205,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
 
   //下拉框
   Widget _dropdownButton(){
-    
     if (change == 'category') {
-      
       return DropdownButton<String>(
         items: categoryList.map((category) {
           return DropdownMenuItem<String>(

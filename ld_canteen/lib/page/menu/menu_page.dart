@@ -160,7 +160,7 @@ class _MenuPageState extends State<MenuPage> {
             child: Scaffold(
               appBar: AppBar(
                 centerTitle: true,
-                title: Text(menu.category.name,style: TextStyle(fontSize: 25),),
+                title: Text(menu?.category?.name ?? '',style: TextStyle(fontSize: 25),),
                 automaticallyImplyLeading: false,
                 backgroundColor: listColor[menu.sort-1],
               ),
@@ -175,9 +175,9 @@ class _MenuPageState extends State<MenuPage> {
           child: Container(
             child: Swiper(
               itemBuilder: (BuildContext context, int index) {
-                if (menu.banner.images != null) {
+                if (menu?.banner?.images != null) {
                   return Image(
-                    image: NetworkImage(menu.banner.images[index]),
+                    image: NetworkImage(menu?.banner?.images[index]),
                     fit: BoxFit.cover,
                   );
                 }
