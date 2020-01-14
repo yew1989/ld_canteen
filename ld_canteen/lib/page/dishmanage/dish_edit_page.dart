@@ -101,8 +101,8 @@ class _DishEditPageState extends State<DishEditPage> {
               ),
               Switch(
                 value: isShow,
-                activeColor: Colors.blue,
-                inactiveTrackColor: Colors.blue.shade50,
+                activeColor: STATIC_STYLE.backgroundColor,
+                inactiveTrackColor: Colors.black12,
                 onChanged: (bool v) {
                   isShow = v;
                 },

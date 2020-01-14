@@ -61,8 +61,7 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
           length: categoryList.length,
           child: new Scaffold(
             backgroundColor: Colors.white,
-            appBar:
-            new TabBar(
+            appBar:new TabBar(
               indicatorColor: Colors.blue,
               tabs: categoryList.map((Category category){
                 return Container(
@@ -73,6 +72,7 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
                 );
               }).toList(),
               isScrollable: true,
+              
             ),
             body:new TabBarView(
               children: categoryList.map((Category category){

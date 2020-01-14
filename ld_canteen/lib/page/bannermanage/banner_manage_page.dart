@@ -1,4 +1,6 @@
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/component/edit_delete_button.dart';
@@ -109,10 +111,6 @@ class _BannerManagePageState extends State<BannerManagePage> {
                 flex: 2,
                 child: Center(child: Text('图片预览',style: STATIC_STYLE.listView)),
               ),
-              Expanded(
-                flex: 1,
-                child: Center(child: Text('操作',style: STATIC_STYLE.listView)),
-              ),
             ],
           ),
         ),
@@ -120,7 +118,8 @@ class _BannerManagePageState extends State<BannerManagePage> {
     }else if(index.isEven){
       var  banner  = bannerList[index-1];
       List<String> str = banner.images;
-      return GestureDetector(
+      return Slidable(
+        child:GestureDetector(
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
           height: 60,
@@ -149,15 +148,6 @@ class _BannerManagePageState extends State<BannerManagePage> {
                     }).toList(),
                   )
                 ),
-                Expanded(
-                  flex: 1,
-                  child: EditAndDeleteButton(
-                    // 删除广告栏
-                    onDeletePressed: (){
-                      deleteBanner(banner);
-                    },
-                  ),
-                )
               ],
             ),
           ),
@@ -165,55 +155,106 @@ class _BannerManagePageState extends State<BannerManagePage> {
         onTap: (){
           pushToPage(context, BannerEditPage(banner: banner));
         },
-      );
+      ),
+      actionPane: SlidableScrollActionPane(),
+        secondaryActions: <Widget>[
+          IconSlideAction(
+            caption: '删除',
+            color: Colors.red,
+            icon: Icons.delete,
+            closeOnTap: false,
+            onTap: (){
+              showDialog(
+                context:context,
+                child: CupertinoAlertDialog(
+                  title:Text('提示'),
+                  content:Center(
+                    child: Text('是否确定删除该项'),
+                  ),
+                  actions: <Widget>[
+                    CupertinoDialogAction(isDestructiveAction: true,child: Text('确定'),onPressed: (){
+                      deleteBanner(banner);
+                      Navigator.of(context).pop();
+                    }),
+                    CupertinoDialogAction(child: Text('取消'),onPressed: (){
+                      Navigator.of(context).pop();
+                    }),
+                  ],
+                )
+              );
+            },
+          ),
+        ],);
     } else {
       var  banner  = bannerList[index-1];
       List<String> str = banner.images;
-      return GestureDetector(
-        child: Container(
-          margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
-          height: 60,
-          // color: Colors.white,
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children:[
-                Expanded(
-                  flex: 1,
-                  child: Center(child: Text('${banner.name}',style: STATIC_STYLE.listView)),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children:str.map((imageUrl) {
-                      try {
-                        return Image(
-                          image: NetworkImage('${imageUrl.toString()}'),fit: BoxFit.cover,
-                        );
-                      } catch (e) {
-                        print(e);
-                      }
-                    }).toList(),
-                  )
-                ),
-                Expanded(
-                  flex: 1,
-                  child: EditAndDeleteButton(
-                    // 删除广告栏
-                    onDeletePressed: (){
-                      deleteBanner(banner);
-                    },
+      return Slidable(
+        child:GestureDetector(
+          child: Container(
+            margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
+            height: 60,
+            // color: Colors.white,
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children:[
+                  Expanded(
+                    flex: 1,
+                    child: Center(child: Text('${banner.name}',style: STATIC_STYLE.listView)),
                   ),
-                )
-              ],
+                  Expanded(
+                    flex: 2,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children:str.map((imageUrl) {
+                        try {
+                          return Image(
+                            image: NetworkImage('${imageUrl.toString()}'),fit: BoxFit.cover,
+                          );
+                        } catch (e) {
+                          print(e);
+                        }
+                      }).toList(),
+                    )
+                  ),
+                ],
+              ),
             ),
           ),
+          onTap: (){
+            pushToPage(context, BannerEditPage(banner: banner));
+          },
         ),
-        onTap: (){
-          pushToPage(context, BannerEditPage(banner: banner));
-        },
+        actionPane: SlidableScrollActionPane(),
+        secondaryActions: <Widget>[
+          IconSlideAction(
+            caption: '删除',
+            color: Colors.red,
+            icon: Icons.delete,
+            closeOnTap: false,
+            onTap: (){
+              showDialog(
+                context:context,
+                child: CupertinoAlertDialog(
+                  title:Text('提示'),
+                  content:Center(
+                    child: Text('是否确定删除该项'),
+                  ),
+                  actions: <Widget>[
+                    CupertinoDialogAction(isDestructiveAction: true,child: Text('确定'),onPressed: (){
+                      deleteBanner(banner);
+                      Navigator.of(context).pop();
+                    }),
+                    CupertinoDialogAction(child: Text('取消'),onPressed: (){
+                      Navigator.of(context).pop();
+                    }),
+                  ],
+                )
+              );
+            },
+          ),
+        ],
       );
     }
   }

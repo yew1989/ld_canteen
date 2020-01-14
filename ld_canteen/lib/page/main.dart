@@ -32,7 +32,7 @@ class _MainPageState extends State<MainPage> {
             buttonTile('素材管理'),
             buttonTile('广告栏管理'),
             buttonTile('菜单展示窗'),
-            buttonTile('今日菜单'),
+            //buttonTile('今日菜单'),
           ],
         ),
       ),
@@ -44,7 +44,7 @@ class _MainPageState extends State<MainPage> {
       title: FlatButton(
       padding: EdgeInsets.all(25),
       child: Text(title,style: TextStyle(color: Colors.white,fontSize: 18)),
-      color: Colors.blueAccent,
+      color: STATIC_STYLE.backgroundColor,
       onPressed: (){
         if(title == '菜单展示窗'){
           pushToPage(context,MenuManagePage());

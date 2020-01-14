@@ -188,7 +188,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
         padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
         child: Text('确定',
             style: STATIC_STYLE.buttonText),
-        color: Colors.blueAccent,
+        color: STATIC_STYLE.backgroundColor,
         onPressed: (){
           setState(() {
             if(change == 'banner'){
@@ -297,9 +297,9 @@ class _MenuShowPageState extends State<MenuShowPage> {
             ],
           ),
           Container(
-            height: 300,
+            height: 700,
             child: GridView.count(
-              crossAxisCount: 5,
+              crossAxisCount: 2,
               crossAxisSpacing: 10.0,
               mainAxisSpacing: 10.0,
               children: _imagePreview(),

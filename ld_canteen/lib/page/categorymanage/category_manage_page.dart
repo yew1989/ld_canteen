@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/api/component/edit_delete_button.dart';
 import 'package:ld_canteen/api/component/event_bus.dart';
@@ -90,52 +92,71 @@ class _CategroyManagePageState extends State<CategroyManagePage> {
                 flex: 2,
                 child: Center(child: Text('菜品类型名称',style: STATIC_STYLE.tab)),
               ),
-              Expanded(
-                flex: 1,
-                child: Center(child: Text('操作',style: STATIC_STYLE.tab)),
-              ),
             ],
           ),
         ),
       );
     } else if(index.isEven){
       var category  = categoryList[index-1];
-      return GestureDetector(
-        child: Container(
-          margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
-          height: 60,
-          color: Color.fromRGBO(241, 241, 241, 1.0),
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children:[
-                Expanded(
-                  flex: 2,
-                  child: Center(child: Text('${category.name}',style: STATIC_STYLE.listView)),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: EditAndDeleteButton(
-                    // 删除菜品分类
-                    onDeletePressed: (){
-                      deleteCategoryAndDishes(category);
-                    },
+      return Slidable(
+        child:GestureDetector(
+          child: Container(
+            margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
+            height: 60,
+            color: Color.fromRGBO(241, 241, 241, 1.0),
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children:[
+                  Expanded(
+                    flex: 2,
+                    child: Center(child: Text('${category.name}',style: STATIC_STYLE.listView)),
                   ),
-                )
-              ],
+                ],
+              ),
             ),
           ),
+          onTap: (){
+            // 编辑菜品分类
+            pushToPage(context, CategoryEditPage(category: category));
+          },
         ),
-        onTap: (){
-          // 编辑菜品分类
-          pushToPage(context, CategoryEditPage(category: category));
-        },
+        actionPane: SlidableScrollActionPane(),
+        secondaryActions: <Widget>[
+          IconSlideAction(
+            caption: '删除',
+            color: Colors.red,
+            icon: Icons.delete,
+            closeOnTap: false,
+            onTap: (){
+              showDialog(
+                context:context,
+                child: CupertinoAlertDialog(
+                  title:Text('提示'),
+                  content:Center(
+                    child: Text('是否确定删除该项'),
+                  ),
+                  actions: <Widget>[
+                    CupertinoDialogAction(isDestructiveAction: true,child: Text('确定'),onPressed: (){
+                      deleteCategoryAndDishes(category);
+                      Navigator.of(context).pop();
+                    }),
+                    CupertinoDialogAction(child: Text('取消'),onPressed: (){
+                      Navigator.of(context).pop();
+                    }),
+                  ],
+                )
+              );
+            },
+          ),
+        ]
       );
     }else {
       var category  = categoryList[index-1];
-      return GestureDetector(
-        child: Container(
+      return Slidable(
+        child:GestureDetector(
+          child:Container(
           margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
           height: 60,
           child: Center(
@@ -147,23 +168,43 @@ class _CategroyManagePageState extends State<CategroyManagePage> {
                   flex: 2,
                   child: Center(child: Text('${category.name}',style: STATIC_STYLE.listView)),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: EditAndDeleteButton(
-                    // 删除菜品分类
-                    onDeletePressed: (){
-                      deleteCategoryAndDishes(category);
-                    },
-                  ),
-                )
               ],
             ),
           ),
-        ),
+        ), 
         onTap: (){
           // 编辑菜品分类
           pushToPage(context, CategoryEditPage(category: category));
-        },
+        }, ),
+        actionPane: SlidableScrollActionPane(),
+        secondaryActions: <Widget>[
+          IconSlideAction(
+            caption: '删除',
+            color: Colors.red,
+            icon: Icons.delete,
+            closeOnTap: false,
+            onTap: (){
+              showDialog(
+                context:context,
+                child: CupertinoAlertDialog(
+                  title:Text('提示'),
+                  content:Center(
+                    child: Text('是否确定删除该项'),
+                  ),
+                  actions: <Widget>[
+                    CupertinoDialogAction(isDestructiveAction: true,child: Text('确定'),onPressed: (){
+                      deleteCategoryAndDishes(category);
+                      Navigator.of(context).pop();
+                    }),
+                    CupertinoDialogAction(child: Text('取消'),onPressed: (){
+                      Navigator.of(context).pop();
+                    }),
+                  ],
+                )
+              );
+            },
+          ),
+        ],
       );
     }
   }

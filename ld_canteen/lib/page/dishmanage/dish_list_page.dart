@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/api/component/edit_delete_button.dart';
 import 'package:ld_canteen/api/component/event_bus.dart';
@@ -123,10 +124,6 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
                 flex: 1,
                 child: Center(child: Text('是否展示',style: STATIC_STYLE.listView)),
               ),
-              Expanded(
-                flex: 1,
-                child: Center(child: Text('操作',style: STATIC_STYLE.listView)),
-              ),
             ],
           ),
         ),
@@ -134,100 +131,144 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
     } else if (index.isEven) {
       var dish  = dishList[index-1];
       var valueb = dish.isShow;
-      return GestureDetector(
-        child: Container(
-          margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
-          height: 60,
-          color: Color.fromRGBO(241, 241, 241, 1.0),
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children:[
-                Expanded(
-                  flex: 1,
-                  child: Center(child: Text('${dish.name}',style: STATIC_STYLE.listView)),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Center(child: Text('${dish.price}',style: STATIC_STYLE.listView)),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Center(child:Switch(
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    value: valueb,
-                    activeColor: Colors.blue,
-                    inactiveTrackColor: Colors.blue.shade50,
-                    onChanged: (bool v) { 
-                      updateDishWithShowState(dish,v);
-                    },
-                  ),),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: EditAndDeleteButton(
-                    // 删除菜品
-                    onDeletePressed: (){
-                      deleteDish(dish);
-                    },
+      return Slidable(
+        child:GestureDetector(
+          child: Container(
+            margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
+            height: 60,
+            color: Color.fromRGBO(241, 241, 241, 1.0),
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children:[
+                  Expanded(
+                    flex: 1,
+                    child: Center(child: Text('${dish.name}',style: STATIC_STYLE.listView)),
                   ),
-                )
-              ],
+                  Expanded(
+                    flex: 1,
+                    child: Center(child: Text('${dish.price}',style: STATIC_STYLE.listView)),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Center(child:Switch(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      value: valueb,
+                      activeColor: STATIC_STYLE.backgroundColor,
+                      inactiveTrackColor: Colors.black12,
+                      onChanged: (bool v) { 
+                        updateDishWithShowState(dish,v);
+                      },
+                    ),),
+                  ),
+                ],
+              ),
             ),
           ),
+          onTap: (){
+            pushToPage(context, DishEditPage(categoryId: categoryId,dish: dish));
+          },
         ),
-        onTap: (){
-          pushToPage(context, DishEditPage(categoryId: categoryId,dish: dish));
-        },
+        actionPane: SlidableScrollActionPane(),
+        secondaryActions: <Widget>[
+          IconSlideAction(
+            caption: '删除',
+            color: Colors.red,
+            icon: Icons.delete,
+            closeOnTap: false,
+            onTap: (){
+              showDialog(
+                context:context,
+                child: CupertinoAlertDialog(
+                  title:Text('提示'),
+                  content:Center(
+                    child: Text('是否确定删除该项'),
+                  ),
+                  actions: <Widget>[
+                    CupertinoDialogAction(isDestructiveAction: true,child: Text('确定'),onPressed: (){
+                      deleteDish(dish);
+                      Navigator.of(context).pop();
+                    }),
+                    CupertinoDialogAction(child: Text('取消'),onPressed: (){
+                      Navigator.of(context).pop();
+                    }),
+                  ],
+                )
+              );
+            },
+          ),
+        ],
       );
     }else{
       var dish  = dishList[index-1];
       var valueb = dish.isShow;
-      return GestureDetector(
-        child: Container(
-          margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
-          height: 60,
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children:[
-                Expanded(
-                  flex: 1,
-                  child: Center(child: Text('${dish.name}',style: STATIC_STYLE.listView)),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Center(child: Text('${dish.price}',style: STATIC_STYLE.listView)),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Center(child:Switch(
-                    value: valueb,
-                    activeColor: Colors.blue,
-                    inactiveTrackColor: Colors.blue.shade50,
-                    onChanged: (bool v) { 
-                      updateDishWithShowState(dish,v);
-                    },
-                  ),),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: EditAndDeleteButton(
-                    // 删除菜品
-                    onDeletePressed: (){
-                      deleteDish(dish);
-                    },
+      return Slidable(
+        child:GestureDetector(
+          child: Container(
+            margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
+            height: 60,
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children:[
+                  Expanded(
+                    flex: 1,
+                    child: Center(child: Text('${dish.name}',style: STATIC_STYLE.listView)),
                   ),
-                )
-              ],
+                  Expanded(
+                    flex: 1,
+                    child: Center(child: Text('${dish.price}',style: STATIC_STYLE.listView)),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Center(child:Switch(
+                      value: valueb,
+                      activeColor: STATIC_STYLE.backgroundColor,
+                      inactiveTrackColor: Colors.black12,
+                      onChanged: (bool v) { 
+                        updateDishWithShowState(dish,v);
+                      },
+                    ),),
+                  ),
+                ],
+              ),
             ),
           ),
+          onTap: (){
+            pushToPage(context, DishEditPage(categoryId: categoryId,dish: dish));
+          },
         ),
-        onTap: (){
-          pushToPage(context, DishEditPage(categoryId: categoryId,dish: dish));
-        },
+        actionPane: SlidableScrollActionPane(),
+        secondaryActions: <Widget>[
+          IconSlideAction(
+            caption: '删除',
+            color: Colors.red,
+            icon: Icons.delete,
+            closeOnTap: false,
+            onTap: (){
+              showDialog(
+                context:context,
+                child: CupertinoAlertDialog(
+                  title:Text('提示'),
+                  content:Center(
+                    child: Text('是否确定删除该项'),
+                  ),
+                  actions: <Widget>[
+                    CupertinoDialogAction(isDestructiveAction: true,child: Text('确定'),onPressed: (){
+                      deleteDish(dish);
+                      Navigator.of(context).pop();
+                    }),
+                    CupertinoDialogAction(child: Text('取消'),onPressed: (){
+                      Navigator.of(context).pop();
+                    }),
+                  ],
+                )
+              );
+            },
+          ),
+        ],
       );
     }
   }
