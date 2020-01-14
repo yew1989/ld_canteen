@@ -284,7 +284,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
                   padding: EdgeInsets.all(1),
                   child: Text('选择图片',
                     style: STATIC_STYLE.buttonText),
-                  color: Colors.blueAccent,
+                  color: STATIC_STYLE.backgroundColor,
                   onPressed: () {
                     setState((){
                       pushToPage(context, PictureAddPage(pictureUrlList: banner.images));  
@@ -313,7 +313,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
   List<Widget> _imagePreview(){
     List<Widget> list = [];
     if (imageUrlList == null) {
-      list.add(Container(child:Text('未上传图片！', style: TextStyle(color: Colors.red, fontSize: 30))));
+      list.add(Container(child:Text('未上传图片！', style: TextStyle(color: Colors.red, fontSize: 25))));
       return list;
     } else {
       list = imageUrlList.map((imageUrl){

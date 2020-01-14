@@ -69,7 +69,7 @@ class _BannerEditPageState extends State<BannerEditPage> {
                     padding: EdgeInsets.all(1),
                     child: Text('选择图片',
                       style: STATIC_STYLE.buttonText),
-                    color: Colors.blueAccent,
+                    color: STATIC_STYLE.backgroundColor,
                     onPressed: () {
                       setState((){
                         pushToPage(context, PictureAddPage(pictureUrlList: newImageUrl));
@@ -97,7 +97,7 @@ class _BannerEditPageState extends State<BannerEditPage> {
         padding: EdgeInsets.all(10),
         child: Text('确定',
             style: STATIC_STYLE.buttonText),
-        color: Colors.blueAccent,
+        color: STATIC_STYLE.backgroundColor,
         onPressed: () {
           // 新增
           if (isAdd) {

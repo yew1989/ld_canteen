@@ -54,7 +54,7 @@ class _CategoryEditPageState extends State<CategoryEditPage> {
         padding: EdgeInsets.all(10),
         child: Text('确定',
             style: STATIC_STYLE.buttonText),
-        color: Colors.blueAccent,
+        color: STATIC_STYLE.backgroundColor,
         onPressed: () {
           // 新增
           if (isAdd) {

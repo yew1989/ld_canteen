@@ -62,7 +62,7 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
           child: new Scaffold(
             backgroundColor: Colors.white,
             appBar:new TabBar(
-              indicatorColor: Colors.blue,
+              indicatorColor: STATIC_STYLE.backgroundColor,
               tabs: categoryList.map((Category category){
                 return Container(
                   padding: EdgeInsets.fromLTRB(20.0,0.0,20.0,0.0),
