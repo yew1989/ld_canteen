@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -17,11 +16,6 @@ class _MenuPageState extends State<MenuPage> {
   DateTime date;
   String weekday = '';
   List<Menu> menuList = [];
-  PageController _pageController = PageController(initialPage: 1);
-  ScrollController _scrollController = new ScrollController();
-  AnimationController _animationController;
-  int _curIndex = 1;
-  Timer _timer;
   bool lastPage = false;
 
   final List<Color> listColor = [
@@ -151,12 +145,12 @@ class _MenuPageState extends State<MenuPage> {
           backgroundColor: Color.fromRGBO(40, 44, 49, 1.0),
           centerTitle: true,
         ),
-        //backgroundColor: Color.fromRGBO(40, 44, 49, 1.0),
         body: girdView(context),
       )
     );
   }
 
+  //卡片框内容
   List<Widget> _cardList() {
     List<Widget> list = [];
     menuList.map((menu) {
@@ -170,8 +164,7 @@ class _MenuPageState extends State<MenuPage> {
                 automaticallyImplyLeading: false,
                 backgroundColor: listColor[menu.sort-1],
               ),
-              body: MenuListPage(
-                  categoryObjectId: menu.category.objectId, limit: 6),
+              body: MenuListPage(categoryObjectId: menu.category.objectId, limit: 6),
             ),
           ),
         );
@@ -189,8 +182,7 @@ class _MenuPageState extends State<MenuPage> {
                   );
                 }
               },
-              itemCount:
-                  menu.banner.images == null ? 0 : menu.banner.images.length,
+              itemCount:menu.banner.images == null ? 0 : menu.banner.images.length,
               autoplay: true,
               autoplayDelay: 5000,
             ),

@@ -44,6 +44,7 @@ class _BannerManagePageState extends State<BannerManagePage> {
     super.dispose();
   }
 
+  //标签栏 行数+1
   int  _getListCount(){
     int dishListCount = bannerList?.length ?? 0;
     return dishListCount + 1;
@@ -53,15 +54,11 @@ class _BannerManagePageState extends State<BannerManagePage> {
   void deleteBanner(BannerBean banner) {
         // 删除分类
     API.deleteBanner(banner.objectId, (String msg){
-
       debugPrint(msg);
       // 刷新列表
       getBannerList();
-
     }, (String msg) {
-
       debugPrint(msg);
-
     });
   }
   
@@ -93,7 +90,7 @@ class _BannerManagePageState extends State<BannerManagePage> {
 
 
   Widget bannerTile(BuildContext context,int index) {
-    
+    //首行 标签
     if (index == 0) {
       return Container(
         margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
@@ -155,14 +152,10 @@ class _BannerManagePageState extends State<BannerManagePage> {
                 Expanded(
                   flex: 1,
                   child: EditAndDeleteButton(
-                  // 删除广告栏
-                  onDeletePressed: (){
-                    deleteBanner(banner);
-                  },
-                  // 编辑广告栏
-                  // onEditPressed: (){
-                  //   pushToPage(context, BannerEditPage(banner: banner));
-                  // }
+                    // 删除广告栏
+                    onDeletePressed: (){
+                      deleteBanner(banner);
+                    },
                   ),
                 )
               ],
@@ -208,14 +201,10 @@ class _BannerManagePageState extends State<BannerManagePage> {
                 Expanded(
                   flex: 1,
                   child: EditAndDeleteButton(
-                  // 删除广告栏
-                  onDeletePressed: (){
-                    deleteBanner(banner);
-                  },
-                  // 编辑广告栏
-                  // onEditPressed: (){
-                  //   pushToPage(context, BannerEditPage(banner: banner));
-                  // }
+                    // 删除广告栏
+                    onDeletePressed: (){
+                      deleteBanner(banner);
+                    },
                   ),
                 )
               ],

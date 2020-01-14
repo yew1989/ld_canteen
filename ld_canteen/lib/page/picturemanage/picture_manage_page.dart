@@ -135,7 +135,6 @@ class _PictureManagePageState extends State<PictureManagePage> {
           ;
         } catch (e) {
           print(e);
-          //newImageUrl.remove(imageUrl);
         }
       }).toList();
       

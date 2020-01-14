@@ -16,6 +16,7 @@ class _MenuListPageState extends State<MenuListPage> {
   List<Dish> dishList = [];
   String categoryObjectId;
   int limit; 
+
   @override
   void initState() {
     categoryObjectId = widget?.categoryObjectId;
@@ -39,7 +40,6 @@ class _MenuListPageState extends State<MenuListPage> {
         itemBuilder: (BuildContext context, int index) {
           list = dishList.sublist(index*this.limit , (index+1)*this.limit < dishList.length ? (index+1)*this.limit : dishList.length);
           return ListView.builder(
-            
             itemBuilder: (BuildContext context, int index) {
               if(index.isEven){
                 return  Container(
@@ -89,7 +89,6 @@ class _MenuListPageState extends State<MenuListPage> {
   }
   
   void getDishList(String categoryObjectId) {
-    
     API.getDishList((List<Dish> dishes,String msg){
       setState(() {
         this.dishList = dishes;
@@ -97,7 +96,6 @@ class _MenuListPageState extends State<MenuListPage> {
       debugPrint(msg);
     }, (String msg){
       debugPrint(msg);
-    },objectId: categoryObjectId//order: 'sort',//limit:limit,skip:skip
-    );
+    },objectId: categoryObjectId);
   }
 }

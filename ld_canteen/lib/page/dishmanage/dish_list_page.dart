@@ -37,7 +37,6 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
         getDishList(categoryId);
       }
     });
-
     super.initState();
   }
 
@@ -51,18 +50,13 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
 
   // 删除菜品
   void deleteDish(Dish dish) {
-
     // 删除分类
     API.deleteDish(dish.objectId, (String msg){
-
       debugPrint(msg);
       // 刷新列表
       getDishList(categoryId);
-
     }, (String msg) {
-
       debugPrint(msg);
-
     });
   }
 
@@ -77,21 +71,14 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
 
   // 请求菜品数据
   void getDishList(String categoryObjectId) {
-    
     API.getDishList((List<Dish> dishes,String msg){
-
       setState(() {
         this.dishList = dishes;
       });
-
       debugPrint(msg);
-
     }, (String msg){
-
       debugPrint(msg);
-
-    },objectId: categoryObjectId//order: 'sort',//limit:limit,skip:skip
-    );
+    },objectId: categoryObjectId);
   }
 
   int  _getListCount(){
@@ -99,10 +86,8 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
     return dishListCount + 1;
   }          
 
-  
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
        body: Container(
         child: ListView.builder(
@@ -186,10 +171,6 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
                     onDeletePressed: (){
                       deleteDish(dish);
                     },
-                  // 编辑菜品
-                  // onEditPressed: (){
-                  //   pushToPage(context, DishEditPage(categoryId: categoryId,dish: dish));
-                  // }
                   ),
                 )
               ],
@@ -207,7 +188,6 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 1,horizontal: 2),
           height: 60,
-          // color: Colors.white,
           child: Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -239,10 +219,6 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
                     onDeletePressed: (){
                       deleteDish(dish);
                     },
-                  // 编辑菜品
-                  // onEditPressed: (){
-                  //   pushToPage(context, DishEditPage(categoryId: categoryId,dish: dish));
-                  // }
                   ),
                 )
               ],

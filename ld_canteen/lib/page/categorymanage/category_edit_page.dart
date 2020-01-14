@@ -28,8 +28,8 @@ class _CategoryEditPageState extends State<CategoryEditPage> {
 
   @override
   Widget build(BuildContext context) {
-
     var isAdd = widget.category == null;
+
     return Scaffold(
       appBar: AppBar(
         title: isAdd ? Text('新增菜品分类',style: STATIC_STYLE.appbar,) : Text('编辑菜品分类',style: STATIC_STYLE.appbar,),
@@ -41,35 +41,35 @@ class _CategoryEditPageState extends State<CategoryEditPage> {
           children: <Widget>[
             Text('菜品分类名称:', style: STATIC_STYLE.tab),
             TextField(
-                maxLength: 20,
-                maxLines: 1,
-                style: STATIC_STYLE.textField,
-                controller: nameCtrl,
-                decoration: InputDecoration()),
-            
+              maxLength: 20,
+              maxLines: 1,
+              style: STATIC_STYLE.textField,
+              controller: nameCtrl,
+              decoration: InputDecoration()
+            ),
           ],
         ),
       ),
       bottomNavigationBar: FlatButton(
-              padding: EdgeInsets.all(10),
-              child: Text('确定',
-                  style: STATIC_STYLE.buttonText),
-              color: Colors.blueAccent,
-              onPressed: () {
-                // 新增
-                if (isAdd) {
-                  var item = Category(
-                      name: nameCtrl.text ?? '',);
-                  createCategory(item);
-                }
-                // 更新
-                else {
-                  var item = widget.category;
-                  item.name = nameCtrl.text ?? '';
-                  updateCategory(item);
-                }
-              },
-            ),
+        padding: EdgeInsets.all(10),
+        child: Text('确定',
+            style: STATIC_STYLE.buttonText),
+        color: Colors.blueAccent,
+        onPressed: () {
+          // 新增
+          if (isAdd) {
+            var item = Category(
+                name: nameCtrl.text ?? '',);
+            createCategory(item);
+          }
+          // 更新
+          else {
+            var item = widget.category;
+            item.name = nameCtrl.text ?? '';
+            updateCategory(item);
+          }
+        },
+      ),
     );
   }
 

@@ -55,7 +55,6 @@ class _MenuManagePageState extends State<MenuManagePage> {
         title: Text('菜品展示管理',style: STATIC_STYLE.appbar,),
         backgroundColor: STATIC_STYLE.backgroundColor,
       ),
-      
       body:Container(
         child:ListView.builder(
           itemBuilder: (BuildContext context, int index)  => _widgetList(context,index),
@@ -191,5 +190,4 @@ class _MenuManagePageState extends State<MenuManagePage> {
       );
     }
   }
-
 }

@@ -21,7 +21,6 @@ class _PictureAddPageState extends State<PictureAddPage> {
   @override
   void initState(){
     getPictureList();
-    
     super.initState();
   }
 
@@ -52,7 +51,6 @@ class _PictureAddPageState extends State<PictureAddPage> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         title: Text('选择图片',style: STATIC_STYLE.appbar),
@@ -71,18 +69,18 @@ class _PictureAddPageState extends State<PictureAddPage> {
       bottomNavigationBar: ButtonBar(
         children: <Widget>[
           FlatButton(
-              padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-              child: Text('确定',
-                  style: STATIC_STYLE.buttonText),
-              color: Colors.blueAccent,
-              onPressed: (){
-                mapList.map((Map<String,dynamic> pic){
-                  if(pic['check'] == true) {
-                    widget.pictureUrlList.add(pic['pictureBean'].url);
-                  }
-                }).toList();
-                Navigator.of(context).pop(widget.pictureUrlList);
-              },
+            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+            child: Text('确定',
+              style: STATIC_STYLE.buttonText),
+            color: Colors.blueAccent,
+            onPressed: (){
+              mapList.map((Map<String,dynamic> pic){
+                if(pic['check'] == true) {
+                  widget.pictureUrlList.add(pic['pictureBean'].url);
+                }
+              }).toList();
+              Navigator.of(context).pop(widget.pictureUrlList);
+            },
           ),
         ],
       ),

@@ -4,7 +4,6 @@ import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/api/component/public_tool.dart';
 import 'package:ld_canteen/model/banner.dart';
 import 'package:ld_canteen/page/picturemanage/picture_add_page.dart';
-import 'package:ld_canteen/page/picturemanage/picture_operation_page.dart';
 import 'package:ld_canteen/page/static_style.dart';
 
 class BannerEditPage extends StatefulWidget {
@@ -25,7 +24,7 @@ class _BannerEditPageState extends State<BannerEditPage> {
 
     final copyBanner = widget?.banner?.copy() ?? null;
     newImageUrl = copyBanner?.images ?? List<String>();
-     nameCtrl.text = widget?.banner?.name ?? '';
+    nameCtrl.text = widget?.banner?.name ?? '';
     EventBus().on('REFRESH', (_) {
       //newImageUrl;
     });

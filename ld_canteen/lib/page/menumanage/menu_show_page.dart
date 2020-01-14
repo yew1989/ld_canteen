@@ -21,9 +21,6 @@ class _MenuShowPageState extends State<MenuShowPage> {
   //选取分类
   var types = [{'name':'选择展示框分类','value':'xxxx'},{'name':'菜品类型','value':'category'},{'name':'广告图片','value':'banner'}];
 
-  //String _typeValue = 'xxxx';
-
-  //List<Menu> menuList = [];
   List<Category> categoryList = [];
   List<BannerBean> bannerList = [];
   Menu menu;
@@ -131,7 +128,6 @@ class _MenuShowPageState extends State<MenuShowPage> {
   void getBanner(String bannerId) {
     API.getBanner(bannerId,(BannerBean banner,String msg){
       setState(() {
-        //imageUrlList = widget?.urlList ?? List<String>();
         this.banner = banner;
         imageUrlList = this.banner.images;
       });
@@ -148,7 +144,6 @@ class _MenuShowPageState extends State<MenuShowPage> {
         title: Text('编辑',style: STATIC_STYLE.appbar,),
         backgroundColor: STATIC_STYLE.backgroundColor,
       ),
-      
       body:Column(
         children: <Widget>[
           Padding(padding: EdgeInsets.all(10),),
@@ -170,8 +165,6 @@ class _MenuShowPageState extends State<MenuShowPage> {
                     setState(() {
                       change = v;
                       _page(change,_categoryChange,_bannerBeanChange);
-                      // _categoryChange = this.menu.category ?? _category ;
-                      // _bannerBeanChange = this.menu.banner ?? _bannerBean  ;
                     });
                   },
                   value: change ,
@@ -188,9 +181,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
           Expanded(
             flex: 1,
             child: _page(change,_categoryChange,_bannerBeanChange),
-            //DishListPage(categoryObjectId:_categoryChange),
           )
-          
         ],
       ),
       bottomNavigationBar: FlatButton(
@@ -252,7 +243,6 @@ class _MenuShowPageState extends State<MenuShowPage> {
           setState(() {
             _bannerBeanChange = v;
             EventBus().emit('REFRESH_BANNERID',_bannerBeanChange);
-            //imageUrlList
           });
         },
         value: _bannerBeanChange ,
@@ -267,11 +257,8 @@ class _MenuShowPageState extends State<MenuShowPage> {
   Widget _page(String change,String categoryId,String bannerId){
    
       if (change == 'category') {
-        //EventBus().emit('REFRESH_CATEGORYID',_categoryChange);
         return DishListPage(categoryObjectId:categoryId);
       }else if (change == 'banner') {
-        //return MenuEditPage(bannerId: bannerId,urlList:imageUrlList);
-        //bannerId
         EventBus().emit('REFRESH_BANNERID',_bannerBeanChange);
         return bannerPage();
       }else{
@@ -312,7 +299,6 @@ class _MenuShowPageState extends State<MenuShowPage> {
           Container(
             height: 300,
             child: GridView.count(
-              
               crossAxisCount: 5,
               crossAxisSpacing: 10.0,
               mainAxisSpacing: 10.0,
@@ -329,9 +315,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
   List<Widget> _imagePreview(){
     List<Widget> list = [];
     if (imageUrlList == null) {
-      //Text('插入图片:', style: TextStyle(color: Colors.black, fontSize: 30));
-      list.add(Container(
-            child:Text('未上传图片！', style: TextStyle(color: Colors.red, fontSize: 30))));
+      list.add(Container(child:Text('未上传图片！', style: TextStyle(color: Colors.red, fontSize: 30))));
       return list;
     } else {
       list = imageUrlList.map((imageUrl){
@@ -351,7 +335,6 @@ class _MenuShowPageState extends State<MenuShowPage> {
                         imageUrlList.remove(imageUrl);
                       });
                     },
-                    //alignment: Alignment.topCenter,
                   ),
                 ],
               ),

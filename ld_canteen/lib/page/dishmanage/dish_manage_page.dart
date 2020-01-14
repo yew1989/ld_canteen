@@ -15,25 +15,17 @@ class DishManagePage extends StatefulWidget {
 
 class _DishManagePageState extends State<DishManagePage> with SingleTickerProviderStateMixin{
 
-  //List<Dish> dishList = [];
   List<Category> categoryList = [];
-
-  
 
   // 请求菜品分类数据
   void getCategoryList() {
-    
     API.getCategoryList((List<Category> categories,String msg){
-
       setState(() {
         this.categoryList = categories;
       });
       debugPrint(msg);
-
     }, (String msg){
-
       debugPrint(msg);
-
     });
   }
   
@@ -65,37 +57,33 @@ class _DishManagePageState extends State<DishManagePage> with SingleTickerProvid
             )
           ],
         ),
-      body: DefaultTabController(
-        length: categoryList.length,
-        
-        child: new Scaffold(
-          backgroundColor: Colors.white,
-          appBar:
-          new TabBar(
-            indicatorColor: Colors.blue,
-            tabs: categoryList.map((Category category){
-              return Container(
-                padding: EdgeInsets.fromLTRB(20.0,0.0,20.0,0.0),
-                child: new Tab(
-                  child: Text('${category.name}',style: STATIC_STYLE.tab)
-                )
-              );
-            }).toList(),
-            isScrollable: true,
-          ),
-          body:
-          new TabBarView(
-            children: categoryList.map((Category category){
-              return new DishListPage(categoryObjectId:category.objectId);
-              //return Container(color: Colors.blueAccent,child: Text('${category.name}'),);
-            }).toList(),
-          )
-        ), 
+        body: DefaultTabController(
+          length: categoryList.length,
+          child: new Scaffold(
+            backgroundColor: Colors.white,
+            appBar:
+            new TabBar(
+              indicatorColor: Colors.blue,
+              tabs: categoryList.map((Category category){
+                return Container(
+                  padding: EdgeInsets.fromLTRB(20.0,0.0,20.0,0.0),
+                  child: new Tab(
+                    child: Text('${category.name}',style: STATIC_STYLE.tab)
+                  )
+                );
+              }).toList(),
+              isScrollable: true,
+            ),
+            body:new TabBarView(
+              children: categoryList.map((Category category){
+                return new DishListPage(categoryObjectId:category.objectId);
+              }).toList(),
+            )
+          ), 
+        ),
       ),
-    ),
     );
   }
-
 
   @override
   void dispose() {
