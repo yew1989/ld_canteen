@@ -50,11 +50,11 @@ class _MenuListPageState extends State<MenuListPage> {
                     children:[
                       Expanded(
                         flex: 1,
-                        child: Center(child: Text('${list[index].name}',style: TextStyle(fontSize: 29))),
+                        child: Center(child: Text('${list[index].name}',style: TextStyle(fontSize: 12))),
                       ),
                       Expanded(
                         flex: 1,
-                        child: Center(child: Text('${list[index].price}',style: TextStyle(fontSize: 29))),
+                        child: Center(child: Text('${list[index].price}',style: TextStyle(fontSize: 12))),
                       ),
                     ]
                   )
@@ -68,11 +68,11 @@ class _MenuListPageState extends State<MenuListPage> {
                     children:[
                       Expanded(
                         flex: 1,
-                        child: Center(child: Text('${list[index].name}',style: TextStyle(fontSize: 29))),
+                        child: Center(child: Text('${list[index].name}',style: TextStyle(fontSize: 12))),
                       ),
                       Expanded(
                         flex: 1,
-                        child: Center(child: Text('${list[index].price}',style: TextStyle(fontSize: 29))),
+                        child: Center(child: Text('${list[index].price}',style: TextStyle(fontSize: 12))),
                       ),
                     ]
                   )

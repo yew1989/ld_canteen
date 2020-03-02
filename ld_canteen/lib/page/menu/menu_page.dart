@@ -1,6 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:ld_canteen/api/api.dart';
 import 'package:ld_canteen/model/menu.dart';
@@ -28,6 +27,10 @@ class _MenuPageState extends State<MenuPage> {
 
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
     date = DateTime.now();
     weekday = _numToText(date.weekday);
     getMenuList(6, 0); //limit=6,skip=0
@@ -37,6 +40,15 @@ class _MenuPageState extends State<MenuPage> {
 
   @override
   void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.portraitDown,
+    ]);
     super.dispose();
   }
 
@@ -87,8 +99,14 @@ class _MenuPageState extends State<MenuPage> {
     final navBarHeight = kToolbarHeight;
     final areaHeight = deviceHeight - statusHeight - navBarHeight;
     final gap = 10.0;
-    final gridHeight = (areaHeight - 3 * gap) / 2;
-    final gridWidth  = gridHeight * 1.3;
+    //final gridHeight = (areaHeight - 3 * gap) / 2;
+    //final gridWidth  = gridHeight * 1.3;
+
+    final deviceWidth = MediaQuery.of(context).size.width;
+    final statusWidth = MediaQuery.of(context).padding.left;
+    final areaWidth = deviceWidth - statusWidth;
+    final gridWidth = (areaWidth - gap) / 3;
+    final gridHeight = gridWidth * 0.6;
 
     return Container(
       decoration: BoxDecoration(
@@ -134,16 +152,19 @@ class _MenuPageState extends State<MenuPage> {
         )
       ),
       child:Scaffold(
-        appBar: AppBar(
-          title: Text('今日菜单', style: TextStyle(fontSize: 30)),
-          actions: <Widget>[
-            Text(
-              '${date.year}年${date.month}月${date.day}日  星期' + weekday,
-              style: TextStyle(fontSize: 20),
-            )
-          ],
-          backgroundColor: Color.fromRGBO(40, 44, 49, 1.0),
-          centerTitle: true,
+        appBar: PreferredSize(
+          child: AppBar(
+            title: Text('今日菜单', style: TextStyle(fontSize: 20)),
+            actions: <Widget>[
+              Text(
+                '${date.year}年${date.month}月${date.day}日  星期' + weekday,
+                style: TextStyle(fontSize: 15),
+              )
+            ],
+            backgroundColor: Color.fromRGBO(40, 44, 49, 1.0),
+            centerTitle: true,
+          ),
+          preferredSize: Size.fromHeight(40.0),
         ),
         body: girdView(context),
       )
@@ -156,17 +177,20 @@ class _MenuPageState extends State<MenuPage> {
     menuList.map((menu) {
       if (menu.type == 'category') {
         Widget _c = Card(
-          child: SafeArea(
+          color: Colors.greenAccent,
             child: Scaffold(
-              appBar: AppBar(
-                centerTitle: true,
-                title: Text(menu?.category?.name ?? '',style: TextStyle(fontSize: 25),),
-                automaticallyImplyLeading: false,
-                backgroundColor: listColor[menu.sort-1],
+              appBar: PreferredSize(
+                child: AppBar(
+                  centerTitle: true,
+                  title: Text(menu?.category?.name ?? '',style: TextStyle(fontSize: 15),),
+                  automaticallyImplyLeading: false,
+                  backgroundColor: listColor[menu.sort-1],
+                ),
+                preferredSize: Size.fromHeight(30.0),
               ),
               body: MenuListPage(categoryObjectId: menu.category.objectId, limit: 6),
+              // body: Container(color:Colors.indigoAccent),
             ),
-          ),
         );
         list.add(_c);
       } else if (menu.type == 'banner') {

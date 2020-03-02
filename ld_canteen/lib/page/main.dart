@@ -32,7 +32,7 @@ class _MainPageState extends State<MainPage> {
             buttonTile('素材管理'),
             buttonTile('广告栏管理'),
             buttonTile('菜单展示窗'),
-            //buttonTile('今日菜单'),
+            buttonTile('今日菜单'),
           ],
         ),
       ),

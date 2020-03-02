@@ -15,4 +15,6 @@ class STATIC_STYLE {
   static final buttonText = TextStyle(fontSize: 20.0,color: Colors.white);
   
   static final backgroundColor = Color.fromRGBO(40, 44, 49, 1.0);
+
+  
 }
