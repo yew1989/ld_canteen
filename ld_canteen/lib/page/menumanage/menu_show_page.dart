@@ -149,8 +149,9 @@ class _MenuShowPageState extends State<MenuShowPage> {
           Padding(padding: EdgeInsets.all(10),),
           Row(
             children: <Widget>[
+              Padding(padding: EdgeInsets.all(10),),
               Expanded(
-                flex: 1,
+                flex: 5,
                 child: DropdownButton<String>(
                   items: types.map((type) {
                     return DropdownMenuItem<String>(
@@ -162,10 +163,14 @@ class _MenuShowPageState extends State<MenuShowPage> {
                     );
                   }).toList(),
                   onChanged: (String v) {
-                    setState(() {
-                      change = v;
-                      _page(change,_categoryChange,_bannerBeanChange);
-                    });
+                    if(v == '选择展示框分类'){
+
+                    }else{
+                      setState(() {
+                        change = v;
+                        _page(change,_categoryChange,_bannerBeanChange);
+                      });
+                    }
                   },
                   value: change ,
                   iconSize: 25,
@@ -173,7 +178,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
               ),
               Padding(padding: EdgeInsets.all(10),),
               Expanded(
-                flex: 1,
+                flex: 5,
                 child: _dropdownButton(),
               ),
             ],
@@ -195,7 +200,9 @@ class _MenuShowPageState extends State<MenuShowPage> {
               banner.images = imageUrlList;
               updateBanner(banner);
             }
-            updateMenu(_categoryChange,_bannerBeanChange,menu,change);
+            if(_bannerBeanChange != '2222' ||_categoryChange != '1111'){
+              updateMenu(_categoryChange,_bannerBeanChange,menu,change);
+            }
             EventBus().emit('REFRESHLIST');
           });
         }
@@ -256,7 +263,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
    
       if (change == 'category') {
         return DishListPage(categoryObjectId:categoryId);
-      }else if (change == 'banner') {
+      }else if (change == 'banner' && bannerId != '2222') {
         EventBus().emit('REFRESH_BANNERID',_bannerBeanChange);
         return bannerPage();
       }else{

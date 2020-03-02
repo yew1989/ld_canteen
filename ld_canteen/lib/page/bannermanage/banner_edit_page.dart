@@ -25,15 +25,15 @@ class _BannerEditPageState extends State<BannerEditPage> {
     final copyBanner = widget?.banner?.copy() ?? null;
     newImageUrl = copyBanner?.images ?? List<String>();
     nameCtrl.text = widget?.banner?.name ?? '';
-    EventBus().on('REFRESH', (_) {
-      //newImageUrl;
+    EventBus().on('REFRESH_EDIT', (_) {
+      setState(() {});
     });
     super.initState();
   }
 
   @override
   void dispose() {
-    EventBus().off('REFRESH');
+    EventBus().off('REFRESH_EDIT');
     super.dispose();
   }
 
@@ -113,6 +113,7 @@ class _BannerEditPageState extends State<BannerEditPage> {
             item.images = newImageUrl;
             updateBanner(item);
           }
+          
         },
       ),
     );

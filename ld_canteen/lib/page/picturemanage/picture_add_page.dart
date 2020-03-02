@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ld_canteen/api/api.dart';
+import 'package:ld_canteen/api/component/event_bus.dart';
 import 'package:ld_canteen/model/picture.dart';
 import 'package:ld_canteen/page/static_style.dart';
 
@@ -80,6 +81,7 @@ class _PictureAddPageState extends State<PictureAddPage> {
                 }
               }).toList();
               Navigator.of(context).pop(widget.pictureUrlList);
+              EventBus().emit('REFRESH_EDIT');
             },
           ),
         ],
