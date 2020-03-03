@@ -41,80 +41,82 @@ class _BannerEditPageState extends State<BannerEditPage> {
   Widget build(BuildContext context) {
 
     var isAdd = widget.banner == null;
-    return Scaffold(
-      appBar: AppBar(
-        title: isAdd ? Text('新增广告栏',style: STATIC_STYLE.appbar,) : Text('编辑广告栏',style: STATIC_STYLE.appbar,),
-        backgroundColor: STATIC_STYLE.backgroundColor,
-      ),
-      body: Container(
-        margin: EdgeInsets.all(10),
-        child: ListView(
-          children: <Widget>[
-            Text('广告栏名称:', style: STATIC_STYLE.tab),
-            TextField(
-                maxLength: 20,
-                maxLines: 1,
-                style: STATIC_STYLE.textField,
-                controller: nameCtrl,
-                decoration: InputDecoration()),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 3,
-                  child:Text('图片预览:', style: STATIC_STYLE.textField),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: FlatButton(
-                    padding: EdgeInsets.all(1),
-                    child: Text('选择图片',
-                      style: STATIC_STYLE.buttonText),
-                    color: STATIC_STYLE.backgroundColor,
-                    onPressed: () {
-                      setState((){
-                        pushToPage(context, PictureAddPage(pictureUrlList: newImageUrl));
-                      });
-                      //imageLoad(imageUrlCtrl.text);
-                    }, 
-                  )
-                ),
-              ],
-            ),
-            Container(
-              height: 400,
-              child: GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10.0,
-                mainAxisSpacing: 10.0,
-                children: _imagePreview(),
-              ),
-            ),
-            //Padding(padding: EdgeInsets.all(20.0),),
-          ],
+    return SafeArea(
+      child:Scaffold(
+        appBar: AppBar(
+          title: isAdd ? Text('新增广告栏',style: STATIC_STYLE.appbar,) : Text('编辑广告栏',style: STATIC_STYLE.appbar,),
+          backgroundColor: STATIC_STYLE.backgroundColor,
         ),
-      ),
-      bottomNavigationBar: FlatButton(
-        padding: EdgeInsets.all(10),
-        child: Text('确定',
-            style: STATIC_STYLE.buttonText),
-        color: STATIC_STYLE.backgroundColor,
-        onPressed: () {
-          // 新增
-          if (isAdd) {
-            var item = BannerBean(
-                name: nameCtrl.text ?? '',
-                images: newImageUrl);
-            createBanner(item);
-          }
-          // 更新
-          else {
-            var item = widget.banner;
-            item.name = nameCtrl.text ?? '';
-            item.images = newImageUrl;
-            updateBanner(item);
-          }
-          
-        },
+        body: Container(
+          margin: EdgeInsets.all(10),
+          child: ListView(
+            children: <Widget>[
+              Text('广告栏名称:', style: STATIC_STYLE.tab),
+              TextField(
+                  maxLength: 20,
+                  maxLines: 1,
+                  style: STATIC_STYLE.textField,
+                  controller: nameCtrl,
+                  decoration: InputDecoration()),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 3,
+                    child:Text('图片预览:', style: STATIC_STYLE.textField),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: FlatButton(
+                      padding: EdgeInsets.all(1),
+                      child: Text('选择图片',
+                        style: STATIC_STYLE.buttonText),
+                      color: STATIC_STYLE.backgroundColor,
+                      onPressed: () {
+                        setState((){
+                          pushToPage(context, PictureAddPage(pictureUrlList: newImageUrl));
+                        });
+                        //imageLoad(imageUrlCtrl.text);
+                      }, 
+                    )
+                  ),
+                ],
+              ),
+              Container(
+                height: 400,
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10.0,
+                  mainAxisSpacing: 10.0,
+                  children: _imagePreview(),
+                ),
+              ),
+              //Padding(padding: EdgeInsets.all(20.0),),
+            ],
+          ),
+        ),
+        bottomNavigationBar: FlatButton(
+          padding: EdgeInsets.all(10),
+          child: Text('确定',
+              style: STATIC_STYLE.buttonText),
+          color: STATIC_STYLE.backgroundColor,
+          onPressed: () {
+            // 新增
+            if (isAdd) {
+              var item = BannerBean(
+                  name: nameCtrl.text ?? '',
+                  images: newImageUrl);
+              createBanner(item);
+            }
+            // 更新
+            else {
+              var item = widget.banner;
+              item.name = nameCtrl.text ?? '';
+              item.images = newImageUrl;
+              updateBanner(item);
+            }
+            
+          },
+        ),
       ),
     );
   }

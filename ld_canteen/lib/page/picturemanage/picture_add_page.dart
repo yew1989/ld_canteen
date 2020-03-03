@@ -52,39 +52,41 @@ class _PictureAddPageState extends State<PictureAddPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('选择图片',style: STATIC_STYLE.appbar),
-        backgroundColor: STATIC_STYLE.backgroundColor,
-      ),
-      body: Container(
-        //height: 400,
-        child: GridView.count(
-          padding: EdgeInsets.all(10.0),
-          crossAxisCount: 2,
-          crossAxisSpacing: 10.0,
-          mainAxisSpacing: 10.0,
-          children: _imagePreview(),
+    return SafeArea(
+      child:Scaffold(
+        appBar: AppBar(
+          title: Text('选择图片',style: STATIC_STYLE.appbar),
+          backgroundColor: STATIC_STYLE.backgroundColor,
         ),
-      ),
-      bottomNavigationBar: ButtonBar(
-        children: <Widget>[
-          FlatButton(
-            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: Text('确定',
-              style: STATIC_STYLE.buttonText),
-            color: Colors.blueAccent,
-            onPressed: (){
-              mapList.map((Map<String,dynamic> pic){
-                if(pic['check'] == true) {
-                  widget.pictureUrlList.add(pic['pictureBean'].url);
-                }
-              }).toList();
-              Navigator.of(context).pop(widget.pictureUrlList);
-              EventBus().emit('REFRESH_EDIT');
-            },
+        body: Container(
+          //height: 400,
+          child: GridView.count(
+            padding: EdgeInsets.all(10.0),
+            crossAxisCount: 2,
+            crossAxisSpacing: 10.0,
+            mainAxisSpacing: 10.0,
+            children: _imagePreview(),
           ),
-        ],
+        ),
+        bottomNavigationBar: ButtonBar(
+          children: <Widget>[
+            FlatButton(
+              padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+              child: Text('确定',
+                style: STATIC_STYLE.buttonText),
+              color: Colors.blueAccent,
+              onPressed: (){
+                mapList.map((Map<String,dynamic> pic){
+                  if(pic['check'] == true) {
+                    widget.pictureUrlList.add(pic['pictureBean'].url);
+                  }
+                }).toList();
+                Navigator.of(context).pop(widget.pictureUrlList);
+                EventBus().emit('REFRESH_EDIT');
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -45,50 +45,52 @@ class _PictureOperationPageState extends State<PictureOperationPage> {
   @override
   Widget build(BuildContext context) {
     
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('操作',style: STATIC_STYLE.appbar),
-        backgroundColor: STATIC_STYLE.backgroundColor,
-      ),
-      body: Container(
-        //height: 400,
-        child: GridView.count(
-          padding: EdgeInsets.all(10.0),
-          crossAxisCount: 2,
-          crossAxisSpacing: 10.0,
-          mainAxisSpacing: 10.0,
-          children: _imagePreview(),
+    return SafeArea(
+      child:Scaffold(
+        appBar: AppBar(
+          title: Text('操作',style: STATIC_STYLE.appbar),
+          backgroundColor: STATIC_STYLE.backgroundColor,
         ),
-      ),
-      bottomNavigationBar: ButtonBar(
-        children: <Widget>[
-          FlatButton(
-              padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-              child: Text('删除',
-                  style: STATIC_STYLE.buttonText),
-              color: Colors.blueAccent,
-              onPressed: (){
-                showDialog(
-                  context:context,
-                  child: CupertinoAlertDialog(
-                    title:Text('提示'),
-                    content:Center(
-                      child: Text('是否确定删除该项'),
-                    ),
-                    actions: <Widget>[
-                      CupertinoDialogAction(isDestructiveAction: true,child: Text('确定'),onPressed: (){
-                        deleteCheck();
-                        Navigator.of(context).pop();
-                      }),
-                      CupertinoDialogAction(child: Text('取消'),onPressed: (){
-                        Navigator.of(context).pop();
-                      }),
-                    ],
-                  )
-                );
-              },
+        body: Container(
+          //height: 400,
+          child: GridView.count(
+            padding: EdgeInsets.all(10.0),
+            crossAxisCount: 2,
+            crossAxisSpacing: 10.0,
+            mainAxisSpacing: 10.0,
+            children: _imagePreview(),
           ),
-        ],
+        ),
+        bottomNavigationBar: ButtonBar(
+          children: <Widget>[
+            FlatButton(
+                padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                child: Text('删除',
+                    style: STATIC_STYLE.buttonText),
+                color: Colors.blueAccent,
+                onPressed: (){
+                  showDialog(
+                    context:context,
+                    child: CupertinoAlertDialog(
+                      title:Text('提示'),
+                      content:Center(
+                        child: Text('是否确定删除该项'),
+                      ),
+                      actions: <Widget>[
+                        CupertinoDialogAction(isDestructiveAction: true,child: Text('确定'),onPressed: (){
+                          deleteCheck();
+                          Navigator.of(context).pop();
+                        }),
+                        CupertinoDialogAction(child: Text('取消'),onPressed: (){
+                          Navigator.of(context).pop();
+                        }),
+                      ],
+                    )
+                  );
+                },
+            ),
+          ],
+        ),
       ),
     );
   }

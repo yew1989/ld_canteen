@@ -30,45 +30,47 @@ class _CategoryEditPageState extends State<CategoryEditPage> {
   Widget build(BuildContext context) {
     var isAdd = widget.category == null;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: isAdd ? Text('新增菜品分类',style: STATIC_STYLE.appbar,) : Text('编辑菜品分类',style: STATIC_STYLE.appbar,),
-        backgroundColor: STATIC_STYLE.backgroundColor,
-      ),
-      body: Container(
-        margin: EdgeInsets.all(40),
-        child: ListView(
-          children: <Widget>[
-            Text('菜品分类名称:', style: STATIC_STYLE.tab),
-            TextField(
-              maxLength: 20,
-              maxLines: 1,
-              style: STATIC_STYLE.textField,
-              controller: nameCtrl,
-              decoration: InputDecoration()
-            ),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: isAdd ? Text('新增菜品分类',style: STATIC_STYLE.appbar,) : Text('编辑菜品分类',style: STATIC_STYLE.appbar,),
+          backgroundColor: STATIC_STYLE.backgroundColor,
         ),
-      ),
-      bottomNavigationBar: FlatButton(
-        padding: EdgeInsets.all(10),
-        child: Text('确定',
-            style: STATIC_STYLE.buttonText),
-        color: STATIC_STYLE.backgroundColor,
-        onPressed: () {
-          // 新增
-          if (isAdd) {
-            var item = Category(
-                name: nameCtrl.text ?? '',);
-            createCategory(item);
-          }
-          // 更新
-          else {
-            var item = widget.category;
-            item.name = nameCtrl.text ?? '';
-            updateCategory(item);
-          }
-        },
+        body: Container(
+          margin: EdgeInsets.all(40),
+          child: ListView(
+            children: <Widget>[
+              Text('菜品分类名称:', style: STATIC_STYLE.tab),
+              TextField(
+                maxLength: 20,
+                maxLines: 1,
+                style: STATIC_STYLE.textField,
+                controller: nameCtrl,
+                decoration: InputDecoration()
+              ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: FlatButton(
+          padding: EdgeInsets.all(10),
+          child: Text('确定',
+              style: STATIC_STYLE.buttonText),
+          color: STATIC_STYLE.backgroundColor,
+          onPressed: () {
+            // 新增
+            if (isAdd) {
+              var item = Category(
+                  name: nameCtrl.text ?? '',);
+              createCategory(item);
+            }
+            // 更新
+            else {
+              var item = widget.category;
+              item.name = nameCtrl.text ?? '';
+              updateCategory(item);
+            }
+          },
+        ),
       ),
     );
   }

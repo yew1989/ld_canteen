@@ -139,73 +139,76 @@ class _MenuShowPageState extends State<MenuShowPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('编辑',style: STATIC_STYLE.appbar,),
-        backgroundColor: STATIC_STYLE.backgroundColor,
-      ),
-      body:Column(
-        children: <Widget>[
-          Padding(padding: EdgeInsets.all(10),),
-          Row(
-            children: <Widget>[
-              Padding(padding: EdgeInsets.all(10),),
-              Expanded(
-                flex: 5,
-                child: DropdownButton<String>(
-                  items: types.map((type) {
-                    return DropdownMenuItem<String>(
-                      child: Text(
-                        type['name'],
-                        style: STATIC_STYLE.tab,
-                      ),
-                      value: type['value'],
-                    );
-                  }).toList(),
-                  onChanged: (String v) {
-                    if(v == '选择展示框分类'){
+    return SafeArea(
 
-                    }else{
-                      setState(() {
-                        change = v;
-                        _page(change,_categoryChange,_bannerBeanChange);
-                      });
-                    }
-                  },
-                  value: change ,
-                  iconSize: 25,
+      child:Scaffold(
+        appBar: AppBar(
+          title: Text('编辑',style: STATIC_STYLE.appbar,),
+          backgroundColor: STATIC_STYLE.backgroundColor,
+        ),
+        body:Column(
+          children: <Widget>[
+            Padding(padding: EdgeInsets.all(10),),
+            Row(
+              children: <Widget>[
+                Padding(padding: EdgeInsets.all(10),),
+                Expanded(
+                  flex: 5,
+                  child: DropdownButton<String>(
+                    items: types.map((type) {
+                      return DropdownMenuItem<String>(
+                        child: Text(
+                          type['name'],
+                          style: STATIC_STYLE.tab,
+                        ),
+                        value: type['value'],
+                      );
+                    }).toList(),
+                    onChanged: (String v) {
+                      if(v == '选择展示框分类'){
+
+                      }else{
+                        setState(() {
+                          change = v;
+                          _page(change,_categoryChange,_bannerBeanChange);
+                        });
+                      }
+                    },
+                    value: change ,
+                    iconSize: 25,
+                  ),
                 ),
-              ),
-              Padding(padding: EdgeInsets.all(10),),
-              Expanded(
-                flex: 5,
-                child: _dropdownButton(),
-              ),
-            ],
-          ),
-          Expanded(
-            flex: 1,
-            child: _page(change,_categoryChange,_bannerBeanChange),
-          )
-        ],
-      ),
-      bottomNavigationBar: FlatButton(
-        padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-        child: Text('确定',
-            style: STATIC_STYLE.buttonText),
-        color: STATIC_STYLE.backgroundColor,
-        onPressed: (){
-          setState(() {
-            if(change == 'banner'){
-              banner.images = imageUrlList;
-              updateBanner(banner);
-            }
-            if(_bannerBeanChange != '2222' ||_categoryChange != '1111'){
-              updateMenu(_categoryChange,_bannerBeanChange,menu,change);
-            }
-            EventBus().emit('REFRESHLIST');
-          });
-        }
+                Padding(padding: EdgeInsets.all(10),),
+                Expanded(
+                  flex: 5,
+                  child: _dropdownButton(),
+                ),
+              ],
+            ),
+            Expanded(
+              flex: 1,
+              child: _page(change,_categoryChange,_bannerBeanChange),
+            )
+          ],
+        ),
+        bottomNavigationBar: FlatButton(
+          padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+          child: Text('确定',
+              style: STATIC_STYLE.buttonText),
+          color: STATIC_STYLE.backgroundColor,
+          onPressed: (){
+            setState(() {
+              if(change == 'banner'){
+                banner.images = imageUrlList;
+                updateBanner(banner);
+              }
+              if(_bannerBeanChange != '2222' ||_categoryChange != '1111'){
+                updateMenu(_categoryChange,_bannerBeanChange,menu,change);
+              }
+              EventBus().emit('REFRESHLIST');
+            });
+          }
+        ),
       ),
     );
   }
@@ -254,7 +257,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
         iconSize: 25,
       );
     }else{
-      return null;
+      return Column();
     }
   }
   

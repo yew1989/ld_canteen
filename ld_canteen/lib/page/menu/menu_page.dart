@@ -23,7 +23,7 @@ class _MenuPageState extends State<MenuPage> {
       Color.fromRGBO(26, 193, 65, 1.0),
       Color.fromRGBO(47, 29, 27, 1.0),
       Color.fromRGBO(40, 44, 49, 1.0),
-      Color.fromRGBO(40, 44, 49, 1.0),];
+      Color.fromRGBO(252, 86, 9, 1.0),];
 
   @override
   void initState() {
@@ -213,6 +213,9 @@ class _MenuPageState extends State<MenuPage> {
           ),
         );
         list.add(_b);
+      }else{
+        Widget _c = Card();
+        list.add(_c);
       }
     }).toList();
 
