@@ -114,7 +114,6 @@ class _BannerEditPageState extends State<BannerEditPage> {
               item.images = newImageUrl;
               updateBanner(item);
             }
-            
           },
         ),
       ),

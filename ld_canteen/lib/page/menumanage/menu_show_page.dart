@@ -165,9 +165,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
                       );
                     }).toList(),
                     onChanged: (String v) {
-                      if(v == '选择展示框分类'){
-
-                      }else{
+                      if(v != '选择展示框分类'){
                         setState(() {
                           change = v;
                           _page(change,_categoryChange,_bannerBeanChange);

@@ -107,7 +107,7 @@ class _MenuManagePageState extends State<MenuManagePage> {
               children:[
                 Expanded(
                   flex: 1,
-                  child: Center(child: Text('第${index}格',style: STATIC_STYLE.listView)),
+                  child: Center(child: Text('第$index格',style: STATIC_STYLE.listView)),
                 ),
                 Expanded(
                   flex: 1,
@@ -120,7 +120,7 @@ class _MenuManagePageState extends State<MenuManagePage> {
                 Expanded(
                   flex: 1,
                   child: Center(
-                    child: Text('${menu.type == null ? '' : (menu.type == "category" ? (menu?.category.name ?? '') : (menu?.banner.name ?? ''))}',
+                    child: Text('${menu.type == null ? '' : (menu.type == "category" ? (menu?.category?.name ?? '') : (menu?.banner?.name ?? ''))}',
                       style: STATIC_STYLE.listView
                     )
                   ),
@@ -148,7 +148,7 @@ class _MenuManagePageState extends State<MenuManagePage> {
               children:[
                 Expanded(
                   flex: 1,
-                  child: Center(child: Text('第${index}格',style: STATIC_STYLE.listView)),
+                  child: Center(child: Text('第$index格',style: STATIC_STYLE.listView)),
                 ),
                 Expanded(
                   flex: 1,
@@ -161,7 +161,7 @@ class _MenuManagePageState extends State<MenuManagePage> {
                 Expanded(
                   flex: 1,
                   child: Center(
-                    child: Text('${(menu.type == "category" ? (menu?.category.name ?? '') : (menu?.banner.name ?? ''))}',
+                    child: Text('${(menu.type == "category" ? (menu?.category?.name ?? '') : (menu?.banner?.name ?? ''))}',
                       style: STATIC_STYLE.listView
                     )
                   ),

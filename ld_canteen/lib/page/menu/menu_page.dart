@@ -194,25 +194,30 @@ class _MenuPageState extends State<MenuPage> {
         );
         list.add(_c);
       } else if (menu.type == 'banner') {
-        var length = menu.banner.images.length;
-        Widget _b = Card(
-          child: Container(
-            child: Swiper(
-              itemBuilder: (BuildContext context, int index) {
-                if (menu?.banner?.images != null) {
-                  return Image(
-                    image: NetworkImage(menu?.banner?.images[index]),
-                    fit: BoxFit.cover,
-                  );
-                }
-              },
-              itemCount:menu.banner.images == null ? 0 : menu.banner.images.length,
-              autoplay: true,
-              autoplayDelay: 5000,
+        if(menu.banner?.images?.length != null || menu.banner?.images?.length != 0){
+          var length = menu?.banner?.images?.length;
+          Widget _b = Card(
+            child: Container(
+              child: Swiper(
+                itemBuilder: (BuildContext context, int index) {
+                  if (menu?.banner?.images != null) {
+                    return Image(
+                      image: NetworkImage(menu?.banner?.images[index]),
+                      fit: BoxFit.cover,
+                    );
+                  }
+                },
+                itemCount:menu?.banner?.images == null ? 0 : menu.banner.images.length,
+                autoplay: true,
+                autoplayDelay: 5000,
+              ),
             ),
-          ),
-        );
-        list.add(_b);
+          );
+          list.add(_b);
+        }else{
+          Widget _b = Card();
+          list.add(_b);
+        }
       }else{
         Widget _c = Card();
         list.add(_c);
