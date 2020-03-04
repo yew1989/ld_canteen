@@ -86,6 +86,7 @@ class _DishEditPageState extends State<DishEditPage> {
                         value: category.objectId,
                       );
                     }).toList(),
+                    
                     onChanged: (String category) {
                       setState(() {
                         categoryObjectId = category;
@@ -118,21 +119,23 @@ class _DishEditPageState extends State<DishEditPage> {
               style: STATIC_STYLE.buttonText),
           color: STATIC_STYLE.backgroundColor,
           onPressed: () {
-            // 新增
-            if (isAdd) {
-              var item = Dish(
-                  name: nameCtrl.text ?? '',
-                  price: priceCtrl.text ?? '',
-                  isShow: isShow);
-              createDish(item, categoryObjectId);
-            }
-            // 更新
-            else {
-              var item = widget.dish;
-              item.name = nameCtrl.text ?? '';
-              item.price = priceCtrl.text ?? '';
-              item.isShow = isShow;
-              updateDish(item, categoryObjectId);
+            if(categoryObjectId != '1111'){
+              // 新增
+              if (isAdd) {
+                var item = Dish(
+                    name: nameCtrl.text ?? '',
+                    price: priceCtrl.text ?? '',
+                    isShow: isShow);
+                createDish(item, categoryObjectId);
+              }
+              // 更新
+              else {
+                var item = widget.dish;
+                item.name = nameCtrl.text ?? '';
+                item.price = priceCtrl.text ?? '';
+                item.isShow = isShow;
+                updateDish(item, categoryObjectId);
+              }
             }
           },
         ),
