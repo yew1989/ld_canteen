@@ -128,6 +128,31 @@ class API{
     }, onFail);
   }
 
+    // 获取菜品列表
+  static void getDishListOnlyShow(DishListCallback onSucc,HttpFailCallback onFail,{String objectId,int limit,int skip}) {
+
+    final path = host + dishPath;
+
+    var queryParam = Map<String, dynamic>();
+    queryParam['keys'] = '-ACL,-updatedAt,-createdAt';
+    queryParam['count'] = '1';
+    queryParam['order'] = 'createdAt';
+    if(objectId != null) {
+        queryParam['where'] = '{"isShow":true,"category":{"\$inQuery":{"where":{"objectId":"$objectId"}"className":"Category"}}}';
+    }
+    if(limit != null) queryParam['limit'] = limit.toString();
+    if(skip != null) queryParam['skip'] = skip.toString();
+
+    HttpHelper.getHttp(path, queryParam, (dynamic data,String msg){
+        final map  = data as Map<String,dynamic>;
+        final resp = DishListResp.fromJson(map);
+        final dishes = resp.results; 
+        if(onSucc != null) onSucc(dishes,msg);
+        
+    }, onFail);
+  }
+
+
 
   // 新增菜品
   static void createDish(String categoryId,Dish dish,UpdateCallBack onSucc,HttpFailCallback onFail) {

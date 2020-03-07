@@ -41,8 +41,7 @@ class _MenuListPageState extends State<MenuListPage> {
           list = dishList.sublist(index*this.limit , (index+1)*this.limit < dishList.length ? (index+1)*this.limit : dishList.length);
           return ListView.builder(
             itemBuilder: (BuildContext context, int index) {
-              if(index.isEven){
-                return  Container(
+              return index.isEven ?  Container(
                   color: Color.fromRGBO(241, 241, 241, 1.0),
                   child:Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -58,10 +57,7 @@ class _MenuListPageState extends State<MenuListPage> {
                       ),
                     ]
                   )
-                );
-              }
-              if(index.isOdd){
-                return  Container(
+                ) : Container(
                   child:Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -76,8 +72,7 @@ class _MenuListPageState extends State<MenuListPage> {
                       ),
                     ]
                   )
-                );
-              }
+                ); 
             },
             itemCount: list.length,
           );
@@ -89,7 +84,7 @@ class _MenuListPageState extends State<MenuListPage> {
   }
   
   void getDishList(String categoryObjectId) {
-    API.getDishList((List<Dish> dishes,String msg){
+    API.getDishListOnlyShow((List<Dish> dishes,String msg){
       setState(() {
         this.dishList = dishes;
       });

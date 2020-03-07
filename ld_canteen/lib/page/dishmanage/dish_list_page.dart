@@ -33,7 +33,7 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
 
     EventBus().on('REFRESH_CATEGORYID',(id){
       if(id is String) {
-        final categoryId = id;
+        categoryId = id;
         getDishList(categoryId);
       }
     });
@@ -67,6 +67,7 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
     API.updateDish(dish.objectId, dish, (_, msg) {
       getDishList(categoryId);
     }, (_) {});
+    //EventBus().emit('REFRESH_CATEGORYID');
   }
 
   // 请求菜品数据

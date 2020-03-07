@@ -168,7 +168,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
                       if(v != '选择展示框分类'){
                         setState(() {
                           change = v;
-                          _page(change,_categoryChange,_bannerBeanChange);
+                          //_page(change,_categoryChange,_bannerBeanChange);
                         });
                       }
                     },
@@ -282,25 +282,7 @@ class _MenuShowPageState extends State<MenuShowPage> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              // Expanded(
-              //   flex: 3,
-                //child:
-                Text('图片预览:', style: STATIC_STYLE.tab),
-              // ),
-              // Expanded(
-              //   flex: 1,
-              //   child: FlatButton(
-              //     padding: EdgeInsets.all(1),
-              //     child: Text('选择图片',
-              //       style: STATIC_STYLE.buttonText),
-              //     color: STATIC_STYLE.backgroundColor,
-              //     onPressed: () {
-              //       setState((){
-              //         pushToPage(context, PictureAddPage(pictureUrlList: banner.images));  
-              //       });
-              //     }, 
-              //   )
-              // ),
+              Text('图片预览:', style: STATIC_STYLE.tab),
             ],
           ),
           Container(
@@ -334,15 +316,6 @@ class _MenuShowPageState extends State<MenuShowPage> {
                 alignment:AlignmentDirectional.topEnd,
                 children:<Widget>[
                   Image(image: NetworkImage(imageUrl)),
-                  // Container(),
-                  // IconButton(
-                  //   icon: Icon(Icons.close,size: 30,color: Colors.red,),
-                  //   onPressed: (){
-                  //     setState(() {
-                  //       imageUrlList.remove(imageUrl);
-                  //     });
-                  //   },
-                  // ),
                 ],
               ),
             ],
