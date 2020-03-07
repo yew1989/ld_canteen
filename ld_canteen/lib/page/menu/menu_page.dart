@@ -188,7 +188,7 @@ class _MenuPageState extends State<MenuPage> {
                 ),
                 preferredSize: Size.fromHeight(30.0),
               ),
-              body: MenuListPage(categoryObjectId: menu.category.objectId, limit: 6),
+              body: MenuListPage(categoryObjectId: menu.category.objectId, limit: 4),
               // body: Container(color:Colors.indigoAccent),
             ),
         );

@@ -231,7 +231,7 @@ class _BannerManagePageState extends State<BannerManagePage> {
             caption: '删除',
             color: Colors.red,
             icon: Icons.delete,
-            closeOnTap: false,
+            closeOnTap: true,
             onTap: (){
               showDialog(
                 context:context,

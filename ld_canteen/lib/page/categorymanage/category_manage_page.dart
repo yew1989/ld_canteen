@@ -181,7 +181,7 @@ class _CategroyManagePageState extends State<CategroyManagePage> {
             caption: '删除',
             color: Colors.red,
             icon: Icons.delete,
-            closeOnTap: false,
+            closeOnTap: true,
             onTap: (){
               showDialog(
                 context:context,

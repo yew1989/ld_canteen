@@ -54,7 +54,9 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
     API.deleteDish(dish.objectId, (String msg){
       debugPrint(msg);
       // 刷新列表
-      getDishList(categoryId);
+      setState(() {
+        getDishList(categoryId);
+      });
     }, (String msg) {
       debugPrint(msg);
     });
@@ -246,7 +248,7 @@ class _DishListPageState extends State<DishListPage>  with SingleTickerProviderS
             caption: '删除',
             color: Colors.red,
             icon: Icons.delete,
-            closeOnTap: false,
+            closeOnTap: true,
             onTap: (){
               showDialog(
                 context:context,
